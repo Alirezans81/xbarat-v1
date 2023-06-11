@@ -1,20 +1,29 @@
 import { useState } from "react";
 import { StyleSheet, SafeAreaView } from "react-native";
+import { NavigationContainer } from '@react-navigation/native';
 import MainScreen from "./screens/MainScreen";
 import SignScreen from "./screens/SignScreen";
 
 export default function App() {
   const [lang, setLang] = useState(require("./assets/languages/EN.json"));
   const [loggedIn, setLoggedIn] = useState(false);
+  const [token, setToken] = useState({});
 
   return (
-    <SafeAreaView style={styles.container}>
-      {loggedIn ? (
-        <MainScreen lang={lang} setLang={setLang} />
-      ) : (
-        <SignScreen lang={lang} setLang={setLang} setLoggedIn={setLoggedIn} />
-      )}
-    </SafeAreaView>
+    <NavigationContainer>
+      <SafeAreaView style={styles.container}>
+        {loggedIn ? (
+          <MainScreen lang={lang} setLang={setLang} />
+        ) : (
+          <SignScreen
+            lang={lang}
+            setLang={setLang}
+            setLoggedIn={setLoggedIn}
+            setToken={setToken}
+          />
+        )}
+      </SafeAreaView>
+    </NavigationContainer>
   );
 }
 

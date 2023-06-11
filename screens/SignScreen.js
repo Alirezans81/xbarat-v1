@@ -4,7 +4,7 @@ import SignInScreen from "./SignScreen/SignInScreen";
 import SignUpScreen from "./SignScreen/SignUpScreen";
 import Language from "../components/Language";
 
-const SignScreen = ({ lang, setLang, setLoggedIn }) => {
+const SignScreen = ({ lang, setLang, setLoggedIn,setToken }) => {
   const [sign, setSign] = useState("in");
 
   return (
@@ -21,6 +21,7 @@ const SignScreen = ({ lang, setLang, setLoggedIn }) => {
           lang={lang}
           setLang={setLang}
           setLoggedIn={setLoggedIn}
+          setToken={setToken}
         />
       ) : (
         <SignUpScreen

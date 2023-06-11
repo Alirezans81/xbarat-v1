@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { Formik } from "formik";
+import axios from "axios";
+import * as Yup from "yup";
 
 const SignUpForm = ({ lang, setSign }) => {
   const [acceptTerms, setAcceptTerms] = useState(false);
@@ -40,6 +42,21 @@ const SignUpForm = ({ lang, setSign }) => {
     return passwordCheck;
   };
 
+  const signup = async (email, password, confirmPassword) => {
+    const api = require("../../../assets/api.json");
+    try {
+      const result = await axios.post(api["signup"], {
+        email,
+        password,
+        confirmPassword,
+      });
+
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Formik
@@ -50,8 +67,7 @@ const SignUpForm = ({ lang, setSign }) => {
             checkPassword(values) &&
             checkConfirmPassword(values)
           ) {
-            values.acceptTerms = acceptTerms;
-            console.log(values);
+            signup(values.email, values.password, values.confirmPassword);
           }
         }}
       >

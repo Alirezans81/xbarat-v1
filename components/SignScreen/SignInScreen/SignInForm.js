@@ -7,8 +7,10 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { Formik } from "formik";
+import axios from "axios";
+import * as Yup from "yup";
 
-const SignInForm = ({ lang, setLoggedIn }) => {
+const SignInForm = ({ lang, setLoggedIn, setToken }) => {
   const [emailError, setEmailError] = useState(false);
   const checkEmail = (values) => {
     if (values.email === "") setEmailError(true);
@@ -25,13 +27,26 @@ const SignInForm = ({ lang, setLoggedIn }) => {
     return !passwordError;
   };
 
+  const [errors, setErrors] = useState([]);
+  const signin = async (email, password) => {
+    const api = require("../../../assets/api.json");
+    try {
+      const result = await axios.post(api["login"], { email, password });
+
+      setToken(result.data);
+      setLoggedIn(true);
+    } catch (error) {
+      console.log(JSON.stringify(error));
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Formik
         initialValues={{ email: "", password: "" }}
         onSubmit={(values) => {
           if (checkEmail(values) && checkPassword(values)) {
-            console.log(values);
+            signin(values.email, values.password);
           }
         }}
       >
@@ -73,6 +88,9 @@ const SignInForm = ({ lang, setLoggedIn }) => {
             >
               {lang["enter the password error"]}
             </Text>
+            {errors.map((error) => (
+              <Text>{error}</Text>
+            ))}
             <TouchableOpacity style={styles.button} onPress={handleSubmit}>
               <Text style={styles.buttonText}>{lang["submit"]}</Text>
             </TouchableOpacity>
