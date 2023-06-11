@@ -1,4 +1,5 @@
 {
   "login": "http://94.74.145.156:5271/mobile-api/identity/login",
-  "signup": "http://94.74.145.156:5271/mobile-api/identity/register"
+  "signup": "http://94.74.145.156:5271/mobile-api/identity/register",
+  "watch-table": "http://94.74.145.156:5271/api/exchange/watch-table"
 }

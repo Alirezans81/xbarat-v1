@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { StyleSheet, SafeAreaView } from "react-native";
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer } from "@react-navigation/native";
 import MainScreen from "./screens/MainScreen";
 import SignScreen from "./screens/SignScreen";
 
 export default function App() {
   const [lang, setLang] = useState(require("./assets/languages/EN.json"));
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [token, setToken] = useState({});
 
   return (

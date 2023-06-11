@@ -6,7 +6,9 @@ import { Image, StyleSheet } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
-const TabNavigator = () => {
+const TabNavigator = ({ lang, setLang }) => {
+  const iconSize = 40;
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -17,11 +19,11 @@ const TabNavigator = () => {
     >
       <Tab.Screen
         name="Exchange"
-        component={ExchangeScreen}
+        children={() => <ExchangeScreen lang={lang} />}
         options={{
           tabBarIcon: ({ size, focused, color }) => (
             <Image
-              style={{ width: 45, height: 45 }}
+              style={{ width: iconSize, height: iconSize }}
               resizeMode="stretch"
               source={
                 focused
@@ -34,11 +36,11 @@ const TabNavigator = () => {
       />
       <Tab.Screen
         name="Wallet"
-        component={WalletScreen}
+        children={() => <WalletScreen lang={lang} />}
         options={{
           tabBarIcon: ({ size, focused, color }) => (
             <Image
-              style={{ width: 45, height: 45 }}
+              style={{ width: iconSize, height: iconSize }}
               resizeMode="stretch"
               source={
                 focused
@@ -51,11 +53,11 @@ const TabNavigator = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={ProfileScreen}
+        children={() => <ProfileScreen lang={lang} setLang={setLang} />}
         options={{
           tabBarIcon: ({ size, focused, color }) => (
             <Image
-              style={{ width: 45, height: 45 }}
+              style={{ width: iconSize, height: iconSize }}
               resizeMode="stretch"
               source={
                 focused
@@ -76,7 +78,7 @@ const styles = StyleSheet.create({
   container: {
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    backgroundColor: "#ddd",
-    height: 65,
+    backgroundColor: "#eee",
+    height: 58,
   },
 });

@@ -11,5 +11,12 @@
   "confirm password": "Confirm Password",
   "password match error": "The password is not the same",
   "i aggree with all ": "I aggree with all ",
-  "terms": "terms"
+  "terms": "terms",
+  "orders": "Orders",
+  "xbarat": "Xbarat",
+  "watch-table-lable": "Watch",
+  "symbol": "Symbol",
+  "rate": "Rate",
+  "low": "Low",
+  "high": "High"
 }
