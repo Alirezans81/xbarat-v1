@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "xbarat-v1",
-    "slug": "xbarat-v1",
+    "name": "xbarat",
+    "slug": "xbarat",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b1410122-9a48-429a-9b93-0b41291feebc"
+      }
+    },
+    "owner": "alirezansr81"
   }
 }

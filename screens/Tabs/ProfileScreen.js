@@ -1,11 +1,15 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import Tab from "../../components/MainScreen/ProfileScreen/TabScreen";
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ lang, token, refreshToken, userInfo }) => {
   return (
-    <View style={styles.container}>
-      <Text>ProfileScreen</Text>
-    </View>
+    <Tab
+      lang={lang}
+      token={token}
+      refreshToken={refreshToken}
+      userInfo={userInfo}
+    />
   );
 };
 

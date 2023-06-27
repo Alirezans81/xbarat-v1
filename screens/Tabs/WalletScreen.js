@@ -1,11 +1,18 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { StyleSheet, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
+import Wallet from "../../components/MainScreen/WalletScreen/Wallet";
+import PendingRequests from "../../components/MainScreen/WalletScreen/PendingRequests";
 
-const WalletScreen = () => {
+const WalletScreen = ({ lang, token, refreshToken, balances, getBalances }) => {
+  useEffect(() => {
+    getBalances();
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Text>WalletScreen</Text>
-    </View>
+    <ScrollView style={styles.container}>
+      <Wallet lang={lang} balances={balances} />
+      <PendingRequests lang={lang} token={token} refreshToken={refreshToken}/>
+    </ScrollView>
   );
 };
 

@@ -85,6 +85,7 @@ const SignUpForm = ({ lang, setSign }) => {
               value={values.email}
               keyboardType="email-address"
               textAlign="left"
+              autoCapitalize="none"
             />
             <Text
               style={[styles.error, emailError ? styles.show : styles.hide]}

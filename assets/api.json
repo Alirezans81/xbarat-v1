@@ -1,5 +1,12 @@
 {
   "login": "http://94.74.145.156:5271/mobile-api/identity/login",
   "signup": "http://94.74.145.156:5271/mobile-api/identity/register",
-  "watch-table": "http://94.74.145.156:5271/api/exchange/watch-table"
+  "refresh-token": "http://94.74.145.156:5271/mobile-api/identity/refresh",
+  "watch-table": "http://94.74.145.156:5271/mobile-api/exchange/watch-table",
+  "exchange" : "http://94.74.145.156:5271/mobile-api/exchange",
+  "exchanges-data": "http://94.74.145.156:5271/mobile-api/exchange/information",
+  "wallet-balances": "http://94.74.145.156:5271/mobile-api/wallet/credit",
+  "pending-requests": "http://94.74.145.156:5271/mobile-api/wallet/pending-requests",
+  "user-info": "http://94.74.145.156:5271/api/identity/me",
+  "countries": "http://94.74.145.156:5271/api/countries/title-value"
 }

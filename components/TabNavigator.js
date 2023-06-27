@@ -3,11 +3,59 @@ import ExchangeScreen from "../screens/Tabs/ExchangeScreen";
 import WalletScreen from "../screens/Tabs/WalletScreen";
 import ProfileScreen from "../screens/Tabs/ProfileScreen";
 import { Image, StyleSheet } from "react-native";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Tab = createBottomTabNavigator();
 
-const TabNavigator = ({ lang, setLang }) => {
-  const iconSize = 40;
+const TabNavigator = ({ lang, setLang, token, refreshToken }) => {
+  const iconSize = 37;
+
+  const api = require("../assets/api.json");
+
+  const [balances, setBalances] = useState();
+  const getBalances = async () => {
+    if (refreshToken()) {
+      setBalances([]);
+      try {
+        const config = {
+          headers: {
+            Authorization: "Bearer " + token.accessToken,
+          },
+        };
+
+        const result = await axios.get(api["wallet-balances"], config);
+
+        setBalances(result.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+  useEffect(() => {
+    getBalances();
+  }, []);
+
+  const [userInfo, setUserInfo] = useState();
+  const getUserInfo = async () => {
+    if (refreshToken()) {
+      try {
+        const config = {
+          headers: {
+            Authorization: "Bearer " + token.accessToken,
+          },
+        };
+
+        const result = await axios.get(api["user-info"], config);
+        setUserInfo(result.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+  useEffect(() => {
+    getUserInfo();
+  }, []);
 
   return (
     <Tab.Navigator
@@ -19,7 +67,14 @@ const TabNavigator = ({ lang, setLang }) => {
     >
       <Tab.Screen
         name="Exchange"
-        children={() => <ExchangeScreen lang={lang} />}
+        children={() => (
+          <ExchangeScreen
+            lang={lang}
+            token={token}
+            refreshToken={refreshToken}
+            balances={balances}
+          />
+        )}
         options={{
           tabBarIcon: ({ size, focused, color }) => (
             <Image
@@ -36,7 +91,15 @@ const TabNavigator = ({ lang, setLang }) => {
       />
       <Tab.Screen
         name="Wallet"
-        children={() => <WalletScreen lang={lang} />}
+        children={() => (
+          <WalletScreen
+            lang={lang}
+            token={token}
+            refreshToken={refreshToken}
+            balances={balances}
+            getBalances={getBalances}
+          />
+        )}
         options={{
           tabBarIcon: ({ size, focused, color }) => (
             <Image
@@ -51,9 +114,17 @@ const TabNavigator = ({ lang, setLang }) => {
           ),
         }}
       />
+
       <Tab.Screen
         name="Profile"
-        children={() => <ProfileScreen lang={lang} setLang={setLang} />}
+        children={() => (
+          <ProfileScreen
+            lang={lang}
+            token={token}
+            refreshToken={refreshToken}
+            userInfo={userInfo}
+          />
+        )}
         options={{
           tabBarIcon: ({ size, focused, color }) => (
             <Image
@@ -79,6 +150,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     backgroundColor: "#eee",
-    height: 58,
+    height: 55,
   },
 });
