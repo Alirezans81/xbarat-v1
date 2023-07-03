@@ -6,10 +6,13 @@ import Inventory from "./ExchangeForm/Inventory";
 const Exchange = ({
   lang,
   availableSources,
+  availableSourcesRef,
   swap,
   exchange,
   source,
   inventory,
+  selectedSourceIndex,
+  setSelectedSourceIndex,
 }) => {
   return (
     <View style={styles.container}>
@@ -18,8 +21,11 @@ const Exchange = ({
           <Inventory lang={lang} source={source} inventory={inventory} />
         ) : null}
         <Form
+          selectedIndex={selectedSourceIndex}
+          setSelectedIndex={setSelectedSourceIndex}
           lang={lang}
           availableSources={availableSources}
+          availableSourcesRef={availableSourcesRef}
           swap={swap}
           exchange={exchange}
         />

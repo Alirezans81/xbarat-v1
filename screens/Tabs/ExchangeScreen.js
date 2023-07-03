@@ -14,8 +14,15 @@ import axios from "axios";
 import ExchangeForm from "../../components/MainScreen/ExchangeScreen/ExchangeForm";
 import Requests from "../../components/MainScreen/ExchangeScreen/Requests";
 import Exchanges from "../../components/MainScreen/ExchangeScreen/Exchanges";
+import { useRef } from "react";
 
-const ExchangeScreen = ({ lang, token, refreshToken, balances }) => {
+const ExchangeScreen = ({
+  lang,
+  token,
+  refreshToken,
+  balances,
+  stackNavigation,
+}) => {
   const api = require("../../assets/api.json");
   const refreshTime = 10000;
 
@@ -28,7 +35,7 @@ const ExchangeScreen = ({ lang, token, refreshToken, balances }) => {
       const mappedResult = result.data.filter((e) => e.order === 1);
       setWatchTableData(mappedResult);
     } catch (error) {
-      console.log(error);
+      console.log(JSON.stringify(error));
     }
   };
   useEffect(() => {
@@ -43,10 +50,10 @@ const ExchangeScreen = ({ lang, token, refreshToken, balances }) => {
 
   // Exchange From
   const [availableSources, setAvailableSources] = useState([]);
+  const [selectedSourceIndex, setSelectedSourceIndex] = useState(0);
   const [source, setSource] = useState({});
   const [target, setTarget] = useState({});
   const [inventory, setInventory] = useState(0);
-    useState();
   const swap = () => {
     const sourceTemp = source;
     setSource(target);
@@ -55,7 +62,6 @@ const ExchangeScreen = ({ lang, token, refreshToken, balances }) => {
   const exchange = async (amount, rate) => {
     if (amount !== 0 && rate !== 0) {
       if (refreshToken()) {
-        console.log("exchanging...");
         try {
           let param = {};
           param.sourceCurrencyId = source.id;
@@ -72,7 +78,7 @@ const ExchangeScreen = ({ lang, token, refreshToken, balances }) => {
 
           console.log(result.data);
         } catch (error) {
-          console.log(error.toString());
+          console.log(JSON.stringify(error));
         }
       }
     }
@@ -80,11 +86,18 @@ const ExchangeScreen = ({ lang, token, refreshToken, balances }) => {
   useEffect(() => {
     if (balances) {
       const newInventory = balances.find(
-        (e) => e.currency === source.abbreviation
+        (e) => e.currency === availableSources[selectedSourceIndex].abbreviation
       );
       setInventory(newInventory ? newInventory.money : 0);
     }
-  }, [source]);
+  }, [selectedSourceIndex]);
+  const availableSourcesRef = useRef();
+  useEffect(() => {
+    availableSourcesRef.current.selectIndex(0);
+  }, [availableSources]);
+  useEffect(() => {
+    availableSourcesRef.current.selectIndex(selectedSourceIndex);
+  }, [selectedSourceIndex]);
   // End of Exchange Form
 
   // Requests
@@ -114,7 +127,7 @@ const ExchangeScreen = ({ lang, token, refreshToken, balances }) => {
       });
       setExchangesData(result.data.bureauDeChangeRates);
     } catch (error) {
-      console.log(error);
+      console.log(JSON.stringify(error));
     }
   };
   useEffect(() => {
@@ -133,17 +146,21 @@ const ExchangeScreen = ({ lang, token, refreshToken, balances }) => {
         style={styles.KeyboardAvoidingView}
       >
         <ScrollView>
-          <Header lang={lang} />
+          <Header lang={lang} stackNavigation={stackNavigation} />
           <WatchTable
             lang={lang}
             watchTableData={watchTableData}
             setAvailableSources={setAvailableSources}
+            setSelectedSourceIndex={setSelectedSourceIndex}
             setSource={setSource}
             setTarget={setTarget}
           />
           <ExchangeForm
             lang={lang}
             availableSources={availableSources}
+            availableSourcesRef={availableSourcesRef}
+            selectedSourceIndex={selectedSourceIndex}
+            setSelectedSourceIndex={setSelectedSourceIndex}
             swap={swap}
             exchange={exchange}
             inventory={inventory}

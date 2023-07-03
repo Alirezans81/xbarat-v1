@@ -1,7 +1,7 @@
 import { StyleSheet, Image, View, TouchableOpacity, Text } from "react-native";
 import React from "react";
 
-const Header = ({ lang }) => {
+const Header = ({ lang, stackNavigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -12,7 +12,12 @@ const Header = ({ lang }) => {
         />
         <Text style={styles.logoText}>{lang["xbarat"]}</Text>
       </View>
-      <TouchableOpacity style={styles.ordersBtn}>
+      <TouchableOpacity
+        onPress={() => {
+          stackNavigation.navigate("Orders");
+        }}
+        style={styles.ordersBtn}
+      >
         <Text style={styles.ordersBtnText}>{lang["orders"]}</Text>
       </TouchableOpacity>
     </View>

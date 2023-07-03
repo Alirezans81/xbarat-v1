@@ -1,93 +1,83 @@
 import { StyleSheet, View } from "react-native";
 import React from "react";
-import { Formik } from "formik";
 import PersonalInfoForm from "./Forms/PersonalInfoForm";
 import NationalInfoForm from "./Forms/NationalInfoForm";
 import UploadDocumentForm from "./Forms/UploadDocumentForm";
 import BankInfoForm from "./Forms/BankInfoForm";
-import axios from "axios";
-import { useState } from "react";
-import { useEffect } from "react";
 
-const Forms = ({ lang, editable, userInfo }) => {
-  // console.log(userInfo);
-
-  const api = require("../../../../../assets/api.json");
-
-  const [countries, setCountries] = useState([]);
-  const [selectedCountryIndex, setSelectedCountryIndex] = useState();
-
-  const getCountries = async () => {
-    try {
-      const result = await axios.get(api["countries"]);
-
-      console.log(result.data);
-      setCountries(result.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    getCountries();
-  }, []);
-  useEffect(() => {
-    countries.findIndex((e) => e.value === 1);
-  }, [countries]);
-
+const Forms = ({
+  lang,
+  editable,
+  userInfo,
+  handleBlur,
+  handleChange,
+  values,
+  nationalities,
+  selectedNationalityIndex,
+  setSelectedNationalityIndex,
+  countries,
+  selectedCountryIndex,
+  setSelectedCountryIndex,
+  cities,
+  selectedCityIndex,
+  setSelectedCityIndex,
+  afghanistanOffices,
+  selectedAfghanistanOfficeIndex,
+  setSelectedAfghanistanOfficeIndex,
+  citiesDropdown,
+}) => {
   return (
     <View style={styles.container}>
-      <Formik
-        initialValues={{
-          email: userInfo ? userInfo.email : "",
-          phoneNumber: userInfo ? userInfo.phoneNumber : "",
-          firstName: userInfo ? userInfo.firstName : "",
-          lastName: userInfo ? userInfo.lastName : "",
-          city: userInfo ? userInfo.city : "",
-          nationalCode: userInfo ? userInfo.nationalCode : "",
-          tazkareNumber: userInfo ? userInfo.tazkareNumber : "",
-          passportNumber: userInfo ? userInfo.passportNumber : "",
-          document: userInfo ? userInfo.document : "",
-          shabaNumber: userInfo ? userInfo.shabaNumber : "",
-          cartNumber: userInfo ? userInfo.cartNumber : "",
-          preferredOffice: userInfo ? userInfo.preferredOffice : "",
-          bankEmail: userInfo ? userInfo.bankEmail : "",
-        }}
-        onSubmit={(values) => {}}
-      >
-        {({ handleChange, handleBlur, handleSubmit, values }) => (
-          <>
-            <PersonalInfoForm
-              values={values}
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-              userInfo={userInfo}
-              editable={editable}
-            />
-            <NationalInfoForm
-              values={values}
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-              editable={editable}
-              countries={countries}
-              selectedCountryIndex={selectedCountryIndex}
-              setSelectedCountryIndex={setSelectedCountryIndex}
-            />
-            <UploadDocumentForm
-              values={values}
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-              editable={editable}
-              userInfo={userInfo}
-            />
-            <BankInfoForm
-              values={values}
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-              editable={editable}
-            />
-          </>
-        )}
-      </Formik>
+      <PersonalInfoForm
+        lang={lang}
+        values={values}
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+        userInfo={userInfo}
+        editable={editable}
+      />
+      <NationalInfoForm
+        lang={lang}
+        editable={editable}
+        nationalities={nationalities}
+        countries={countries}
+        cities={cities}
+        citiesDropdownRef={citiesDropdown}
+        selectedNationalityIndex={selectedNationalityIndex}
+        setSelectedNationalityIndex={setSelectedNationalityIndex}
+        selectedCountryIndex={selectedCountryIndex}
+        setSelectedCountryIndex={setSelectedCountryIndex}
+        selectedCityIndex={selectedCityIndex}
+        setSelectedCityIndex={setSelectedCityIndex}
+      />
+      <UploadDocumentForm
+        lang={lang}
+        values={values}
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+        editable={editable}
+        userInfo={userInfo}
+        nationality={
+          nationalities[selectedNationalityIndex]
+            ? nationalities[selectedNationalityIndex].title.toLowerCase()
+            : ""
+        }
+      />
+      <BankInfoForm
+        lang={lang}
+        values={values}
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+        editable={editable}
+        country={
+          countries[selectedCountryIndex]
+            ? countries[selectedCountryIndex].title.toLowerCase()
+            : ""
+        }
+        afghanistanOffices={afghanistanOffices}
+        selectedAfghanistanOfficeIndex={selectedAfghanistanOfficeIndex}
+        setSelectedAfghanistanOfficeIndex={setSelectedAfghanistanOfficeIndex}
+      />
     </View>
   );
 };

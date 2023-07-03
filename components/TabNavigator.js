@@ -8,7 +8,13 @@ import axios from "axios";
 
 const Tab = createBottomTabNavigator();
 
-const TabNavigator = ({ lang, setLang, token, refreshToken }) => {
+const TabNavigator = ({
+  lang,
+  setLang,
+  token,
+  refreshToken,
+  stackNavigation,
+}) => {
   const iconSize = 37;
 
   const api = require("../assets/api.json");
@@ -28,7 +34,7 @@ const TabNavigator = ({ lang, setLang, token, refreshToken }) => {
 
         setBalances(result.data);
       } catch (error) {
-        console.log(error);
+        console.log(JSON.stringify(error));
       }
     }
   };
@@ -49,7 +55,7 @@ const TabNavigator = ({ lang, setLang, token, refreshToken }) => {
         const result = await axios.get(api["user-info"], config);
         setUserInfo(result.data);
       } catch (error) {
-        console.log(error);
+        console.log(JSON.stringify(error));
       }
     }
   };
@@ -73,6 +79,7 @@ const TabNavigator = ({ lang, setLang, token, refreshToken }) => {
             token={token}
             refreshToken={refreshToken}
             balances={balances}
+            stackNavigation={stackNavigation}
           />
         )}
         options={{
@@ -97,7 +104,7 @@ const TabNavigator = ({ lang, setLang, token, refreshToken }) => {
             token={token}
             refreshToken={refreshToken}
             balances={balances}
-            getBalances={getBalances}
+            stackNavigation={stackNavigation}
           />
         )}
         options={{

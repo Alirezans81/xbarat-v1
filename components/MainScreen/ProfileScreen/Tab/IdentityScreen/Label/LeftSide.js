@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     height: 60,
   },
   profileWarn: {
-    fontSize: 20,
+    fontSize: 17,
     marginLeft: 10,
     fontWeight: "300",
   },

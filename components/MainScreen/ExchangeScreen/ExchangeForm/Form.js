@@ -13,14 +13,13 @@ import Dropdown from "react-native-select-dropdown";
 const Form = ({
   lang,
   availableSources,
+  availableSourcesRef,
   swap,
   exchange,
+  selectedIndex,
+  setSelectedIndex,
 }) => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
-
   const alert = (amount, rate) => {
-    Ref
-
     const message =
       lang["confirm-exchange-message"] +
       " " +
@@ -59,16 +58,16 @@ const Form = ({
             <View style={styles.row}>
               <Dropdown
                 data={availableSources.map((e) => e.abbreviation)}
+                ref={availableSourcesRef}
                 defaultValue={
                   availableSources[0] ? availableSources[0].abbreviation : null
                 }
                 defaultButtonText="- - -"
                 onSelect={(e, index) => {
-                  if (index !== selectedIndex) {
-                    setSelectedIndex(index);
-                    swap();
-                  }
+                  setSelectedIndex(index);
+                  swap();
                 }}
+                disabledIndexs={[selectedIndex]}
                 buttonStyle={styles.dropdownButton}
                 buttonTextStyle={
                   availableSources.length === 0

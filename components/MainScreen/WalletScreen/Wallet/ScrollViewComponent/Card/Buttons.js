@@ -1,13 +1,27 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 
-const Buttons = ({ lang }) => {
+const Buttons = ({ lang, stackNavigation }) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={[styles.button, styles.transferButton]}>
+      <TouchableOpacity
+        onPress={() => {
+          stackNavigation.navigate("DepositWithdrawalTransfer", {
+            type: "transfer",
+          });
+        }}
+        style={[styles.button, styles.transferButton]}
+      >
         <Text style={styles.buttonText}>Transfer</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.button, styles.withrawalButton]}>
+      <TouchableOpacity
+        onPress={() => {
+          stackNavigation.navigate("DepositWithdrawalTransfer", {
+            type: "withdrawal",
+          });
+        }}
+        style={[styles.button, styles.withrawalButton]}
+      >
         <Text style={styles.buttonText}>Withdrawal</Text>
       </TouchableOpacity>
     </View>

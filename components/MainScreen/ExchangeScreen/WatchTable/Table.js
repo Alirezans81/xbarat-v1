@@ -7,6 +7,7 @@ const Table = ({
   lang,
   watchTableData,
   setAvailableSources,
+  setSelectedSourceIndex,
   setSource,
   setTarget,
 }) => {
@@ -28,6 +29,7 @@ const Table = ({
                 index={index}
                 row={row}
                 setAvailableSources={setAvailableSources}
+                setSelectedSourceIndex={setSelectedSourceIndex}
                 setSource={setSource}
                 setTarget={setTarget}
                 selectedIndex={selectedIndex}

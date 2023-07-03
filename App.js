@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { StyleSheet, SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import MainScreen from "./screens/MainScreen";
 import SignScreen from "./screens/SignScreen";
 import axios from "axios";
+import "react-native-gesture-handler";
+import StackNavigator from "./components/StackNavigator";
 
 export default function App() {
   const api = require("./assets/api.json");
@@ -28,7 +29,7 @@ export default function App() {
 
         setToken(result.data);
       } catch (error) {
-        console.log(error);
+        console.log(JSON.stringify(error));
       }
 
       return false;
@@ -41,7 +42,7 @@ export default function App() {
     <NavigationContainer>
       <SafeAreaView style={styles.container}>
         {loggedIn ? (
-          <MainScreen
+          <StackNavigator
             lang={lang}
             setLang={setLang}
             token={token}
@@ -64,5 +65,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    padding: 0,
   },
 });

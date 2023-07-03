@@ -4,7 +4,6 @@ import Row from "./Table/Row";
 import Head from "./Table/Head";
 
 const Table = ({ lang, data }) => {
-  console.log(data);
   return (
     <View style={styles.container}>
       {!data || (data && data.length === 0) ? (

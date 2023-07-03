@@ -2,6 +2,7 @@ import { StyleSheet, Text, TextInput, View } from "react-native";
 import React from "react";
 
 const PersonalInfoForm = ({
+  lang,
   handleChange,
   handleBlur,
   values,
@@ -10,10 +11,10 @@ const PersonalInfoForm = ({
 }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.head}>Personal Information</Text>
+      <Text style={styles.head}>{lang["personal-information"]}</Text>
       <View style={styles.formView}>
         <View style={styles.inputView}>
-          <Text style={styles.label}>Email</Text>
+          <Text style={styles.label}>{lang["email"]}</Text>
           <View style={styles.emailView}>
             <Text style={styles.emailInput}>
               {userInfo ? userInfo.email : ""}
@@ -21,7 +22,7 @@ const PersonalInfoForm = ({
           </View>
         </View>
         <View style={styles.inputView}>
-          <Text style={styles.label}>Phone Number</Text>
+          <Text style={styles.label}>{lang["phone-number"]}</Text>
           <TextInput
             style={editable ? styles.input : styles.disabledInput}
             name="phoneNumber"
@@ -33,7 +34,7 @@ const PersonalInfoForm = ({
         </View>
         <View style={styles.twoColView}>
           <View style={[styles.inputView, styles.col6]}>
-            <Text style={styles.label}>First Name</Text>
+            <Text style={styles.label}>{lang["first-name"]}</Text>
             <TextInput
               style={editable ? styles.input : styles.disabledInput}
               name="firstName"
@@ -44,7 +45,7 @@ const PersonalInfoForm = ({
             />
           </View>
           <View style={[styles.inputView, styles.col6]}>
-            <Text style={styles.label}>Last Name</Text>
+            <Text style={styles.label}>{lang["last-name"]}</Text>
             <TextInput
               style={editable ? styles.input : styles.disabledInput}
               name="lastName"

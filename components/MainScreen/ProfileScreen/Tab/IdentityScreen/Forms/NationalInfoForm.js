@@ -3,23 +3,51 @@ import React from "react";
 import SelectDropdown from "react-native-select-dropdown";
 
 const NationalInfoForm = ({
-  handleChange,
-  handleBlur,
-  values,
+  lang,
   editable,
+  nationalities,
   countries,
+  cities,
+  citiesDropdownRef,
+  selectedNationalityIndex,
+  setSelectedNationalityIndex,
   selectedCountryIndex,
   setSelectedCountryIndex,
+  selectedCityIndex,
+  setSelectedCityIndex,
 }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.head}>National Information</Text>
+      <Text style={styles.head}>{lang["national-information"]}</Text>
       <View style={styles.formView}>
         <View style={styles.inputView}>
-          <Text style={styles.label}>Nationality</Text>
+          <Text style={styles.label}>{lang["nationality"]}</Text>
           <SelectDropdown
-            data={countries.map((e) => e.title)}
+            data={nationalities ? nationalities.map((e) => e.title) : []}
+            defaultValueByIndex={selectedNationalityIndex}
+            disabledIndexs={[selectedNationalityIndex]}
+            onSelect={(e, index) => setSelectedNationalityIndex(index)}
+            disabled={!editable}
+            buttonStyle={
+              editable ? styles.dropdownInput : styles.disabledDropdownInput
+            }
+            buttonTextStyle={
+              editable
+                ? styles.dropdownInputText
+                : styles.disabledDropdownInputText
+            }
+            dropdownStyle={styles.dropdown}
+            selectedRowStyle={styles.seletedDropdownRow}
+            selectedRowTextStyle={styles.seletedDropdownRowText}
+            defaultButtonText={lang["nationality-default-button-text"]}
+          />
+        </View>
+        <View style={styles.inputView}>
+          <Text style={styles.label}>{lang["country"]}</Text>
+          <SelectDropdown
+            data={countries ? countries.map((e) => e.title) : []}
             defaultValueByIndex={selectedCountryIndex}
+            disabledIndexs={[selectedCountryIndex]}
             onSelect={(e, index) => setSelectedCountryIndex(index)}
             disabled={!editable}
             buttonStyle={
@@ -32,14 +60,20 @@ const NationalInfoForm = ({
             }
             dropdownStyle={styles.dropdown}
             selectedRowStyle={styles.seletedDropdownRow}
+            selectedRowTextStyle={styles.seletedDropdownRowText}
+            defaultButtonText={lang["country-default-button-text"]}
           />
         </View>
         <View style={styles.inputView}>
-          <Text style={styles.label}>Country</Text>
+          <Text style={styles.label}>{lang["city"]}</Text>
           <SelectDropdown
-            data={countries.map((e) => e.title)}
-            defaultValueByIndex={selectedCountryIndex}
-            onSelect={(e, index) => setSelectedCountryIndex(index)}
+            data={cities ? cities.map((e) => e.title) : []}
+            ref={citiesDropdownRef}
+            defaultValueByIndex={selectedCityIndex}
+            disabledIndexs={[
+              selectedCityIndex !== -1 ? selectedCityIndex : null,
+            ]}
+            onSelect={(e, index) => setSelectedCityIndex(index)}
             disabled={!editable}
             buttonStyle={
               editable ? styles.dropdownInput : styles.disabledDropdownInput
@@ -51,17 +85,8 @@ const NationalInfoForm = ({
             }
             dropdownStyle={styles.dropdown}
             selectedRowStyle={styles.seletedDropdownRow}
-          />
-        </View>
-        <View style={styles.inputView}>
-          <Text style={styles.label}>City</Text>
-          <TextInput
-            style={editable ? styles.input : styles.disabledInput}
-            name="city"
-            onChangeText={handleChange("city")}
-            onBlur={handleBlur("city")}
-            value={values.city}
-            editable={editable}
+            selectedRowTextStyle={styles.seletedDropdownRowText}
+            defaultButtonText={lang["city-default-button-text"]}
           />
         </View>
       </View>
@@ -150,6 +175,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "400",
     color: "#888",
+  },
+  seletedDropdownRow: {
+    backgroundColor: "#03A9F4",
+  },
+  seletedDropdownRowText: {
+    color: "#fff",
   },
   emailView: {
     borderRadius: 15,

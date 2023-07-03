@@ -1,7 +1,13 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
 import React from "react";
 
-const EditButton = ({ lang, editable, setEditable }) => {
+const EditButton = ({
+  editable,
+  setEditable,
+  resetDropdowns,
+  resetForm,
+  handleSubmit,
+}) => {
   if (!editable) {
     return (
       <TouchableOpacity
@@ -20,7 +26,11 @@ const EditButton = ({ lang, editable, setEditable }) => {
       <View style={[styles.container, styles.onEditContainer]}>
         <TouchableOpacity
           style={styles.cancelButton}
-          onPress={() => setEditable(false)}
+          onPress={() => {
+            setEditable(false);
+            resetDropdowns();
+            resetForm();
+          }}
         >
           <Image
             resizeMode="cover"

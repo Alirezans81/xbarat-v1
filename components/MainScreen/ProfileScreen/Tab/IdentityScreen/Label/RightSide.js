@@ -1,11 +1,24 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
+import ChangePasswordModal from "./RightSide/ChangePasswordModal";
+import { useState } from "react";
 
 const RightSide = ({ lang }) => {
+  const [modalIsVisible, setModalIsVisible] = useState(false);
+
   return (
-    <TouchableOpacity style={styles.button}>
-      <Text style={styles.buttonText}>Change Password</Text>
-    </TouchableOpacity>
+    <>
+      <TouchableOpacity
+        onPress={() => setModalIsVisible(true)}
+        style={styles.button}
+      >
+        <Text style={styles.buttonText}>{lang["change-password"]}</Text>
+      </TouchableOpacity>
+      <ChangePasswordModal
+        isVisible={modalIsVisible}
+        setIsVisible={setModalIsVisible}
+      />
+    </>
   );
 };
 

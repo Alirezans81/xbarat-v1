@@ -7,6 +7,7 @@ const WatchTable = ({
   lang,
   watchTableData,
   setAvailableSources,
+  setSelectedSourceIndex,
   setSource,
   setTarget,
 }) => {
@@ -18,6 +19,7 @@ const WatchTable = ({
           lang={lang}
           watchTableData={watchTableData}
           setAvailableSources={setAvailableSources}
+          setSelectedSourceIndex={setSelectedSourceIndex}
           setSource={setSource}
           setTarget={setTarget}
         />

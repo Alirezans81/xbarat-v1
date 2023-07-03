@@ -3,11 +3,11 @@ import React from "react";
 import Label from "./Card/Label";
 import Buttons from "./Card/Buttons";
 
-const Card = ({ lang, data }) => {
+const Card = ({ lang, data, stackNavigation }) => {
   return (
     <View style={styles.container}>
       <Label data={data} />
-      <Buttons lang={lang} />
+      <Buttons lang={lang} stackNavigation={stackNavigation} />
     </View>
   );
 };

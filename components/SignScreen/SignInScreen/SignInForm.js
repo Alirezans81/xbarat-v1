@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import { Formik } from "formik";
 import axios from "axios";
 
-const SignInForm = ({ lang, setLoggedIn, setToken }) => {
+const SignInForm = ({ lang, setLoggedIn, setToken, setLoadingSpinner }) => {
   const [emailError, setEmailError] = useState(false);
   const checkEmail = (values) => {
     if (values.email === "") setEmailError(true);
@@ -29,14 +29,18 @@ const SignInForm = ({ lang, setLoggedIn, setToken }) => {
   const [errors, setErrors] = useState([]);
   const signin = async (email, password) => {
     const api = require("../../../assets/api.json");
-    try {
-      const result = await axios.post(api["login"], { email, password });
-
-      setToken(result.data);
-      setLoggedIn(true);
-    } catch (error) {
-      console.log(JSON.stringify(error));
-    }
+    setLoadingSpinner(true);
+    await axios
+      .post(api["login"], { email, password })
+      .then((result) => {
+        setLoadingSpinner(false);
+        setToken(result.data);
+        setLoggedIn(true);
+      })
+      .catch((error) => {
+        setLoadingSpinner(false);
+        console.log(JSON.stringify(error));
+      });
   };
 
   return (

@@ -2,7 +2,7 @@ import { StyleSheet, Text, ScrollView, View } from "react-native";
 import React from "react";
 import Card from "./ScrollViewComponent/Card";
 
-const ScrollViewComponent = ({ lang, data }) => {
+const ScrollViewComponent = ({ lang, data, stackNavigation }) => {
   if (data && data.length !== 0) {
     return (
       <ScrollView
@@ -11,7 +11,12 @@ const ScrollViewComponent = ({ lang, data }) => {
         contentContainerStyle={styles.contentContainer}
       >
         {data.map((e, index) => (
-          <Card key={index} data={e} lang={lang} />
+          <Card
+            key={index}
+            data={e}
+            lang={lang}
+            stackNavigation={stackNavigation}
+          />
         ))}
       </ScrollView>
     );
@@ -41,5 +46,8 @@ const styles = StyleSheet.create({
   noDataText: {
     fontSize: 18,
     fontWeight: "300",
+  },
+  contentContainer: {
+    paddingHorizontal: 10,
   },
 });

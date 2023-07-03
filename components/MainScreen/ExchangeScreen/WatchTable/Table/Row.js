@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import React, { useEffect } from "react";
-import { flushSync } from "react-dom";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import React from "react";
 
 const Row = ({
   row,
   setAvailableSources,
+  setSelectedSourceIndex,
   setSource,
   setTarget,
   index,
@@ -22,6 +22,8 @@ const Row = ({
       <View style={styles.width1} />
       <TouchableOpacity
         onPress={() => {
+          setSelectedSourceIndex(0);
+
           setSelectedIndex(index);
 
           let data = {};

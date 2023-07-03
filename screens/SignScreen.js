@@ -6,6 +6,7 @@ import {
   Platform,
 } from "react-native";
 import React, { useState } from "react";
+import Loader from "react-native-modal-loader";
 import SignInScreen from "./SignScreen/SignInScreen";
 import SignUpScreen from "./SignScreen/SignUpScreen";
 import Language from "../components/Language";
@@ -15,8 +16,11 @@ const SignScreen = ({ lang, setLang, setLoggedIn, setToken }) => {
 
   const backgroundImg = require("../assets/SignScreenBackground.png");
 
+  const [loadingSpinner, setLoadingSpinner] = useState(false);
+
   return (
     <View style={styles.container}>
+      <Loader loading={loadingSpinner} color="#03A9F4" />
       <Image
         style={styles.backgroundImg}
         resizeMode="cover"
@@ -31,6 +35,7 @@ const SignScreen = ({ lang, setLang, setLoggedIn, setToken }) => {
             setLang={setLang}
             setLoggedIn={setLoggedIn}
             setToken={setToken}
+            setLoadingSpinner={setLoadingSpinner}
           />
         ) : (
           <SignUpScreen
@@ -38,6 +43,7 @@ const SignScreen = ({ lang, setLang, setLoggedIn, setToken }) => {
             lang={lang}
             setLang={setLang}
             setLoggedIn={setLoggedIn}
+            setLoadingSpinner={setLoadingSpinner}
           />
         )}
       </KeyboardAvoidingView>

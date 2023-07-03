@@ -20,7 +20,7 @@ const PendingRequests = ({ lang, token, refreshToken }) => {
         const result = await axios.get(api["pending-requests"], config);
         setPendingRequestsData(result.data);
       } catch (error) {
-        console.log(error);
+        console.log(JSON.stringify(error));
       }
     }
   };

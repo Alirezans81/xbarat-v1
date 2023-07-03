@@ -3,11 +3,22 @@ import React from "react";
 import Header from "../../components/SignScreen/SignInScreen/Header";
 import SignInForm from "../../components/SignScreen/SignInScreen/SignInForm";
 
-const SignInScreen = ({ setSign, lang, setLoggedIn, setToken }) => {
+const SignInScreen = ({
+  setSign,
+  lang,
+  setLoggedIn,
+  setToken,
+  setLoadingSpinner,
+}) => {
   return (
     <View style={styles.container}>
       <Header setSign={setSign} lang={lang} />
-      <SignInForm setLoggedIn={setLoggedIn} lang={lang} setToken={setToken} />
+      <SignInForm
+        setLoggedIn={setLoggedIn}
+        lang={lang}
+        setToken={setToken}
+        setLoadingSpinner={setLoadingSpinner}
+      />
     </View>
   );
 };

@@ -3,11 +3,15 @@ import React from "react";
 import Header from "./Wallet/Header";
 import ScrollViewComponent from "./Wallet/ScrollViewComponent";
 
-const Wallet = ({ balances, lang }) => {
+const Wallet = ({ balances, lang, stackNavigation }) => {
   return (
     <View style={styles.container}>
-      <Header lang={lang} />
-      <ScrollViewComponent lang={lang} data={balances} />
+      <Header lang={lang} stackNavigation={stackNavigation} />
+      <ScrollViewComponent
+        lang={lang}
+        data={balances}
+        stackNavigation={stackNavigation}
+      />
     </View>
   );
 };
