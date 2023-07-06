@@ -10,5 +10,7 @@
   "user-info": "http://94.74.145.156:5271/api/identity/me",
   "countries": "http://94.74.145.156:5271/api/countries/title-value",
   "cities-1st": "http://94.74.145.156:5271/api/countries/",
-  "cities-2nd": "/cities"
+  "cities-2nd": "/cities",
+  "currencies": "http://94.74.145.156:5271/api/currencies",
+  "exhcanges" : "http://94.74.145.156:5271/mobile-api/exchange/pending-requests"
 }

@@ -1,70 +1,193 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useRef, useState } from "react";
-import SelectDropdown from "react-native-select-dropdown";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
 import DepositForm from "./DepositForm";
 import WithdrawalForm from "./WithdrawalForm";
 import TransferForm from "./TransferForm";
+import axios from "axios";
 
-const Forms = ({ route }) => {
-  const { type, currency } = route.params;
+const SwitchButtons = ({ transactionType, setTransactionType }) => {
+  return (
+    <View style={switchButtonsStyles.container}>
+      <TouchableOpacity
+        onPress={() => setTransactionType("deposit")}
+        disabled={transactionType === "deposit"}
+        style={[
+          switchButtonsStyles.depositButton,
+          transactionType !== "deposit"
+            ? switchButtonsStyles.enabledButton
+            : switchButtonsStyles.disabledButton,
+        ]}
+      >
+        <Text
+          style={[
+            switchButtonsStyles.depositButtonText,
+            transactionType !== "deposit"
+              ? switchButtonsStyles.enabledButtonText
+              : switchButtonsStyles.disabledButtonText,
+          ]}
+        >
+          Deposit
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => setTransactionType("withdrawal")}
+        disabled={transactionType === "withdrawal"}
+        style={[
+          switchButtonsStyles.withdrawalButton,
+          transactionType !== "withdrawal"
+            ? switchButtonsStyles.enabledButton
+            : switchButtonsStyles.disabledButton,
+        ]}
+      >
+        <Text
+          style={[
+            switchButtonsStyles.withdrawalButtonText,
+            transactionType !== "withdrawal"
+              ? switchButtonsStyles.enabledButtonText
+              : switchButtonsStyles.disabledButtonText,
+          ]}
+        >
+          Withdrawals
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => setTransactionType("transfer")}
+        disabled={transactionType === "transfer"}
+        style={[
+          switchButtonsStyles.transferButton,
+          transactionType !== "transfer"
+            ? switchButtonsStyles.enabledButton
+            : switchButtonsStyles.disabledButton,
+        ]}
+      >
+        <Text
+          style={[
+            switchButtonsStyles.transferButtonText,
+            transactionType !== "transfer"
+              ? switchButtonsStyles.enabledButtonText
+              : switchButtonsStyles.disabledButtonText,
+          ]}
+        >
+          Transfer
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
-  const dropdownData = [
-    { title: "Deposit", value: "deposit" },
-    { title: "Withdrawal", value: "withdrawal" },
-    { title: "Transfer", value: "transfer" },
-  ];
-  const [selectedTypeIndex, setSelectedTypeIndex] = useState(0);
+const switchButtonsStyles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    borderRadius: 10,
+  },
+  enabledButton: {
+    borderColor: "#999",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+  },
+  enabledButtonText: {
+    color: "#999",
+    fontSize: 18,
+    fontWeight: "300",
+  },
+  disabledButton: {
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderColor: "#028BCA",
+    backgroundColor: "#028BCA",
+  },
+  disabledButtonText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "300",
+  },
+  depositButton: {
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
+    borderTopWidth: 0.5,
+    borderLeftWidth: 0.5,
+    borderBottomWidth: 0.5,
+  },
+  depositButtonText: {},
+  withdrawalButton: {
+    borderWidth: 0.5,
+  },
+  withdrawalButtonText: {},
+  transferButton: {
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    borderTopWidth: 0.5,
+    borderRightWidth: 0.5,
+    borderBottomWidth: 0.5,
+  },
+  transferButtonText: {},
+});
+
+const Forms = ({ route, lang, navigation }) => {
+  const { type, currency, balances } = route.params;
+  const [transactionType, setTransactionType] = useState("");
   useEffect(() => {
-    const foundIndex = dropdownData.findIndex((e) => e.value === type);
-    setSelectedTypeIndex(foundIndex);
+    setTransactionType(type);
   }, []);
 
-  if (dropdownData[selectedTypeIndex].value === "deposit") {
+  const api = require("../../../assets/api.json");
+
+  const [currencies, setCurrencies] = useState();
+  const getCurrencies = async () => {
+    try {
+      const result = await axios.get(api["currencies"]);
+      setCurrencies(result.data);
+    } catch (error) {
+      console.log(JSON.stringify(error));
+    }
+  };
+  useEffect(() => {
+    getCurrencies();
+  }, [transactionType]);
+
+  if (transactionType === "deposit") {
     return (
       <View style={styles.container}>
-        <SelectDropdown
-          buttonStyle={styles.typeDropdownButton}
-          buttonTextStyle={styles.typeDropdownButtonText}
-          dropdownStyle={styles.typeDropdown}
-          selectedRowStyle={styles.typeDropdownSelectedRow}
-          selectedRowTextStyle={styles.typeDropdownSelectedRowText}
-          data={dropdownData.map((e) => e.title)}
-          defaultValueByIndex={selectedTypeIndex}
-          onSelect={(e, index) => setSelectedTypeIndex(index)}
+        <SwitchButtons
+          transactionType={transactionType}
+          setTransactionType={setTransactionType}
         />
-        <DepositForm />
+        <DepositForm
+          currencies={currencies ? currencies : []}
+          navigation={navigation}
+        />
       </View>
     );
-  } else if (dropdownData[selectedTypeIndex].value === "withdrawal") {
+  } else if (transactionType === "withdrawal") {
     return (
       <View style={styles.container}>
-        <SelectDropdown
-          buttonStyle={styles.typeDropdownButton}
-          buttonTextStyle={styles.typeDropdownButtonText}
-          dropdownStyle={styles.typeDropdown}
-          selectedRowStyle={styles.typeDropdownSelectedRow}
-          selectedRowTextStyle={styles.typeDropdownSelectedRowText}
-          data={dropdownData.map((e) => e.title)}
-          defaultValueByIndex={selectedTypeIndex}
-          onSelect={(e, index) => setSelectedTypeIndex(index)}
+        <SwitchButtons
+          transactionType={transactionType}
+          setTransactionType={setTransactionType}
         />
-        <WithdrawalForm currency={currency} />
+        <WithdrawalForm
+          navigation={navigation}
+          currencies={currencies ? currencies : []}
+          currency={currency}
+          balances={balances}
+          lang={lang}
+        />
       </View>
     );
-  } else if (dropdownData[selectedTypeIndex].value === "transfer") {
+  } else if (transactionType === "transfer") {
     return (
       <View style={styles.container}>
-        <SelectDropdown
-          buttonStyle={styles.typeDropdownButton}
-          buttonTextStyle={styles.typeDropdownButtonText}
-          dropdownStyle={styles.typeDropdown}
-          selectedRowStyle={styles.typeDropdownSelectedRow}
-          selectedRowTextStyle={styles.typeDropdownSelectedRowText}
-          data={dropdownData.map((e) => e.title)}
-          defaultValueByIndex={selectedTypeIndex}
-          onSelect={(e, index) => setSelectedTypeIndex(index)}
+        <SwitchButtons
+          transactionType={transactionType}
+          setTransactionType={setTransactionType}
         />
-        <TransferForm currency={currency} />
+        <TransferForm
+          navigation={navigation}
+          currencies={currencies ? currencies : []}
+          currency={currency}
+          balances={balances}
+          lang={lang}
+        />
       </View>
     );
   } else {

@@ -1,13 +1,15 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 
-const Buttons = ({ lang, stackNavigation }) => {
+const Buttons = ({ lang, currency, stackNavigation, balances }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
         onPress={() => {
           stackNavigation.navigate("DepositWithdrawalTransfer", {
             type: "transfer",
+            currency,
+            balances,
           });
         }}
         style={[styles.button, styles.transferButton]}
@@ -18,6 +20,8 @@ const Buttons = ({ lang, stackNavigation }) => {
         onPress={() => {
           stackNavigation.navigate("DepositWithdrawalTransfer", {
             type: "withdrawal",
+            currency,
+            balances,
           });
         }}
         style={[styles.button, styles.withrawalButton]}

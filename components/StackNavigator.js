@@ -4,6 +4,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import MainScreen from "../screens/MainScreen";
 import OrdersScreen from "../screens/StackTabs/OrdersScreen";
 import DepositWithdrawalTransferScreen from "../screens/StackTabs/DepositWithdrawalTransferScreen";
+import OrderDetails from "../screens/StackTabs/OrderDetails";
+import Request from "../screens/StackTabs/Request";
 
 const StackNavigator = ({ lang, setLang, token, refreshToken }) => {
   const Stack = createStackNavigator();
@@ -31,8 +33,21 @@ const StackNavigator = ({ lang, setLang, token, refreshToken }) => {
       />
       <Stack.Screen
         name="Orders"
-        children={() => (
+        children={(props) => (
           <OrdersScreen
+            {...props}
+            lang={lang}
+            setLang={setLang}
+            token={token}
+            refreshToken={refreshToken}
+          />
+        )}
+      />
+      <Stack.Screen
+        name="Order Details"
+        children={(props) => (
+          <OrderDetails
+            {...props}
             lang={lang}
             setLang={setLang}
             token={token}
@@ -45,6 +60,18 @@ const StackNavigator = ({ lang, setLang, token, refreshToken }) => {
         options={{ title: "Transaction" }}
         children={(props) => (
           <DepositWithdrawalTransferScreen
+            {...props}
+            lang={lang}
+            setLang={setLang}
+            token={token}
+            refreshToken={refreshToken}
+          />
+        )}
+      />
+      <Stack.Screen
+        name="Request"
+        children={(props) => (
+          <Request
             {...props}
             lang={lang}
             setLang={setLang}

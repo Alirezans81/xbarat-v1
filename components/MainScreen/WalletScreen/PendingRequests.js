@@ -4,7 +4,7 @@ import Header from "./PendingRequests/Header";
 import Table from "./PendingRequests/Table";
 import axios from "axios";
 
-const PendingRequests = ({ lang, token, refreshToken }) => {
+const PendingRequests = ({ lang, token, refreshToken, stackNavigation }) => {
   const api = require("../../../assets/api.json");
 
   const [pendingRequestsData, setPendingRequestsData] = useState();
@@ -31,7 +31,11 @@ const PendingRequests = ({ lang, token, refreshToken }) => {
   return (
     <View style={styles.container}>
       <Header lang={lang} />
-      <Table lang={lang} data={pendingRequestsData} />
+      <Table
+        lang={lang}
+        data={pendingRequestsData}
+        stackNavigation={stackNavigation}
+      />
     </View>
   );
 };

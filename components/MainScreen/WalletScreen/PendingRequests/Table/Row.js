@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
 
-const Row = ({ row }) => {
+const Row = ({ row, stackNavigation }) => {
   let backgroundColor;
   if (row.status === "Rejected") {
     backgroundColor = "#E04B4B";
@@ -21,7 +21,10 @@ const Row = ({ row }) => {
       <Text style={[styles.width1, styles.text]}>{row.type}</Text>
       <Text style={[styles.width2, styles.text]}>{row.currency}</Text>
       <Text style={[styles.width3, styles.text]}>{row.money}</Text>
-      <TouchableOpacity style={[styles.width4, styles.text]}>
+      <TouchableOpacity
+        onPress={() => stackNavigation.navigate("Request", { data: row })}
+        style={[styles.width4, styles.text]}
+      >
         <Image
           style={styles.more}
           sizeMode="cover"

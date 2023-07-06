@@ -25,7 +25,7 @@ const UploadDocumentForm = ({
         />
       </View>
     );
-  } else if (nationality === "afghani") {
+  } else if (nationality === "afghan") {
     return (
       <View style={styles.container}>
         <Text style={styles.head}>{lang["upload-document"]}</Text>

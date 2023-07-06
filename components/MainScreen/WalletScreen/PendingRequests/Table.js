@@ -3,7 +3,7 @@ import React from "react";
 import Row from "./Table/Row";
 import Head from "./Table/Head";
 
-const Table = ({ lang, data }) => {
+const Table = ({ lang, data, stackNavigation }) => {
   return (
     <View style={styles.container}>
       {!data || (data && data.length === 0) ? (
@@ -16,7 +16,7 @@ const Table = ({ lang, data }) => {
           <View style={styles.line} />
           {data.map((row, index) => (
             <View key={index}>
-              <Row row={row} />
+              <Row row={row} stackNavigation={stackNavigation} />
               {index !== data.length - 1 ? <View style={styles.line} /> : null}
             </View>
           ))}

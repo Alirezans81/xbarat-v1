@@ -4,53 +4,61 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 const TopButtonTabs = ({ type, setType }) => {
   return (
-    <ScrollView style={styles.container} horizontal>
-      <TouchableOpacity
-        style={type === "open" ? styles.enabledButton : styles.disabledButton}
-        disabled={type === "open"}
-        onPress={() => setType("open")}
+    <View>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.contentContainer}
+        horizontal
       >
-        <Text
-          style={
-            type === "open"
-              ? styles.enabledButtonText
-              : styles.disabledButtonText
-          }
+        <TouchableOpacity
+          style={type === "open" ? styles.enabledButton : styles.disabledButton}
+          disabled={type === "open"}
+          onPress={() => setType("open")}
         >
-          Open Orders
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={type === "done" ? styles.enabledButton : styles.disabledButton}
-        disabled={type === "done"}
-        onPress={() => setType("done")}
-      >
-        <Text
-          style={
-            type === "done"
-              ? styles.enabledButtonText
-              : styles.disabledButtonText
-          }
+          <Text
+            style={
+              type === "open"
+                ? styles.enabledButtonText
+                : styles.disabledButtonText
+            }
+          >
+            Open Orders
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={type === "done" ? styles.enabledButton : styles.disabledButton}
+          disabled={type === "done"}
+          onPress={() => setType("done")}
         >
-          Done Orders
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={type === "today" ? styles.enabledButton : styles.disabledButton}
-        disabled={type === "today"}
-        onPress={() => setType("today")}
-      >
-        <Text
+          <Text
+            style={
+              type === "done"
+                ? styles.enabledButtonText
+                : styles.disabledButtonText
+            }
+          >
+            Done Orders
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           style={
-            type === "today"
-              ? styles.enabledButtonText
-              : styles.disabledButtonText
+            type === "today" ? styles.enabledButton : styles.disabledButton
           }
+          disabled={type === "today"}
+          onPress={() => setType("today")}
         >
-          Today Orders
-        </Text>
-      </TouchableOpacity>
-    </ScrollView>
+          <Text
+            style={
+              type === "today"
+                ? styles.enabledButtonText
+                : styles.disabledButtonText
+            }
+          >
+            Today Orders
+          </Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -62,6 +70,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     backgroundColor: "#eee",
   },
+  contentContainer: {},
   enabledButton: {
     marginHorizontal: 8,
     backgroundColor: "#03A9F4",

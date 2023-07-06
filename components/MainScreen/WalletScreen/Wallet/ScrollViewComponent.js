@@ -14,6 +14,7 @@ const ScrollViewComponent = ({ lang, data, stackNavigation }) => {
           <Card
             key={index}
             data={e}
+            balances={data}
             lang={lang}
             stackNavigation={stackNavigation}
           />

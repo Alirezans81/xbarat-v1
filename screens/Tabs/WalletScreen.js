@@ -17,7 +17,12 @@ const WalletScreen = ({
         balances={balances}
         stackNavigation={stackNavigation}
       />
-      <PendingRequests lang={lang} token={token} refreshToken={refreshToken} />
+      <PendingRequests
+        lang={lang}
+        token={token}
+        refreshToken={refreshToken}
+        stackNavigation={stackNavigation}
+      />
     </ScrollView>
   );
 };

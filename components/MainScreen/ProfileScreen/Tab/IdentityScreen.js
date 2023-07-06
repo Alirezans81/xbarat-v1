@@ -17,8 +17,11 @@ const IdentityScreen = ({ lang, token, refreshToken, userInfo }) => {
   const api = require("../../../../assets/api.json");
 
   const [nationalities, setNationalities] = useState([
-    { title: userInfo.nationalityTitle, value: userInfo.nationalityId },
-    { title: "Afghani", value: "3156-31661dsgr-4627-b42g42244" },
+    { title: "Iranian", value: "3F93CEF6-34CF-4005-AAAD-130F1370C805" },
+    { title: "German", value: "810A3FE6-AB28-4790-B134-14E3D10CDDA7" },
+    { title: "Turkish", value: "55C1C51D-5151-4F44-B1F5-742AD4439969" },
+    { title: "Afghan", value: "ADAE4BDF-FB8A-47FE-BD9D-F8BEC3853C77" },
+    { title: "Canadian", value: "21D65C65-B33E-474C-B903-FF71A867E3ED" },
   ]);
   const [initialNationalityIndex, setInitalNationalityIndex] = useState();
   const [selectedNationalityIndex, setSelectedNationalityIndex] = useState();

@@ -3,11 +3,16 @@ import React from "react";
 import Label from "./Card/Label";
 import Buttons from "./Card/Buttons";
 
-const Card = ({ lang, data, stackNavigation }) => {
+const Card = ({ lang, data, stackNavigation, balances }) => {
   return (
     <View style={styles.container}>
       <Label data={data} />
-      <Buttons lang={lang} stackNavigation={stackNavigation} />
+      <Buttons
+        lang={lang}
+        currency={data.currency}
+        balances={balances}
+        stackNavigation={stackNavigation}
+      />
     </View>
   );
 };
