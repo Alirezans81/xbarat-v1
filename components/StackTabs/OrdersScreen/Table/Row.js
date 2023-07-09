@@ -1,5 +1,6 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
+import convertNumber from "../../../../hooks/convertNumber";
 
 const Row = ({ row, navigation }) => {
   return (
@@ -7,8 +8,12 @@ const Row = ({ row, navigation }) => {
       <Text style={[styles.width1, styles.text]}>
         {row.sourceCurrency.abbreviation}
       </Text>
-      <Text style={[styles.width2, styles.text]}>{row.sourceMoney}</Text>
-      <Text style={[styles.width3, styles.text]}>{row.rate}</Text>
+      <Text style={[styles.width2, styles.text]}>
+        {convertNumber(row.sourceMoney)}
+      </Text>
+      <Text style={[styles.width3, styles.text]}>
+        {convertNumber(row.rate)}
+      </Text>
       <Text style={[styles.width4, styles.text]}>
         {row.destinationCurrency.abbreviation}
       </Text>

@@ -50,7 +50,7 @@ const ExchangeScreen = ({
 
   // Exchange From
   const [availableSources, setAvailableSources] = useState([]);
-  const [selectedSourceIndex, setSelectedSourceIndex] = useState(0);
+  const [selectedSourceIndex, setSelectedSourceIndex] = useState();
   const [source, setSource] = useState({});
   const [target, setTarget] = useState({});
   const [inventory, setInventory] = useState(0);
@@ -90,7 +90,7 @@ const ExchangeScreen = ({
       );
       setInventory(newInventory ? newInventory.money : 0);
     }
-  }, [selectedSourceIndex]);
+  }, [selectedSourceIndex, source]);
   const availableSourcesRef = useRef();
   useEffect(() => {
     availableSourcesRef.current.selectIndex(0);

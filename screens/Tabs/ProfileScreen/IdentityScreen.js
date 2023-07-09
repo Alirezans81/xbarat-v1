@@ -5,16 +5,16 @@ import {
   Platform,
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
-import Label from "./IdentityScreen/Label";
-import EditButton from "./IdentityScreen/EditButton";
-import Forms from "./IdentityScreen/Forms";
+import Label from "../../../components/MainScreen/ProfileScreen/Tab/IdentityScreen/Label";
+import EditButton from "../../../components/MainScreen/ProfileScreen/Tab/IdentityScreen/EditButton";
+import Forms from "../../../components/MainScreen/ProfileScreen/Tab/IdentityScreen/Forms";
 import { Formik } from "formik";
 import axios from "axios";
 
 const IdentityScreen = ({ lang, token, refreshToken, userInfo }) => {
   const [editable, setEditable] = useState(false);
 
-  const api = require("../../../../assets/api.json");
+  const api = require("../../../assets/api.json");
 
   const [nationalities, setNationalities] = useState([
     { title: "Iranian", value: "3F93CEF6-34CF-4005-AAAD-130F1370C805" },

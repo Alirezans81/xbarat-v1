@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
+import convertNumber from "../../../../../hooks/convertNumber";
 
 const Row = ({ row, stackNavigation }) => {
   let backgroundColor;
@@ -20,7 +21,9 @@ const Row = ({ row, stackNavigation }) => {
       </View>
       <Text style={[styles.width1, styles.text]}>{row.type}</Text>
       <Text style={[styles.width2, styles.text]}>{row.currency}</Text>
-      <Text style={[styles.width3, styles.text]}>{row.money}</Text>
+      <Text style={[styles.width3, styles.text]}>
+        {convertNumber(row.money)}
+      </Text>
       <TouchableOpacity
         onPress={() => stackNavigation.navigate("Request", { data: row })}
         style={[styles.width4, styles.text]}
@@ -50,13 +53,13 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   width1: {
-    width: "22%",
+    width: "28%",
   },
   width2: {
-    width: "26%",
+    width: "24%",
   },
   width3: {
-    width: "34%",
+    width: "30%",
   },
   width4: {
     width: "8%",

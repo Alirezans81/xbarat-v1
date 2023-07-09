@@ -134,25 +134,12 @@ const ModalStyles = StyleSheet.create({
   },
 });
 
+import convertNumber from "../../hooks/convertNumber";
+import convertDate from "../../hooks/convertDate";
+
 const OrderDetails = ({ route, navigation }) => {
   const { data } = route.params;
-  const convertDate = (date) => {
-    const newDate = new Date(date);
-    const dateFormat =
-      newDate.getFullYear() +
-      "-" +
-      (newDate.getMonth() + 1) +
-      "-" +
-      newDate.getDate() +
-      "\n" +
-      newDate.getHours() +
-      ":" +
-      newDate.getMinutes() +
-      ":" +
-      newDate.getSeconds();
-
-    return dateFormat;
-  };
+  console.log(data);
 
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
@@ -162,6 +149,8 @@ const OrderDetails = ({ route, navigation }) => {
         isVisible={modalIsVisible}
         setIsVisible={setModalIsVisible}
         navigation={navigation}
+        amount={data.sourceMoney + ""}
+        rate={data.rate + ""}
       />
       <View>
         <View style={styles.row}>
@@ -177,7 +166,7 @@ const OrderDetails = ({ route, navigation }) => {
           <View style={styles.col6}>
             <View style={styles.section}>
               <Text style={styles.label}>Source Amount</Text>
-              <Text style={styles.var}>{data.sourceMoney}</Text>
+              <Text style={styles.var}>{convertNumber(data.sourceMoney)}</Text>
             </View>
           </View>
         </View>
@@ -193,7 +182,9 @@ const OrderDetails = ({ route, navigation }) => {
           <View style={styles.col6}>
             <View style={styles.section}>
               <Text style={styles.label}>Target Amount</Text>
-              <Text style={styles.var}>{data.destinationMoney}</Text>
+              <Text style={styles.var}>
+                {convertNumber(data.destinationMoney)}
+              </Text>
             </View>
           </View>
         </View>
@@ -201,7 +192,7 @@ const OrderDetails = ({ route, navigation }) => {
           <View style={styles.col6}>
             <View style={styles.section}>
               <Text style={styles.label}>Rate</Text>
-              <Text style={styles.var}>{data.rate}</Text>
+              <Text style={styles.var}>{convertNumber(data.rate)}</Text>
             </View>
           </View>
           <View style={styles.col6}>
@@ -221,7 +212,12 @@ const OrderDetails = ({ route, navigation }) => {
             Edit Exchange
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, styles.cancelButton]}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.goBack();
+          }}
+          style={[styles.button, styles.cancelButton]}
+        >
           <Text style={[styles.buttonText, styles.cancelButtonText]}>
             Cancel Exchange
           </Text>
@@ -243,7 +239,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
-    marginVertical: 20,
+    marginVertical: 15,
     marginRight: 10,
     paddingHorizontal: 10,
   },
@@ -266,11 +262,11 @@ const styles = StyleSheet.create({
     fontSize: 28,
   },
   buttonsView: {
-    paddingHorizontal: 30,
+    padding: 30,
   },
   button: {
     width: "100%",
-    borderWidth: 0.5,
+    borderWidth: 1,
     alignItems: "center",
     paddingVertical: 15,
     marginVertical: 10,

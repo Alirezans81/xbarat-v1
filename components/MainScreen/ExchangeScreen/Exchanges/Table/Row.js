@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import convertNumber from "../../../../../hooks/convertNumber";
 
 const Row = ({ lang, row, availableSources }) => {
   return (
@@ -18,13 +19,15 @@ const Row = ({ lang, row, availableSources }) => {
             <Text style={styles.buyLabel}>
               {lang["buy-rate-exchanges"] + ": "}
             </Text>
-            <Text style={styles.buyRate}>{row["buyRate"]}</Text>
+            <Text style={styles.buyRate}>{convertNumber(row["buyRate"])}</Text>
           </View>
           <View style={[styles.rateView, styles.sellRateView]}>
             <Text styles={styles.sellLabel}>
               {lang["sell-rate-exchanges"] + ": "}
             </Text>
-            <Text style={styles.sellRate}>{row["sellRate"]}</Text>
+            <Text style={styles.sellRate}>
+              {convertNumber(row["sellRate"])}
+            </Text>
           </View>
         </View>
       </View>

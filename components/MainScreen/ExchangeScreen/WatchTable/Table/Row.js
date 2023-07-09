@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
+import convertNumber from "../../../../../hooks/convertNumber";
 
 const Row = ({
   row,
@@ -18,43 +19,50 @@ const Row = ({
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.width1} />
-      <TouchableOpacity
-        onPress={() => {
-          setSelectedSourceIndex(0);
+    <TouchableOpacity
+      onPress={() => {
+        setSelectedSourceIndex(0);
 
-          setSelectedIndex(index);
+        setSelectedIndex(index);
 
-          let data = {};
-          data.sourceCurrency = row.sourceCurrency;
-          data.destinationCurrency = row.destinationCurrency;
+        let data = {};
+        data.sourceCurrency = row.sourceCurrency;
+        data.destinationCurrency = row.destinationCurrency;
 
-          change(data);
-        }}
-        style={[styles.width2, styles.text, styles.button]}
-        disabled={selectedIndex === index}
-      >
-        <View
-          style={
-            selectedIndex === index
-              ? styles.disabledButtonView
-              : styles.buttonView
-          }
-        >
-          <Text
-            style={selectedIndex === index ? styles.textGray : styles.textBlue}
+        change(data);
+      }}
+      disabled={selectedIndex === index}
+    >
+      <View style={styles.container}>
+        <View style={styles.width1} />
+        <View style={[styles.width2, styles.text, styles.button]}>
+          <View
+            style={
+              selectedIndex === index
+                ? styles.disabledButtonView
+                : styles.buttonView
+            }
           >
-            {row.symbol}
-          </Text>
+            <Text
+              style={
+                selectedIndex === index ? styles.textGray : styles.textBlue
+              }
+            >
+              {row.symbol}
+            </Text>
+          </View>
         </View>
-      </TouchableOpacity>
-      <Text style={[styles.width3, styles.text]}>
-        {Number(row.rate).toFixed(2)}
-      </Text>
-      <Text style={[styles.width4, styles.text]}>{row.low}</Text>
-      <Text style={[styles.width5, styles.text]}>{row.high}</Text>
-    </View>
+        <Text style={[styles.width3, styles.text]}>
+          {convertNumber(Number(row.rate).toFixed(2))}
+        </Text>
+        <Text style={[styles.width4, styles.text]}>
+          {convertNumber(row.low)}
+        </Text>
+        <Text style={[styles.width5, styles.text]}>
+          {convertNumber(row.high)}
+        </Text>
+      </View>
+    </TouchableOpacity>
   );
 };
 

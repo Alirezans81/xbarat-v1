@@ -8,11 +8,13 @@ const Requests = ({ lang, requestsData, availableSources }) => {
       <RequestsTable
         lang={lang}
         availableSources={availableSources}
+        reversed={false}
         data={requestsData.sourceToDestination}
       />
       <RequestsTable
         lang={lang}
         availableSources={availableSources}
+        reversed={true}
         data={requestsData.destinationToSource}
       />
     </View>

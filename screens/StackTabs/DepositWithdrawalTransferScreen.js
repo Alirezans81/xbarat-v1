@@ -1,15 +1,27 @@
-import { KeyboardAvoidingView, StyleSheet, Platform, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  StyleSheet,
+  Platform,
+  View,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import React from "react";
 import Forms from "../../components/StackTabs/DepositWithdrawalTransferScreen/Forms";
 
 const DepositWithdrawalTransferScreen = ({ lang, route, navigation }) => {
   return (
     <View style={styles.container}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      <TouchableWithoutFeedback
+        style={{ backgroundColor: "red", zIndex: 10 }}
+        onPress={Keyboard.dismiss}
       >
-        <Forms route={route} lang={lang} navigation={navigation} />
-      </KeyboardAvoidingView>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
+          <Forms route={route} lang={lang} navigation={navigation} />
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
     </View>
   );
 };

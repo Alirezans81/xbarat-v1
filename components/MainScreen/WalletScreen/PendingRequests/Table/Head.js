@@ -52,18 +52,21 @@ const styles = StyleSheet.create({
   },
   width0: {
     width: "10%",
+    alignItems: "flex-start",
   },
   width1: {
-    width: "22%",
+    width: "28%",
   },
   width2: {
-    width: "26%",
+    width: "24%",
   },
   width3: {
-    width: "26%",
+    width: "30%",
   },
   width4: {
     width: "8%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   hint: {
     justifyContent: "flex-end",

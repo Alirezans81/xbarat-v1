@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import convertNumber from "../../../../../../hooks/convertNumber";
 
 const Label = ({ data }) => {
   return (
     <View style={styles.container}>
       <View style={styles.balanceView}>
-        <Text style={styles.balance}>{data.money}</Text>
+        <Text style={styles.balance}>{convertNumber(data.money)}</Text>
         <Text style={styles.currency}>{data.currency}</Text>
       </View>
       <View style={styles.detailsView}>

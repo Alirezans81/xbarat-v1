@@ -3,7 +3,7 @@ import React from "react";
 import Lable from "./RequestsTable/Lable";
 import Table from "./RequestsTable/Table";
 
-const RequestsTable = ({ lang, data, availableSources }) => {
+const RequestsTable = ({ lang, data, availableSources, reversed }) => {
   return (
     <View style={styles.container}>
       {availableSources.length === 0 || !data ? (
@@ -16,7 +16,7 @@ const RequestsTable = ({ lang, data, availableSources }) => {
         </View>
       ) : (
         <>
-          <Lable availableSources={availableSources} />
+          <Lable availableSources={availableSources} reversed={reversed} />
           <Table lang={lang} data={data} />
         </>
       )}

@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import convertNumber from "../../../../hooks/convertNumber";
 
 const Inventory = ({ lang, source, inventory }) => {
   return (
     <View style={styles.container}>
       <View style={styles.inventory}>
-        <Text style={styles.text}>{inventory}</Text>
+        <Text style={styles.text}>{convertNumber(inventory)}</Text>
         <Text style={styles.currency}>{source}</Text>
       </View>
       <Text style={styles.text}> {lang["available"]}.</Text>

@@ -1,12 +1,19 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import convertNumber from "../../../../../../hooks/convertNumber";
 
 const Row = ({ row }) => {
   return (
     <View style={styles.container}>
-      <Text style={[styles.width1, styles.text]}>{row.quantity}</Text>
-      <Text style={[styles.width2, styles.text]}>{row.amount}</Text>
-      <Text style={[styles.width3, styles.text]}>{row.rate}</Text>
+      <Text style={[styles.width1, styles.text]}>
+        {convertNumber(row.quantity)}
+      </Text>
+      <Text style={[styles.width2, styles.text]}>
+        {convertNumber(row.amount)}
+      </Text>
+      <Text style={[styles.width3, styles.text]}>
+        {convertNumber(row.rate)}
+      </Text>
     </View>
   );
 };

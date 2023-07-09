@@ -26,7 +26,7 @@ const PendingRequests = ({ lang, token, refreshToken, stackNavigation }) => {
   };
   useEffect(() => {
     getPendingRequests();
-  }, []);
+  });
 
   return (
     <View style={styles.container}>

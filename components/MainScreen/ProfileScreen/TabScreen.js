@@ -1,6 +1,6 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import IdentityScreen from "./Tab/IdentityScreen";
-import ReportScreen from "./Tab/ReportScreen";
+import IdentityScreen from "../../../screens/Tabs/ProfileScreen/IdentityScreen";
+import ReportScreen from "../../../screens/Tabs/ProfileScreen/ReportScreen";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -26,7 +26,12 @@ function TabScreen({ lang, token, refreshToken, userInfo }) {
           />
         )}
       />
-      <Tab.Screen name="Report" children={() => <ReportScreen lang={lang} />} />
+      <Tab.Screen
+        name="Report"
+        children={() => (
+          <ReportScreen lang={lang} token={token} refreshToken={refreshToken} />
+        )}
+      />
     </Tab.Navigator>
   );
 }

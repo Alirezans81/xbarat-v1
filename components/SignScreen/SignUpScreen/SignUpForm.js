@@ -9,7 +9,6 @@ import {
 import React, { useState } from "react";
 import { Formik } from "formik";
 import axios from "axios";
-import * as Yup from "yup";
 
 const SignUpForm = ({ lang, setSign, setLoadingSpinner }) => {
   const [acceptTerms, setAcceptTerms] = useState(false);
