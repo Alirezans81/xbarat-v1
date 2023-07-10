@@ -16,5 +16,6 @@
   "deposit-reports": "http://94.74.145.156:5271/api/reports/deposit",
   "withdrawal-reports": "http://94.74.145.156:5271/api/reports/withdrawal",
   "exchange-reports": "http://94.74.145.156:5271/api/reports/exchange",
-  "transfer-reports": "http://94.74.145.156:5271/api/reports/transfer"
+  "transfer-reports": "http://94.74.145.156:5271/api/reports/transfer",
+  "site-setting": "http://94.74.145.156:5271/api/daynamicsettings"
 }

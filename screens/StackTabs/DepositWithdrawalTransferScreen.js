@@ -2,7 +2,7 @@ import {
   KeyboardAvoidingView,
   StyleSheet,
   Platform,
-  View,
+  ScrollView,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
@@ -11,7 +11,7 @@ import Forms from "../../components/StackTabs/DepositWithdrawalTransferScreen/Fo
 
 const DepositWithdrawalTransferScreen = ({ lang, route, navigation }) => {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <TouchableWithoutFeedback
         style={{ backgroundColor: "red", zIndex: 10 }}
         onPress={Keyboard.dismiss}
@@ -22,7 +22,7 @@ const DepositWithdrawalTransferScreen = ({ lang, route, navigation }) => {
           <Forms route={route} lang={lang} navigation={navigation} />
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
-    </View>
+    </ScrollView>
   );
 };
 

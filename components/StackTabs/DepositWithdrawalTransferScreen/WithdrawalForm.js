@@ -60,7 +60,7 @@ const WithdrawalForm = ({
   return (
     <View style={styles.container}>
       <Formik
-        initialValues={{ amount: "" }}
+        initialValues={{ amount: "", destination: "" }}
         onSubmit={(values) => {
           navigation.goBack();
         }}
@@ -103,6 +103,7 @@ const WithdrawalForm = ({
               style={styles.input}
               keyboardType="numeric"
             />
+
             <SelectDropdown
               ref={loactionDropdownRef}
               data={locations ? locations.map((e) => e.title) : []}
@@ -114,6 +115,14 @@ const WithdrawalForm = ({
               selectedRowStyle={styles.dropdownSelectedRow}
               selectedRowTextStyle={styles.dropdownSelectedRowText}
               onSelect={(e, index) => setSelectedLocationIndex(index)}
+            />
+            <TextInput
+              onBlur={handleBlur("destination")}
+              onChangeText={handleChange("destination")}
+              value={values.destination}
+              placeholder="Destination"
+              style={styles.input}
+              keyboardType="numeric"
             />
             <TouchableOpacity
               style={styles.submitButton}
@@ -179,6 +188,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 15,
     borderRadius: 15,
+    marginTop: 20,
   },
   submitButtonText: {
     color: "#fff",

@@ -5,6 +5,7 @@ import {
   View,
   Image,
   TextInput,
+  ScrollView,
 } from "react-native";
 import React from "react";
 import Modal from "react-native-modal";
@@ -139,12 +140,11 @@ import convertDate from "../../hooks/convertDate";
 
 const OrderDetails = ({ route, navigation }) => {
   const { data } = route.params;
-  console.log(data);
 
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <EditExchangeModal
         isVisible={modalIsVisible}
         setIsVisible={setModalIsVisible}
@@ -223,7 +223,7 @@ const OrderDetails = ({ route, navigation }) => {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -231,11 +231,9 @@ export default OrderDetails;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    width: "100%",
+    height: "100%",
     backgroundColor: "#fff",
     paddingHorizontal: 10,
-    justifyContent: "space-between",
   },
   row: {
     flexDirection: "row",

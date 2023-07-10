@@ -74,7 +74,7 @@ const DepositStatus = ({ status }) => {
         </View>
       </View>
     );
-  } else if (status === "Accept") {
+  } else if (status === "Accepted") {
     return (
       <View style={styles.container}>
         <View style={styles.blueCircle}>
@@ -98,7 +98,7 @@ const DepositStatus = ({ status }) => {
         </View>
       </View>
     );
-  } else if (status === "Reject") {
+  } else if (status === "Rejected") {
     return (
       <View style={styles.container}>
         <View style={styles.blueCircle}>

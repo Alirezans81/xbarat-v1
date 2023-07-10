@@ -4,13 +4,13 @@ import Deposit from "../../components/StackTabs/Request/Deposit";
 import Withdrawal from "../../components/StackTabs/Request/Withdrawal";
 import Transfer from "../../components/StackTabs/Request/Transfer";
 
-const Request = ({ route, navigation }) => {
+const Request = ({ token, route, navigation }) => {
   const { data } = route.params;
 
   if (data.type.toLowerCase() === "deposit") {
     return (
       <View style={styles.container}>
-        <Deposit data={data} navigation={navigation} />
+        <Deposit token={token} data={data} navigation={navigation} />
       </View>
     );
   } else if (data.type.toLowerCase() === "withdrawal") {

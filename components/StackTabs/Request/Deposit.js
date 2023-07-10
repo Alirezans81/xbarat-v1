@@ -10,8 +10,10 @@ import axios from "axios";
 import IranUploadDocument from "./Deposit/WaitingForPayment/IranUploadDocument";
 import AfghanistanUploadDocument from "./Deposit/WaitingForPayment/AfghanistanUploadDocument";
 import OtherUploadDocument from "./Deposit/WaitingForPayment/OtherUploadDocument";
+import UploadedImage from "./Deposit/WaitingForAdministrationApprove/UploadedImage";
+import WhyRejected from "./Deposit/Rejected/WhyRejected";
 
-const Deposit = ({ data, navigation }) => {
+const Deposit = ({ data, navigation, token }) => {
   const api = require("../../../assets/api.json");
 
   const [countries, setCountries] = useState([]);
@@ -63,7 +65,11 @@ const Deposit = ({ data, navigation }) => {
         <ScrollView style={styles.container}>
           <DepositStatus status={data.status} />
           <DepositDetails countryTitle={countryTitle} data={data} />
-          <IranUploadDocument />
+          <IranUploadDocument
+            amount={data.money}
+            token={token}
+            navigation={navigation}
+          />
         </ScrollView>
       );
     } else if (countryTitle === "Afghanistan") {
@@ -71,7 +77,11 @@ const Deposit = ({ data, navigation }) => {
         <ScrollView style={styles.container}>
           <DepositStatus status={data.status} />
           <DepositDetails countryTitle={countryTitle} data={data} />
-          <AfghanistanUploadDocument />
+          <AfghanistanUploadDocument
+            amount={data.money}
+            token={token}
+            navigation={navigation}
+          />
         </ScrollView>
       );
     } else {
@@ -83,6 +93,31 @@ const Deposit = ({ data, navigation }) => {
         </ScrollView>
       );
     }
+  } else if (data.status === "WaitingForAdministrationApprove") {
+    return (
+      <ScrollView style={styles.container}>
+        <DepositStatus status={data.status} />
+        <DepositDetails countryTitle={countryTitle} data={data} />
+        <UploadedImage />
+      </ScrollView>
+    );
+  } else if (data.status === "Accepted") {
+    return (
+      <ScrollView style={styles.container}>
+        <DepositStatus status={data.status} />
+        <DepositDetails countryTitle={countryTitle} data={data} />
+        <UploadedImage />
+      </ScrollView>
+    );
+  } else if (data.status === "Rejected") {
+    return (
+      <ScrollView style={styles.container}>
+        <DepositStatus status={data.status} />
+        <DepositDetails countryTitle={countryTitle} data={data} />
+        <UploadedImage />
+        <WhyRejected />
+      </ScrollView>
+    );
   }
 };
 
