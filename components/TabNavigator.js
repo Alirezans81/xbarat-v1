@@ -63,6 +63,8 @@ const TabNavigator = ({
     getUserInfo();
   }, []);
 
+  const [inventory, setInventory] = useState(0);
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -80,12 +82,13 @@ const TabNavigator = ({
             refreshToken={refreshToken}
             balances={balances}
             stackNavigation={stackNavigation}
+            getBalances={getBalances}
           />
         )}
         options={{
           tabBarIcon: ({ size, focused, color }) => (
             <Image
-              style={{ width: iconSize, height: iconSize }}
+              style={[{ width: iconSize, height: iconSize }, styles.icon]}
               resizeMode="stretch"
               source={
                 focused
@@ -110,7 +113,7 @@ const TabNavigator = ({
         options={{
           tabBarIcon: ({ size, focused, color }) => (
             <Image
-              style={{ width: iconSize, height: iconSize }}
+              style={[{ width: iconSize, height: iconSize }, styles.icon]}
               resizeMode="stretch"
               source={
                 focused
@@ -130,12 +133,13 @@ const TabNavigator = ({
             token={token}
             refreshToken={refreshToken}
             userInfo={userInfo}
+            stackNavigation={stackNavigation}
           />
         )}
         options={{
           tabBarIcon: ({ size, focused, color }) => (
             <Image
-              style={{ width: iconSize, height: iconSize }}
+              style={[{ width: iconSize, height: iconSize }, styles.icon]}
               resizeMode="stretch"
               source={
                 focused
@@ -157,6 +161,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     backgroundColor: "#eee",
-    height: 55,
   },
+  icon: {},
 });

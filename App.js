@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet, View, StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import SignScreen from "./screens/SignScreen";
 import axios from "axios";
@@ -40,23 +40,29 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         {loggedIn ? (
-          <StackNavigator
-            lang={lang}
-            setLang={setLang}
-            token={token}
-            refreshToken={refreshToken}
-          />
+          <>
+            <StatusBar backgroundColor="#eee" barStyle="dark-content" />
+            <StackNavigator
+              lang={lang}
+              setLang={setLang}
+              token={token}
+              refreshToken={refreshToken}
+            />
+          </>
         ) : (
-          <SignScreen
-            lang={lang}
-            setLang={setLang}
-            setLoggedIn={setLoggedIn}
-            setToken={setToken}
-          />
+          <>
+            <StatusBar barStyle="light-content" />
+            <SignScreen
+              lang={lang}
+              setLang={setLang}
+              setLoggedIn={setLoggedIn}
+              setToken={setToken}
+            />
+          </>
         )}
-      </SafeAreaView>
+      </View>
     </NavigationContainer>
   );
 }

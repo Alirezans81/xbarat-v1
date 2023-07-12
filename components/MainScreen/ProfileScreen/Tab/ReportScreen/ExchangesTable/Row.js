@@ -2,7 +2,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import convertDate from "../../../../../../hooks/convertDate";
 
-const Row = ({ data }) => {
+const Row = ({ data, stackNavigation }) => {
   return (
     <View style={styles.container}>
       <View style={[styles.width1, styles.text]}>
@@ -16,7 +16,10 @@ const Row = ({ data }) => {
         <Text>{data.destinationMoney}</Text>
         <Text style={styles.currency}>{data.destinationCurrency}</Text>
       </View>
-      <TouchableOpacity style={styles.width4}>
+      <TouchableOpacity
+        onPress={() => stackNavigation.navigate("Report Details", { data })}
+        style={styles.width4}
+      >
         <Image
           style={styles.moreImg}
           source={require("../../../../../../assets/App/MainScreen/WalletScreen/more.png")}

@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  View,
-  Image,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
+import { StyleSheet, View, Image, KeyboardAvoidingView } from "react-native";
 import React, { useState } from "react";
 import Loader from "react-native-modal-loader";
 import SignInScreen from "./SignScreen/SignInScreen";

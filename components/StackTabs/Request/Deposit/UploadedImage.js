@@ -6,7 +6,7 @@ import ImageModal from "react-native-image-modal";
 
 const UploadedImage = () => {
   const [image, setImage] = useState(
-    require("../../../../../assets/test-document.png")
+    require("../../../../assets/test-document.png")
   );
   const [imageDimension, setImageDimension] = useState();
 

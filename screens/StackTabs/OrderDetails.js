@@ -6,6 +6,7 @@ import {
   Image,
   TextInput,
   ScrollView,
+  Alert,
 } from "react-native";
 import React from "react";
 import Modal from "react-native-modal";
@@ -18,6 +19,7 @@ const EditExchangeModal = ({
   amount,
   rate,
   navigation,
+  editAlert,
 }) => {
   return (
     <Modal isVisible={isVisible}>
@@ -37,8 +39,7 @@ const EditExchangeModal = ({
             <Formik
               initialValues={{ amount, rate }}
               onSubmit={(values) => {
-                setIsVisible(false);
-                navigation.goBack();
+                editAlert(values.amount, values.rate);
               }}
             >
               {({ handleBlur, handleChange, values, handleSubmit }) => (
@@ -51,6 +52,8 @@ const EditExchangeModal = ({
                       onChangeText={handleChange("amount")}
                       onBlur={handleBlur("amount")}
                       value={values.amount}
+                      keyboardType="decimal-pad"
+                      inputMode="decimal"
                     />
                   </View>
                   <View style={ModalStyles.inputView}>
@@ -61,6 +64,8 @@ const EditExchangeModal = ({
                       onChangeText={handleChange("rate")}
                       onBlur={handleBlur("rate")}
                       value={values.rate}
+                      keyboardType="decimal-pad"
+                      inputMode="decimal"
                     />
                   </View>
                   <TouchableOpacity
@@ -137,11 +142,102 @@ const ModalStyles = StyleSheet.create({
 
 import convertNumber from "../../hooks/convertNumber";
 import convertDate from "../../hooks/convertDate";
+import axios from "axios";
 
-const OrderDetails = ({ route, navigation }) => {
+const OrderDetails = ({ route, navigation, token, lang }) => {
+  const api = require("../../assets/api.json");
+
   const { data } = route.params;
 
   const [modalIsVisible, setModalIsVisible] = useState(false);
+
+  const cancelExchange = async () => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token.accessToken,
+      },
+    };
+    await axios
+      .patch(
+        api["cancel-exchange-1st"] + data.id + api["cancel-exchange-2nd"],
+        {},
+        config
+      )
+      .then((result) => {
+        navigation.goBack();
+      })
+      .catch((error) => {
+        console.log(JSON.parse(error));
+      });
+  };
+  const cancelAlert = () => {
+    Alert.alert("Are you sure?", "Are you sure you want cancel the exchange?", [
+      {
+        text: lang["cancel"],
+        onPress: () => {},
+        style: "cancel",
+      },
+      {
+        text: lang["ok"],
+        onPress: () => {
+          cancelExchange();
+        },
+      },
+    ]);
+  };
+
+  const editExchange = async (newAmount, newRate) => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token.accessToken,
+      },
+    };
+
+    let param = {};
+    param.sourceCurrencyId = data.sourceCurrency.id;
+    param.destinationCurrencyId = data.destinationMoney.id;
+    param.sourceValue = newAmount;
+    param.rate = newRate;
+    param.calculationMethod = "";
+
+    await axios
+      .put(api["edit-exchange"] + data.id, param, config)
+      .then((result) => {
+        console.log(result);
+        navigation.goBack();
+      })
+      .catch((error) => {
+        console.log(JSON.stringify(error));
+      });
+  };
+  const editAlert = (newAmount, newRate) => {
+    const message =
+      "Are you sure you want to change your amount from " +
+      data.sourceMoney +
+      " to " +
+      newAmount +
+      " and your rate from " +
+      data.rate +
+      " to " +
+      newRate +
+      "?";
+    Alert.alert("Are you sure?", message, [
+      {
+        text: lang["cancel"],
+        onPress: () => {},
+        style: "cancel",
+      },
+      {
+        text: lang["ok"],
+        onPress: () => {
+          setModalIsVisible(false);
+          editExchange(newAmount, newRate);
+        },
+      },
+    ]);
+  };
+
+  console.log(data);
 
   return (
     <ScrollView style={styles.container}>
@@ -151,6 +247,7 @@ const OrderDetails = ({ route, navigation }) => {
         navigation={navigation}
         amount={data.sourceMoney + ""}
         rate={data.rate + ""}
+        editAlert={editAlert}
       />
       <View>
         <View style={styles.row}>
@@ -214,7 +311,7 @@ const OrderDetails = ({ route, navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            navigation.goBack();
+            cancelAlert();
           }}
           style={[styles.button, styles.cancelButton]}
         >

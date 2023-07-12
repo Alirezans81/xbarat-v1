@@ -4,7 +4,7 @@ import ReportScreen from "../../../screens/Tabs/ProfileScreen/ReportScreen";
 
 const Tab = createMaterialTopTabNavigator();
 
-function TabScreen({ lang, token, refreshToken, userInfo }) {
+function TabScreen({ lang, token, refreshToken, userInfo, stackNavigation }) {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -29,7 +29,12 @@ function TabScreen({ lang, token, refreshToken, userInfo }) {
       <Tab.Screen
         name="Report"
         children={() => (
-          <ReportScreen lang={lang} token={token} refreshToken={refreshToken} />
+          <ReportScreen
+            lang={lang}
+            token={token}
+            refreshToken={refreshToken}
+            stackNavigation={stackNavigation}
+          />
         )}
       />
     </Tab.Navigator>

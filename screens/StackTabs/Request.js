@@ -16,7 +16,7 @@ const Request = ({ token, route, navigation }) => {
   } else if (data.type.toLowerCase() === "withdrawal") {
     return (
       <View style={styles.container}>
-        <Withdrawal data={data} />
+        <Withdrawal token={token} data={data} navigation={navigation} />
       </View>
     );
   } else if (data.type.toLowerCase() === "transfer") {

@@ -15,6 +15,19 @@ const convertDate = (date, format) => {
       newDate.getMinutes() +
       ":" +
       newDate.getSeconds();
+  } else if (format === "not-break") {
+    dateFormat =
+      newDate.getFullYear() +
+      "-" +
+      (newDate.getMonth() + 1) +
+      "-" +
+      newDate.getDate() +
+      "  " +
+      newDate.getHours() +
+      ":" +
+      newDate.getMinutes() +
+      ":" +
+      newDate.getSeconds();
   } else if (format === "without-time") {
     dateFormat =
       newDate.getFullYear() +

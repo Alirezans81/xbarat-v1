@@ -13,6 +13,7 @@ const Exchange = ({
   inventory,
   selectedSourceIndex,
   setSelectedSourceIndex,
+  stackNavigation,
 }) => {
   return (
     <View style={styles.container}>
@@ -28,6 +29,7 @@ const Exchange = ({
           availableSourcesRef={availableSourcesRef}
           swap={swap}
           exchange={exchange}
+          stackNavigation={stackNavigation}
         />
       </View>
     </View>

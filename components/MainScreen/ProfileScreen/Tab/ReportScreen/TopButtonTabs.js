@@ -4,76 +4,78 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 const TopButtonTabs = ({ type, setType }) => {
   return (
-    <ScrollView style={styles.container} horizontal>
-      <TouchableOpacity
-        style={
-          type === "deposit" ? styles.enabledButton : styles.disabledButton
-        }
-        disabled={type === "deposit"}
-        onPress={() => setType("deposit")}
-      >
-        <Text
+    <View>
+      <ScrollView style={styles.container} horizontal>
+        <TouchableOpacity
           style={
-            type === "deposit"
-              ? styles.enabledButtonText
-              : styles.disabledButtonText
+            type === "deposit" ? styles.enabledButton : styles.disabledButton
           }
+          disabled={type === "deposit"}
+          onPress={() => setType("deposit")}
         >
-          Deposits
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={
-          type === "withdrawal" ? styles.enabledButton : styles.disabledButton
-        }
-        disabled={type === "withdrawal"}
-        onPress={() => setType("withdrawal")}
-      >
-        <Text
+          <Text
+            style={
+              type === "deposit"
+                ? styles.enabledButtonText
+                : styles.disabledButtonText
+            }
+          >
+            Deposits
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           style={
-            type === "withdrawal"
-              ? styles.enabledButtonText
-              : styles.disabledButtonText
+            type === "withdrawal" ? styles.enabledButton : styles.disabledButton
           }
+          disabled={type === "withdrawal"}
+          onPress={() => setType("withdrawal")}
         >
-          Withdrawals
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={
-          type === "transfer" ? styles.enabledButton : styles.disabledButton
-        }
-        disabled={type === "transfer"}
-        onPress={() => setType("transfer")}
-      >
-        <Text
+          <Text
+            style={
+              type === "withdrawal"
+                ? styles.enabledButtonText
+                : styles.disabledButtonText
+            }
+          >
+            Withdrawals
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           style={
-            type === "transfer"
-              ? styles.enabledButtonText
-              : styles.disabledButtonText
+            type === "transfer" ? styles.enabledButton : styles.disabledButton
           }
+          disabled={type === "transfer"}
+          onPress={() => setType("transfer")}
         >
-          Transfers
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={
-          type === "exchange" ? styles.enabledButton : styles.disabledButton
-        }
-        disabled={type === "exchange"}
-        onPress={() => setType("exchange")}
-      >
-        <Text
+          <Text
+            style={
+              type === "transfer"
+                ? styles.enabledButtonText
+                : styles.disabledButtonText
+            }
+          >
+            Transfers
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           style={
-            type === "exchange"
-              ? styles.enabledButtonText
-              : styles.disabledButtonText
+            type === "exchange" ? styles.enabledButton : styles.disabledButton
           }
+          disabled={type === "exchange"}
+          onPress={() => setType("exchange")}
         >
-          Exchanges
-        </Text>
-      </TouchableOpacity>
-    </ScrollView>
+          <Text
+            style={
+              type === "exchange"
+                ? styles.enabledButtonText
+                : styles.disabledButtonText
+            }
+          >
+            Exchanges
+          </Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </View>
   );
 };
 

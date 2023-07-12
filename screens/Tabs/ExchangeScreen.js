@@ -22,6 +22,7 @@ const ExchangeScreen = ({
   refreshToken,
   balances,
   stackNavigation,
+  getBalances,
 }) => {
   const api = require("../../assets/api.json");
   const refreshTime = 10000;
@@ -40,8 +41,6 @@ const ExchangeScreen = ({
   };
   useEffect(() => {
     getWatchTableData();
-  }, [1]);
-  useEffect(() => {
     setInterval(() => {
       getWatchTableData();
     }, refreshTime);
@@ -60,36 +59,47 @@ const ExchangeScreen = ({
     setTarget(sourceTemp);
   };
   const exchange = async (amount, rate) => {
-    if (amount !== 0 && rate !== 0) {
+    if (amount !== 0 && amount <= inventory && rate !== 0 && source.id) {
       if (refreshToken()) {
-        try {
-          let param = {};
-          param.sourceCurrencyId = source.id;
-          param.destinationCurrencyId = target.id;
-          param.sourceValue = amount;
-          param.rate = rate;
+        let param = {};
+        param.sourceCurrencyId = source.id;
+        param.destinationCurrencyId = target.id;
+        param.sourceValue = +amount;
+        param.rate = +rate;
+        param.calculationMethod = "";
 
-          const config = {
-            headers: {
-              Authorization: "Bearer " + token.accessToken,
-            },
-          };
-          const result = await axios.post(api["exchange"], param, config);
+        console.log(param);
 
-          console.log(result.data);
-        } catch (error) {
-          console.log(JSON.stringify(error));
-        }
+        const config = {
+          headers: {
+            Authorization: "Bearer " + token.accessToken,
+          },
+        };
+        await axios
+          .post(api["exchange"], param, config)
+          .then((result) => {
+            getBalances();
+            stackNavigation.navigate("Orders");
+          })
+          .catch((error) => {
+            console.log(JSON.stringify(error));
+          });
       }
     }
   };
-  useEffect(() => {
-    if (balances) {
+  const initalInventory = () => {
+    if (balances && availableSources[selectedSourceIndex]) {
       const newInventory = balances.find(
         (e) => e.currency === availableSources[selectedSourceIndex].abbreviation
       );
       setInventory(newInventory ? newInventory.money : 0);
     }
+  };
+  useEffect(() => {
+    initalInventory();
+  }, [balances]);
+  useEffect(() => {
+    initalInventory();
   }, [selectedSourceIndex, source]);
   const availableSourcesRef = useRef();
   useEffect(() => {
@@ -165,6 +175,7 @@ const ExchangeScreen = ({
             exchange={exchange}
             inventory={inventory}
             source={source.abbreviation}
+            stackNavigation={stackNavigation}
           />
           <Requests
             lang={lang}

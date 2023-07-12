@@ -6,7 +6,7 @@ import {
   Text,
   Alert,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import { Formik } from "formik";
 import Dropdown from "react-native-select-dropdown";
 
@@ -18,6 +18,7 @@ const Form = ({
   exchange,
   selectedIndex,
   setSelectedIndex,
+  stackNavigation,
 }) => {
   const alert = (amount, rate) => {
     const message =
@@ -49,8 +50,11 @@ const Form = ({
     <View>
       <Formik
         initialValues={{ amount: "", rate: "" }}
-        onSubmit={(values) => {
-          alert(values.amount, values.rate);
+        onSubmit={(values, { resetForm }) => {
+          if (values.amount !== 0 && values.rate !== 0) {
+            alert(+values.amount, +values.rate);
+            resetForm();
+          }
         }}
       >
         {({ handleChange, handleBlur, handleSubmit, values }) => (
@@ -122,7 +126,9 @@ const Form = ({
             </View>
             <TouchableOpacity
               style={styles.submitButton}
-              onPress={handleSubmit}
+              onPress={(e) => {
+                handleSubmit(e);
+              }}
             >
               <Text style={styles.submitButtonText}>
                 {lang["exchange-button-text"]}

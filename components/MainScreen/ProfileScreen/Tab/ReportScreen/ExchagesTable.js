@@ -3,7 +3,7 @@ import React from "react";
 import Head from "./ExchangesTable/Head";
 import Row from "./ExchangesTable/Row";
 
-const ExchangesTable = ({ data }) => {
+const ExchangesTable = ({ data, stackNavigation }) => {
   if (!data) {
     return (
       <View style={styles.container}>
@@ -21,7 +21,7 @@ const ExchangesTable = ({ data }) => {
         <View style={styles.line} />
         {data.map((row, index) => (
           <View key={index}>
-            <Row data={row} />
+            <Row stackNavigation={stackNavigation} data={row} />
             {index !== data.length - 1 ? <View style={styles.line} /> : null}
           </View>
         ))}

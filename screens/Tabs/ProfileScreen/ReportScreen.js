@@ -4,7 +4,6 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   View,
-  SafeAreaView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import TopButtonTabs from "../../../components/MainScreen/ProfileScreen/Tab/ReportScreen/TopButtonTabs";
@@ -14,7 +13,7 @@ import TransfersTable from "../../../components/MainScreen/ProfileScreen/Tab/Rep
 import ExchagesTable from "../../../components/MainScreen/ProfileScreen/Tab/ReportScreen/ExchagesTable";
 import axios from "axios";
 
-const ReportScreen = ({ lang, token }) => {
+const ReportScreen = ({ lang, token, stackNavigation }) => {
   const [type, setType] = useState("deposit");
 
   const api = require("../../../assets/api.json");
@@ -51,45 +50,67 @@ const ReportScreen = ({ lang, token }) => {
     return (
       <KeyboardAvoidingView styles={styles.container}>
         <TopButtonTabs type={type} setType={setType} />
-        <ScrollView style={styles.TableScrollView}>
-          <DepositsTable data={depositReports} />
-        </ScrollView>
+        <View style={styles.flex1}>
+          <ScrollView style={styles.TableScrollView}>
+            <DepositsTable
+              stackNavigation={stackNavigation}
+              data={depositReports}
+            />
+          </ScrollView>
+        </View>
       </KeyboardAvoidingView>
     );
   } else if (type === "withdrawal") {
     return (
       <KeyboardAvoidingView styles={styles.container}>
         <TopButtonTabs type={type} setType={setType} />
-        <ScrollView style={styles.TableScrollView}>
-          <WithdrawalsTable data={withdrawalReports} />
-        </ScrollView>
+        <View style={styles.flex1}>
+          <ScrollView style={styles.TableScrollView}>
+            <WithdrawalsTable
+              stackNavigation={stackNavigation}
+              data={withdrawalReports}
+            />
+          </ScrollView>
+        </View>
       </KeyboardAvoidingView>
     );
   } else if (type === "transfer") {
     return (
       <KeyboardAvoidingView styles={styles.container}>
         <TopButtonTabs type={type} setType={setType} />
-        <ScrollView style={styles.TableScrollView}>
-          <TransfersTable data={transferReports} />
-        </ScrollView>
+        <View style={styles.flex1}>
+          <ScrollView style={styles.TableScrollView}>
+            <TransfersTable
+              stackNavigation={stackNavigation}
+              data={transferReports}
+            />
+          </ScrollView>
+        </View>
       </KeyboardAvoidingView>
     );
   } else if (type === "exchange") {
     return (
       <KeyboardAvoidingView styles={styles.container}>
         <TopButtonTabs type={type} setType={setType} />
-        <ScrollView style={styles.TableScrollView}>
-          <ExchagesTable data={exchangeReports} />
-        </ScrollView>
+        <View style={styles.flex1}>
+          <ScrollView style={styles.TableScrollView}>
+            <ExchagesTable
+              stackNavigation={stackNavigation}
+              data={exchangeReports}
+            />
+          </ScrollView>
+        </View>
       </KeyboardAvoidingView>
     );
   } else {
     return (
       <KeyboardAvoidingView styles={styles.container}>
         <TopButtonTabs type={type} setType={setType} />
-        <ScrollView style={styles.TableScrollView}>
-          <Text>Somthing wrong!</Text>
-        </ScrollView>
+        <View style={styles.flex1}>
+          <ScrollView style={styles.TableScrollView}>
+            <Text>Somthing wrong!</Text>
+          </ScrollView>
+        </View>
       </KeyboardAvoidingView>
     );
   }
@@ -105,5 +126,8 @@ const styles = StyleSheet.create({
   TableScrollView: {
     backgroundColor: "#fff",
     minHeight: "88.5%",
+  },
+  flex1: {
+    height: "90%",
   },
 });

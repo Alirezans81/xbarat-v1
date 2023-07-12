@@ -17,5 +17,8 @@
   "withdrawal-reports": "http://94.74.145.156:5271/api/reports/withdrawal",
   "exchange-reports": "http://94.74.145.156:5271/api/reports/exchange",
   "transfer-reports": "http://94.74.145.156:5271/api/reports/transfer",
-  "site-setting": "http://94.74.145.156:5271/api/daynamicsettings"
+  "site-setting": "http://94.74.145.156:5271/api/daynamicsettings",
+  "cancel-exchange-1st": "http://94.74.145.156:5271/mobile-api/exchange/",
+  "cancel-exchange-2nd": "/cancel",
+  "edit-exchange": "http://94.74.145.156:5271/mobile-api/exchange/"
 }

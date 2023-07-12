@@ -10,7 +10,7 @@ import axios from "axios";
 import IranUploadDocument from "./Deposit/WaitingForPayment/IranUploadDocument";
 import AfghanistanUploadDocument from "./Deposit/WaitingForPayment/AfghanistanUploadDocument";
 import OtherUploadDocument from "./Deposit/WaitingForPayment/OtherUploadDocument";
-import UploadedImage from "./Deposit/WaitingForAdministrationApprove/UploadedImage";
+import UploadedImage from "./Deposit/UploadedImage";
 import WhyRejected from "./Deposit/Rejected/WhyRejected";
 
 const Deposit = ({ data, navigation, token }) => {

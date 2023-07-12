@@ -10,7 +10,13 @@ import React from "react";
 import Modal from "react-native-modal";
 import { Formik } from "formik";
 
-const EditRequestModal = ({ isVisible, setIsVisible, amount, navigation }) => {
+const EditRequestModal = ({
+  isVisible,
+  setIsVisible,
+  amount,
+  destination,
+  navigation,
+}) => {
   return (
     <Modal isVisible={isVisible}>
       <View style={ModalStyles.container}>
@@ -29,7 +35,7 @@ const EditRequestModal = ({ isVisible, setIsVisible, amount, navigation }) => {
           </TouchableOpacity>
           <View style={ModalStyles.content}>
             <Formik
-              initialValues={{ amount }}
+              initialValues={{ amount, destination }}
               onSubmit={(values) => {
                 setIsVisible(false);
                 navigation.goBack();
@@ -46,6 +52,16 @@ const EditRequestModal = ({ isVisible, setIsVisible, amount, navigation }) => {
                       onBlur={handleBlur("amount")}
                       value={values.amount}
                       inputMode="decimal"
+                    />
+                  </View>
+                  <View style={ModalStyles.inputView}>
+                    <Text style={ModalStyles.inputLabel}>Destination</Text>
+                    <TextInput
+                      style={ModalStyles.input}
+                      name="destination"
+                      onChangeText={handleChange("destination")}
+                      onBlur={handleBlur("destination")}
+                      value={values.destination}
                     />
                   </View>
                   <TouchableOpacity
