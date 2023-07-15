@@ -1,28 +1,28 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-const DepositStatus = ({ status }) => {
+const DepositStatus = ({ status, lang }) => {
   if (status === "New") {
     return (
       <View style={styles.container}>
         <View style={styles.blueCircle}>
-          <Text style={styles.circleText}>1</Text>
-          <Text style={styles.blueInfo}>Waiting for Assign</Text>
+          <Text style={styles.circleText}>{lang["1"]}</Text>
+          <Text style={styles.blueInfo}>{lang["waiting-for-assignment"]}</Text>
         </View>
         <View style={styles.line} />
         <View style={styles.circle}>
-          <Text style={styles.circleText}>2</Text>
-          <Text style={styles.info}>Waiting for payment</Text>
+          <Text style={styles.circleText}>{lang["2"]}</Text>
+          <Text style={styles.info}>{lang["waiting-for-payment"]}</Text>
         </View>
         <View style={styles.line} />
         <View style={styles.circle}>
-          <Text style={styles.circleText}>3</Text>
-          <Text style={styles.info}>Waiting for admin approve</Text>
+          <Text style={styles.circleText}>{lang["3"]}</Text>
+          <Text style={styles.info}>{lang["waiting-for-admin-approve"]}</Text>
         </View>
         <View style={styles.line} />
         <View style={styles.circle}>
-          <Text style={styles.circleText}>4</Text>
-          <Text style={styles.info}>Accept</Text>
+          <Text style={styles.circleText}>{lang["4"]}</Text>
+          <Text style={styles.info}>{lang["accept"]}</Text>
         </View>
       </View>
     );
@@ -30,23 +30,23 @@ const DepositStatus = ({ status }) => {
     return (
       <View style={styles.container}>
         <View style={styles.blueCircle}>
-          <Text style={styles.circleText}>1</Text>
-          <Text style={styles.blueInfo}>Waiting for Assign</Text>
+          <Text style={styles.circleText}>{lang["1"]}</Text>
+          <Text style={styles.blueInfo}>{lang["waiting-for-assignment"]}</Text>
         </View>
         <View style={styles.line} />
         <View style={styles.blueCircle}>
-          <Text style={styles.circleText}>2</Text>
-          <Text style={styles.blueInfo}>Waiting for payment</Text>
+          <Text style={styles.circleText}>{lang["2"]}</Text>
+          <Text style={styles.blueInfo}>{lang["waiting-for-payment"]}</Text>
         </View>
         <View style={styles.line} />
         <View style={styles.circle}>
-          <Text style={styles.circleText}>3</Text>
-          <Text style={styles.info}>Waiting for admin approve</Text>
+          <Text style={styles.circleText}>{lang["3"]}</Text>
+          <Text style={styles.info}>{lang["waiting-for-admin-approve"]}</Text>
         </View>
         <View style={styles.line} />
         <View style={styles.circle}>
-          <Text style={styles.circleText}>4</Text>
-          <Text style={styles.info}>Accept</Text>
+          <Text style={styles.circleText}>{lang["4"]}</Text>
+          <Text style={styles.info}>{lang["accept"]}</Text>
         </View>
       </View>
     );
@@ -54,23 +54,25 @@ const DepositStatus = ({ status }) => {
     return (
       <View style={styles.container}>
         <View style={styles.blueCircle}>
-          <Text style={styles.circleText}>1</Text>
-          <Text style={styles.blueInfo}>Waiting for Assign</Text>
+          <Text style={styles.circleText}>{lang["1"]}</Text>
+          <Text style={styles.blueInfo}>{lang["waiting-for-assignment"]}</Text>
         </View>
         <View style={styles.line} />
         <View style={styles.blueCircle}>
-          <Text style={styles.circleText}>2</Text>
-          <Text style={styles.blueInfo}>Waiting for payment</Text>
+          <Text style={styles.circleText}>{lang["2"]}</Text>
+          <Text style={styles.blueInfo}>{lang["waiting-for-payment"]}</Text>
         </View>
         <View style={styles.line} />
         <View style={styles.blueCircle}>
-          <Text style={styles.circleText}>3</Text>
-          <Text style={styles.blueInfo}>Waiting for admin approve</Text>
+          <Text style={styles.circleText}>{lang["3"]}</Text>
+          <Text style={styles.blueInfo}>
+            {lang["waiting-for-admin-approve"]}
+          </Text>
         </View>
         <View style={styles.line} />
         <View style={styles.circle}>
-          <Text style={styles.circleText}>4</Text>
-          <Text style={styles.info}>Accept</Text>
+          <Text style={styles.circleText}>{lang["4"]}</Text>
+          <Text style={styles.info}>{lang["accept"]}</Text>
         </View>
       </View>
     );
@@ -78,23 +80,25 @@ const DepositStatus = ({ status }) => {
     return (
       <View style={styles.container}>
         <View style={styles.blueCircle}>
-          <Text style={styles.circleText}>1</Text>
-          <Text style={styles.blueInfo}>Waiting for Assign</Text>
+          <Text style={styles.circleText}>{lang["1"]}</Text>
+          <Text style={styles.blueInfo}>{lang["waiting-for-assignment"]}</Text>
         </View>
         <View style={styles.line} />
         <View style={styles.blueCircle}>
-          <Text style={styles.circleText}>2</Text>
-          <Text style={styles.blueInfo}>Waiting for payment</Text>
+          <Text style={styles.circleText}>{lang["2"]}</Text>
+          <Text style={styles.blueInfo}>{lang["waiting-for-payment"]}</Text>
         </View>
         <View style={styles.line} />
         <View style={styles.blueCircle}>
-          <Text style={styles.circleText}>3</Text>
-          <Text style={styles.blueInfo}>Waiting for admin approve</Text>
+          <Text style={styles.circleText}>{lang["3"]}</Text>
+          <Text style={styles.blueInfo}>
+            {lang["waiting-for-admin-approve"]}
+          </Text>
         </View>
         <View style={styles.line} />
         <View style={styles.greenCircle}>
-          <Text style={styles.circleText}>4</Text>
-          <Text style={styles.greenInfo}>Accept</Text>
+          <Text style={styles.circleText}>{lang["4"]}</Text>
+          <Text style={styles.greenInfo}>{lang["accept"]}</Text>
         </View>
       </View>
     );
@@ -102,23 +106,25 @@ const DepositStatus = ({ status }) => {
     return (
       <View style={styles.container}>
         <View style={styles.blueCircle}>
-          <Text style={styles.circleText}>1</Text>
-          <Text style={styles.blueInfo}>Waiting for Assign</Text>
+          <Text style={styles.circleText}>{lang["1"]}</Text>
+          <Text style={styles.blueInfo}>{lang["waiting-for-assignment"]}</Text>
         </View>
         <View style={styles.line} />
         <View style={styles.blueCircle}>
-          <Text style={styles.circleText}>2</Text>
-          <Text style={styles.blueInfo}>Waiting for payment</Text>
+          <Text style={styles.circleText}>{lang["2"]}</Text>
+          <Text style={styles.blueInfo}>{lang["waiting-for-payment"]}</Text>
         </View>
         <View style={styles.line} />
         <View style={styles.blueCircle}>
-          <Text style={styles.circleText}>3</Text>
-          <Text style={styles.blueInfo}>Waiting for admin approve</Text>
+          <Text style={styles.circleText}>{lang["3"]}</Text>
+          <Text style={styles.blueInfo}>
+            {lang["waiting-for-admin-approve"]}
+          </Text>
         </View>
         <View style={styles.line} />
         <View style={styles.redCircle}>
-          <Text style={styles.circleText}>4</Text>
-          <Text style={styles.redInfo}>Reject</Text>
+          <Text style={styles.circleText}>{lang["4"]}</Text>
+          <Text style={styles.redInfo}>{lang["reject"]}</Text>
         </View>
       </View>
     );

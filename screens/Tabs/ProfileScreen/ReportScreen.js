@@ -53,6 +53,7 @@ const ReportScreen = ({ lang, token, stackNavigation }) => {
         <View style={styles.flex1}>
           <ScrollView style={styles.TableScrollView}>
             <DepositsTable
+              lang={lang}
               stackNavigation={stackNavigation}
               data={depositReports}
             />
@@ -67,6 +68,7 @@ const ReportScreen = ({ lang, token, stackNavigation }) => {
         <View style={styles.flex1}>
           <ScrollView style={styles.TableScrollView}>
             <WithdrawalsTable
+              lang={lang}
               stackNavigation={stackNavigation}
               data={withdrawalReports}
             />
@@ -81,6 +83,7 @@ const ReportScreen = ({ lang, token, stackNavigation }) => {
         <View style={styles.flex1}>
           <ScrollView style={styles.TableScrollView}>
             <TransfersTable
+              lang={lang}
               stackNavigation={stackNavigation}
               data={transferReports}
             />
@@ -95,6 +98,7 @@ const ReportScreen = ({ lang, token, stackNavigation }) => {
         <View style={styles.flex1}>
           <ScrollView style={styles.TableScrollView}>
             <ExchagesTable
+              lang={lang}
               stackNavigation={stackNavigation}
               data={exchangeReports}
             />

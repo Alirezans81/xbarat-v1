@@ -3,13 +3,13 @@ import React from "react";
 import DepositWithdrawalTransferDetails from "../../components/StackTabs/ReportDetails/DepositWithdrawalTransferDetails";
 import ExchangeDetails from "../../components/StackTabs/ReportDetails/ExchangeDetails";
 
-const ReportDetails = ({ route, navigation }) => {
+const ReportDetails = ({ route, lang }) => {
   const { data } = route.params;
 
   if (data && data.money) {
     return (
       <View>
-        <DepositWithdrawalTransferDetails data={data} />
+        <DepositWithdrawalTransferDetails lang={lang} data={data} />
       </View>
     );
   } else if (data && !data.money) {

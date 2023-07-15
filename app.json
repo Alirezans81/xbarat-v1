@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "xbarat",
-    "slug": "xbarat",
+    "name": "xbarat-v1",
+    "slug": "xbarat-v1",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,14 +21,15 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.xbarat.xbaratv1"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "b1410122-9a48-429a-9b93-0b41291feebc"
+        "projectId": "45b4ed90-3a97-4771-955f-97fe6f640106"
       }
     },
     "owner": "alirezansr81"

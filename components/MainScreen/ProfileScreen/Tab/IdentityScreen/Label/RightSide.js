@@ -15,6 +15,7 @@ const RightSide = ({ lang }) => {
         <Text style={styles.buttonText}>{lang["change-password"]}</Text>
       </TouchableOpacity>
       <ChangePasswordModal
+        lang={lang}
         isVisible={modalIsVisible}
         setIsVisible={setModalIsVisible}
       />

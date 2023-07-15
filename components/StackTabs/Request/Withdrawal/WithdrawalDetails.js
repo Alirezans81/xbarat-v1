@@ -3,22 +3,24 @@ import React from "react";
 import convertNumber from "../../../../hooks/convertNumber";
 import convertDate from "../../../../hooks/convertDate";
 
-const WithdrawalDetails = ({ data, countryTitle }) => {
+const WithdrawalDetails = ({ data, countryTitle, lang }) => {
   return (
     <View style={styles.container}>
       <View>
         <View style={styles.elementView}>
-          <Text style={styles.label}>Type</Text>
+          <Text style={styles.label}>{lang["type"]}</Text>
           <Text style={styles.text}>{data.type}</Text>
         </View>
         <View style={styles.elementView}>
-          <Text style={styles.label}>Country</Text>
+          <Text style={styles.label}>{lang["country"]}</Text>
           <Text style={styles.text}>{countryTitle}</Text>
         </View>
       </View>
       <View>
         <View style={styles.elementView}>
-          <Text style={styles.label}>Amount/Currency</Text>
+          <Text style={styles.label}>
+            {lang["amount"] + "/" + lang["currency"]}
+          </Text>
           <View style={styles.amountCurrencyView}>
             <Text style={[styles.text, styles.amount]}>
               {convertNumber(data.money)}
@@ -28,7 +30,7 @@ const WithdrawalDetails = ({ data, countryTitle }) => {
         </View>
 
         <View style={styles.elementView}>
-          <Text style={styles.label}>Date</Text>
+          <Text style={styles.label}>{lang["date"]}</Text>
           <Text style={styles.text}>{convertDate(data.createDate)}</Text>
         </View>
       </View>

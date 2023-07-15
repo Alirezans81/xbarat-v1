@@ -1,6 +1,4 @@
 import {
-  KeyboardAvoidingView,
-  Pressable,
   StyleSheet,
   Text,
   TextInput,
@@ -11,7 +9,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Formik } from "formik";
 import SelectDropdown from "react-native-select-dropdown";
 
-const DepositForm = ({ currencies, navigation }) => {
+const DepositForm = ({ currencies, navigation, lang }) => {
   const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState();
 
   const [locations, setLocations] = useState();
@@ -71,7 +69,7 @@ const DepositForm = ({ currencies, navigation }) => {
               style={styles.submitButton}
               onPress={handleSubmit}
             >
-              <Text style={styles.submitButtonText}>Submit</Text>
+              <Text style={styles.submitButtonText}>{lang["submit"]}</Text>
             </TouchableOpacity>
           </>
         )}

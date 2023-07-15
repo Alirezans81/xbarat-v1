@@ -4,7 +4,7 @@ import axios from "axios";
 import SelectDropdown from "react-native-select-dropdown";
 import UploadDocument from "../../../../MainScreen/ProfileScreen/Tab/IdentityScreen/UploadDocument";
 
-const OtherUploadDocument = ({ token, navigation }) => {
+const OtherUploadDocument = ({ token, navigation, lang }) => {
   const api = require("../../../../../assets/api.json");
 
   const [dropdownData, setDropdownData] = useState([]);
@@ -58,7 +58,7 @@ const OtherUploadDocument = ({ token, navigation }) => {
         renderCustomizedRowChild={(e) => (
           <Text style={styles.dropdownRowText}>{e}</Text>
         )}
-        defaultButtonText="Choose the paypal email"
+        defaultButtonText={lang["select-paypal-text"]}
         onSelect={(e, index) => {
           setSelectedDropdownDataIndex(index);
           setCanUpload(true);
@@ -66,7 +66,7 @@ const OtherUploadDocument = ({ token, navigation }) => {
         disabled={dropdownData.length === 0}
       />
       <View style={styles.uploadDocumentView}>
-        <UploadDocument editable={canUpload} />
+        <UploadDocument editable={canUpload} lang={lang} />
       </View>
       <TouchableOpacity
         onPress={() => {
@@ -74,7 +74,7 @@ const OtherUploadDocument = ({ token, navigation }) => {
         }}
         style={styles.submitButton}
       >
-        <Text style={styles.submitButtonText}>Submit</Text>
+        <Text style={styles.submitButtonText}>{lang["submit"]}</Text>
       </TouchableOpacity>
     </View>
   );

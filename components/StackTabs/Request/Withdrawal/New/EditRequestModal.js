@@ -16,6 +16,7 @@ const EditRequestModal = ({
   amount,
   destination,
   navigation,
+  lang,
 }) => {
   return (
     <Modal isVisible={isVisible}>
@@ -44,7 +45,7 @@ const EditRequestModal = ({
               {({ handleBlur, handleChange, values, handleSubmit }) => (
                 <>
                   <View style={ModalStyles.inputView}>
-                    <Text style={ModalStyles.inputLabel}>Amount</Text>
+                    <Text style={ModalStyles.inputLabel}>{lang["amount"]}</Text>
                     <TextInput
                       style={ModalStyles.input}
                       name="amount"
@@ -55,7 +56,9 @@ const EditRequestModal = ({
                     />
                   </View>
                   <View style={ModalStyles.inputView}>
-                    <Text style={ModalStyles.inputLabel}>Destination</Text>
+                    <Text style={ModalStyles.inputLabel}>
+                      {lang["destination"]}
+                    </Text>
                     <TextInput
                       style={ModalStyles.input}
                       name="destination"
@@ -68,7 +71,9 @@ const EditRequestModal = ({
                     onPress={handleSubmit}
                     style={ModalStyles.submitButton}
                   >
-                    <Text style={ModalStyles.submitButtonText}>Submit</Text>
+                    <Text style={ModalStyles.submitButtonText}>
+                      {lang["submit"]}
+                    </Text>
                   </TouchableOpacity>
                 </>
               )}

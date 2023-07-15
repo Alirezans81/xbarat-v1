@@ -10,7 +10,7 @@ import WaitText from "./Withdrawal/WaitingForPayment/WaitText";
 import UploadedImage from "./Withdrawal/UploadedImage";
 import WhyRejected from "./Withdrawal/Rejected/WhyRejected";
 
-const Withdrawal = ({ data, navigation }) => {
+const Withdrawal = ({ data, navigation, lang }) => {
   const api = require("../../../assets/api.json");
 
   const [countries, setCountries] = useState([]);
@@ -46,40 +46,58 @@ const Withdrawal = ({ data, navigation }) => {
           destination={data.destination + ""}
           isVisible={editRequestModalIsVisible}
           setIsVisible={setEditRequestModalIsVisible}
+          lang={lang}
         />
-        <WithdrawalStatus status={data.status} />
-        <WithdrawalDetails countryTitle={countryTitle} data={data} />
-        <Assignment />
+        <WithdrawalStatus status={data.status} lang={lang} />
+        <WithdrawalDetails
+          countryTitle={countryTitle}
+          data={data}
+          lang={lang}
+        />
+        <Assignment lang={lang} />
         <Buttons
           id={data.id}
           navigation={navigation}
           setEditRequestModalIsVisible={setEditRequestModalIsVisible}
+          lang={lang}
         />
       </ScrollView>
     );
   } else if (data.status === "WaitingForPayment") {
     return (
       <ScrollView>
-        <WithdrawalStatus status={data.status} />
-        <WithdrawalDetails countryTitle={countryTitle} data={data} />
-        <WaitText />
+        <WithdrawalStatus status={data.status} lang={lang} />
+        <WithdrawalDetails
+          countryTitle={countryTitle}
+          data={data}
+          lang={lang}
+        />
+        <WaitText lang={lang} />
       </ScrollView>
     );
   } else if (data.status === "Accepted") {
     return (
       <ScrollView>
-        <WithdrawalStatus status={data.status} />
-        <WithdrawalDetails countryTitle={countryTitle} data={data} />
+        <WithdrawalStatus status={data.status} lang={lang} />
+        <WithdrawalDetails
+          countryTitle={countryTitle}
+          data={data}
+          lang={lang}
+        />
         <UploadedImage />
       </ScrollView>
     );
   } else if (data.status === "Rejected") {
     return (
       <ScrollView>
-        <WithdrawalStatus status={data.status} />
-        <WithdrawalDetails countryTitle={countryTitle} data={data} />
+        <WithdrawalStatus status={data.status} lang={lang} />
+        <WithdrawalDetails
+          countryTitle={countryTitle}
+          data={data}
+          lang={lang}
+        />
         <UploadedImage />
-        <WhyRejected />
+        <WhyRejected lang={lang} />
       </ScrollView>
     );
   }

@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import convertNumber from "../../../../../../hooks/convertNumber";
 
-const Label = ({ data }) => {
+const Label = ({ data, lang }) => {
   return (
     <View style={styles.container}>
       <View style={styles.balanceView}>
@@ -11,10 +11,10 @@ const Label = ({ data }) => {
       </View>
       <View style={styles.detailsView}>
         <Text style={[styles.detailsText, styles.locked]}>
-          {"-" + data.lockedMoney + " locked"}
+          {"-" + data.lockedMoney + " " + lang["locked"]}
         </Text>
         <Text style={[styles.detailsText, styles.pending]}>
-          {"+" + data.penddingMoney + " pending"}
+          {"+" + data.penddingMoney + " " + lang["pending"]}
         </Text>
       </View>
     </View>

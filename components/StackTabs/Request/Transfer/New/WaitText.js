@@ -1,14 +1,14 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-const WaitText = () => {
+const WaitText = ({ lang }) => {
   return (
     <View style={styles.container}>
       <Image
         style={styles.image}
         source={require("../../../../../assets/App/Tabs/Request/wait.png")}
       />
-      <Text style={styles.text}>Please wait for admin to approve</Text>
+      <Text style={styles.text}>{lang["waiting-for-admin-approve-text"]}</Text>
     </View>
   );
 };

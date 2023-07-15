@@ -3,19 +3,19 @@ import React from "react";
 import Head from "./Table/Head";
 import Row from "./Table/Row";
 
-const Table = ({ data, navigation }) => {
+const Table = ({ data, navigation, lang }) => {
   if (!data) {
     return (
       <View style={styles.container}>
         <View style={styles.noDataView}>
-          <Text style={styles.noDataText}>Loading...</Text>
+          <Text style={styles.noDataText}>{lang["loading"]}</Text>
         </View>
       </View>
     );
   } else if (data && data.length !== 0) {
     return (
       <View style={styles.container}>
-        <Head />
+        <Head lang={lang} />
         {data && data.length !== 0 ? <View style={styles.line} /> : null}
         {data.map((row, index) => (
           <View key={index}>
@@ -29,7 +29,7 @@ const Table = ({ data, navigation }) => {
     return (
       <View style={styles.container}>
         <View style={styles.noDataView}>
-          <Text style={styles.noDataText}>No Data!</Text>
+          <Text style={styles.noDataText}>{lang["no-data"]}</Text>
         </View>
       </View>
     );

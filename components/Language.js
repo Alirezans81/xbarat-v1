@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     height: "100%",
     width: "100%",
+    zIndex: 100,
   },
   button: {
     backgroundColor: "#026897",

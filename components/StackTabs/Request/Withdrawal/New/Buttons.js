@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 
-const Buttons = ({ id, navigation, setEditRequestModalIsVisible }) => {
+const Buttons = ({ id, navigation, setEditRequestModalIsVisible, lang }) => {
   const edit = () => {
     setEditRequestModalIsVisible(true);
   };
@@ -15,13 +15,17 @@ const Buttons = ({ id, navigation, setEditRequestModalIsVisible }) => {
         onPress={edit}
         style={[styles.button, styles.editButton]}
       >
-        <Text style={[styles.buttonText, styles.editButtonText]}>Edit</Text>
+        <Text style={[styles.buttonText, styles.editButtonText]}>
+          {lang["edit"]}
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={cancel}
         style={[styles.button, styles.cancelButton]}
       >
-        <Text style={[styles.buttonText, styles.cancelButtonText]}>Cancel</Text>
+        <Text style={[styles.buttonText, styles.cancelButtonText]}>
+          {lang["cancel"]}
+        </Text>
       </TouchableOpacity>
     </View>
   );

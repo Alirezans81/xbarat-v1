@@ -3,7 +3,7 @@ import React from "react";
 import convertNumber from "../../../hooks/convertNumber";
 import convertDate from "../../../hooks/convertDate";
 
-const DepositWithdrawalTransferDetails = ({ data }) => {
+const DepositWithdrawalTransferDetails = ({ data, lang }) => {
   console.log(data);
 
   return (
@@ -11,21 +11,21 @@ const DepositWithdrawalTransferDetails = ({ data }) => {
       <View style={styles.outerContainer}>
         <View style={styles.innerContainer}>
           <View style={styles.col12}>
-            <Text style={styles.label}>Code</Text>
+            <Text style={styles.label}>{lang["code"]}</Text>
             <Text style={styles.text}>{data.code}</Text>
           </View>
           <View style={styles.row}>
             <View style={styles.col6}>
-              <Text style={styles.label}>Currency</Text>
+              <Text style={styles.label}>{lang["currency"]}</Text>
               <Text style={styles.text}>{data.currency}</Text>
             </View>
             <View style={styles.col6}>
-              <Text style={styles.label}>Amount</Text>
+              <Text style={styles.label}>{lang["amount"]}</Text>
               <Text style={styles.text}>{convertNumber(data.money)}</Text>
             </View>
           </View>
           <View style={styles.col12}>
-            <Text style={styles.label}>Date</Text>
+            <Text style={styles.label}>{lang["date"]}</Text>
             <Text style={styles.text}>
               {convertDate(data.createDate, "not-break")}
             </Text>

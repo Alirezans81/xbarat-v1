@@ -1,11 +1,11 @@
-import { StyleSheet, Image, View, Text, Button } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { TouchableOpacity } from "react-native";
 import React from "react";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
 import ImageModal from "react-native-image-modal";
 
-const UploadDocument = ({ editable }) => {
+const UploadDocument = ({ editable, lang }) => {
   const [image, setImage] = useState(null);
   const [imageDimension, setImageDimension] = useState();
 
@@ -40,7 +40,7 @@ const UploadDocument = ({ editable }) => {
         disabled={!editable}
       >
         <Text style={editable ? styles.buttonText : styles.disabledButtonText}>
-          Upload your document
+          {lang["upload-your-document"]}
         </Text>
       </TouchableOpacity>
       {image && (

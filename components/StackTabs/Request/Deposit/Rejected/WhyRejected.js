@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-const WhyRejected = () => {
+const WhyRejected = ({ lang }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Why you has been rejected</Text>
+      <Text style={styles.label}>{lang["reject-reason-label"]}</Text>
       <Text style={styles.text}>You've uploaded unclear document</Text>
     </View>
   );

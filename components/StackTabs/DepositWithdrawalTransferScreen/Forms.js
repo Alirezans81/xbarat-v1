@@ -153,6 +153,7 @@ const Forms = ({ route, lang, navigation }) => {
           setTransactionType={setTransactionType}
         />
         <DepositForm
+          lang={lang}
           currencies={currencies ? currencies : []}
           navigation={navigation}
         />

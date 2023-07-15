@@ -6,7 +6,7 @@ import Buttons from "./Card/Buttons";
 const Card = ({ lang, data, stackNavigation, balances }) => {
   return (
     <View style={styles.container}>
-      <Label data={data} />
+      <Label data={data} lang={lang} />
       <Buttons
         lang={lang}
         currency={data.currency}

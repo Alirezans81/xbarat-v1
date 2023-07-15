@@ -1,17 +1,17 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-const TransferStatus = ({ status }) => {
+const TransferStatus = ({ status, lang }) => {
   if (status === "New") {
     return (
       <View style={styles.container}>
         <View style={styles.blueCircle}>
-          <Text style={styles.circleText}>1</Text>
-          <Text style={styles.blueInfo}>New</Text>
+          <Text style={styles.circleText}>{lang["1"]}</Text>
+          <Text style={styles.blueInfo}>{lang["new"]}</Text>
         </View>
         <View style={styles.line} />
         <View style={styles.circle}>
-          <Text style={styles.circleText}>2</Text>
+          <Text style={styles.circleText}>{lang["2"]}</Text>
           <Text style={styles.info}>Accept</Text>
         </View>
       </View>
@@ -20,13 +20,13 @@ const TransferStatus = ({ status }) => {
     return (
       <View style={styles.container}>
         <View style={styles.blueCircle}>
-          <Text style={styles.circleText}>1</Text>
-          <Text style={styles.blueInfo}>Waiting for Assign</Text>
+          <Text style={styles.circleText}>{lang["1"]}</Text>
+          <Text style={styles.blueInfo}>{lang["new"]}</Text>
         </View>
         <View style={styles.line} />
         <View style={styles.greenCircle}>
-          <Text style={styles.circleText}>2</Text>
-          <Text style={styles.greenInfo}>Accept</Text>
+          <Text style={styles.circleText}>{lang["2"]}</Text>
+          <Text style={styles.greenInfo}>{lang["accept"]}</Text>
         </View>
       </View>
     );
@@ -34,13 +34,13 @@ const TransferStatus = ({ status }) => {
     return (
       <View style={styles.container}>
         <View style={styles.blueCircle}>
-          <Text style={styles.circleText}>1</Text>
-          <Text style={styles.blueInfo}>Waiting for Assign</Text>
+          <Text style={styles.circleText}>{lang["1"]}</Text>
+          <Text style={styles.blueInfo}>{lang["new"]}</Text>
         </View>
         <View style={styles.line} />
         <View style={styles.redCircle}>
-          <Text style={styles.circleText}>2</Text>
-          <Text style={styles.redInfo}>Reject</Text>
+          <Text style={styles.circleText}>{lang["2"]}</Text>
+          <Text style={styles.redInfo}>{lang["reject"]}</Text>
         </View>
       </View>
     );

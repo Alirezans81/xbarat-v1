@@ -14,7 +14,7 @@ const Buttons = ({ lang, currency, stackNavigation, balances }) => {
         }}
         style={[styles.button, styles.transferButton]}
       >
-        <Text style={styles.buttonText}>Transfer</Text>
+        <Text style={styles.buttonText}>{lang["tranfer"]}</Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
@@ -26,7 +26,7 @@ const Buttons = ({ lang, currency, stackNavigation, balances }) => {
         }}
         style={[styles.button, styles.withrawalButton]}
       >
-        <Text style={styles.buttonText}>Withdrawal</Text>
+        <Text style={styles.buttonText}>{lang["withdrawal"]}</Text>
       </TouchableOpacity>
     </View>
   );

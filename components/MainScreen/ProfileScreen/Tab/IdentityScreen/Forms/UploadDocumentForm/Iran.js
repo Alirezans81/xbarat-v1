@@ -18,7 +18,7 @@ const Iran = ({ lang, handleChange, handleBlur, values, editable }) => {
       </View>
       <View style={styles.inputView}>
         <Text style={styles.label}>{lang["upload-document"]}</Text>
-        <UploadDocument editable={editable} />
+        <UploadDocument editable={editable} lang={lang} />
       </View>
     </View>
   );

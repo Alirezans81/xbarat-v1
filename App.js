@@ -49,6 +49,7 @@ export default function App() {
               setLang={setLang}
               token={token}
               refreshToken={refreshToken}
+              setLoggedIn={setLoggedIn}
             />
           </>
         ) : (

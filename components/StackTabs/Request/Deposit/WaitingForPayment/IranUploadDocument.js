@@ -4,7 +4,7 @@ import axios from "axios";
 import SelectDropdown from "react-native-select-dropdown";
 import UploadDocument from "../../../../MainScreen/ProfileScreen/Tab/IdentityScreen/UploadDocument";
 
-const IranUploadDocument = ({ token, amount, navigation }) => {
+const IranUploadDocument = ({ token, amount, navigation, lang }) => {
   const api = require("../../../../../assets/api.json");
 
   const [dropdownData, setDropdownData] = useState([]);
@@ -55,8 +55,8 @@ const IranUploadDocument = ({ token, amount, navigation }) => {
         selectedRowTextStyle={styles.dropdownSelectedRowText}
         defaultButtonText={
           amount < 100000000
-            ? "Choose the card number"
-            : "Choose the shaba number"
+            ? lang["select-card-number-text"]
+            : lang["select-shaba-number-text"]
         }
         onSelect={(e, index) => {
           setSelectedDropdownDataIndex(index);
@@ -64,7 +64,7 @@ const IranUploadDocument = ({ token, amount, navigation }) => {
         }}
       />
       <View style={styles.uploadDocumentView}>
-        <UploadDocument editable={canUpload} />
+        <UploadDocument editable={canUpload} lang={lang} />
       </View>
       <TouchableOpacity
         onPress={() => {
@@ -72,7 +72,7 @@ const IranUploadDocument = ({ token, amount, navigation }) => {
         }}
         style={styles.submitButton}
       >
-        <Text style={styles.submitButtonText}>Submit</Text>
+        <Text style={styles.submitButtonText}>{lang["submit"]}</Text>
       </TouchableOpacity>
     </View>
   );

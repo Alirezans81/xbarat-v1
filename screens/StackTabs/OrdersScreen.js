@@ -6,7 +6,7 @@ import Table from "../../components/StackTabs/OrdersScreen/Table";
 import { useEffect } from "react";
 import axios from "axios";
 
-const OrdersScreen = ({ token, navigation }) => {
+const OrdersScreen = ({ token, navigation, lang }) => {
   const api = require("../../assets/api.json");
 
   const [type, setType] = useState("open");
@@ -35,6 +35,7 @@ const OrdersScreen = ({ token, navigation }) => {
         <TopButtonTabs type={type} setType={setType} />
         <ScrollView style={{ flex: 1 }}>
           <Table
+            lang={lang}
             navigation={navigation}
             data={exhcanges ? exhcanges.pendingExchangeDetails : null}
           />
@@ -47,6 +48,7 @@ const OrdersScreen = ({ token, navigation }) => {
         <TopButtonTabs type={type} setType={setType} />
         <ScrollView style={{ flex: 1 }}>
           <Table
+            lang={lang}
             navigation={navigation}
             data={exhcanges ? exhcanges.todayDoneExchangeDetails : null}
           />
@@ -59,6 +61,7 @@ const OrdersScreen = ({ token, navigation }) => {
         <TopButtonTabs type={type} setType={setType} />
         <ScrollView style={{ flex: 1 }}>
           <Table
+            lang={lang}
             navigation={navigation}
             data={exhcanges ? exhcanges.allTodayExchangeDetails : null}
           />
@@ -70,7 +73,7 @@ const OrdersScreen = ({ token, navigation }) => {
       <View style={styles.container}>
         <TopButtonTabs type={type} setType={setType} />
         <ScrollView style={{ flex: 1 }}>
-          <Text>Somthing wrong!</Text>
+          <Text>{lang["something-wrong"]}</Text>
         </ScrollView>
       </View>
     );

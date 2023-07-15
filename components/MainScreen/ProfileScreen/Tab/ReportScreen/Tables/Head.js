@@ -1,12 +1,14 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-const Head = () => {
+const Head = ({ lang }) => {
   return (
     <View style={styles.container}>
-      <Text style={[styles.width1, styles.text]}>Amount/Currency</Text>
-      <Text style={[styles.width2, styles.text]}>Date</Text>
-      <Text style={[styles.width3, styles.text]}>Done</Text>
+      <Text style={[styles.width1, styles.text]}>
+        {lang["amount"] + "/" + lang["currency"]}
+      </Text>
+      <Text style={[styles.width2, styles.text]}>{lang["date"]}</Text>
+      <Text style={[styles.width3, styles.text]}>{lang["status"]}</Text>
       <View style={[styles.width4, styles.text]} />
     </View>
   );

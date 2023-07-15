@@ -3,21 +3,21 @@ import React from "react";
 import Head from "./ExchangesTable/Head";
 import Row from "./ExchangesTable/Row";
 
-const ExchangesTable = ({ data, stackNavigation }) => {
+const ExchangesTable = ({ data, stackNavigation, lang }) => {
   if (!data) {
     return (
       <View style={styles.container}>
-        <Head />
+        <Head lang={lang} />
         <View style={styles.line} />
         <View style={styles.noDataView}>
-          <Text style={styles.noDataText}>Loading...</Text>
+          <Text style={styles.noDataText}>{lang["loading"]}</Text>
         </View>
       </View>
     );
   } else if (data && data.length !== 0) {
     return (
       <View style={styles.container}>
-        <Head />
+        <Head lang={lang} />
         <View style={styles.line} />
         {data.map((row, index) => (
           <View key={index}>
@@ -30,10 +30,10 @@ const ExchangesTable = ({ data, stackNavigation }) => {
   } else {
     return (
       <View style={styles.container}>
-        <Head />
+        <Head lang={lang} />
         <View style={styles.line} />
         <View style={styles.noDataView}>
-          <Text style={styles.noDataText}>No Data!</Text>
+          <Text style={styles.noDataText}>{lang["no-data"]}</Text>
         </View>
       </View>
     );

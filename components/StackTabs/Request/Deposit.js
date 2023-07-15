@@ -13,7 +13,7 @@ import OtherUploadDocument from "./Deposit/WaitingForPayment/OtherUploadDocument
 import UploadedImage from "./Deposit/UploadedImage";
 import WhyRejected from "./Deposit/Rejected/WhyRejected";
 
-const Deposit = ({ data, navigation, token }) => {
+const Deposit = ({ data, navigation, token, lang }) => {
   const api = require("../../../assets/api.json");
 
   const [countries, setCountries] = useState([]);
@@ -48,14 +48,16 @@ const Deposit = ({ data, navigation, token }) => {
           amount={data.money + ""}
           isVisible={editRequestModalIsVisible}
           setIsVisible={setEditRequestModalIsVisible}
+          lang={lang}
         />
-        <DepositStatus status={data.status} />
-        <DepositDetails countryTitle={countryTitle} data={data} />
-        <Assignment />
+        <DepositStatus status={data.status} lang={lang} />
+        <DepositDetails countryTitle={countryTitle} data={data} lang={lang} />
+        <Assignment lang={lang} />
         <Buttons
           id={data.id}
           navigation={navigation}
           setEditRequestModalIsVisible={setEditRequestModalIsVisible}
+          lang={lang}
         />
       </ScrollView>
     );
@@ -63,59 +65,61 @@ const Deposit = ({ data, navigation, token }) => {
     if (countryTitle === "Iran") {
       return (
         <ScrollView style={styles.container}>
-          <DepositStatus status={data.status} />
-          <DepositDetails countryTitle={countryTitle} data={data} />
+          <DepositStatus status={data.status} lang={lang} />
+          <DepositDetails countryTitle={countryTitle} data={data} lang={lang} />
           <IranUploadDocument
             amount={data.money}
             token={token}
             navigation={navigation}
+            lang={lang}
           />
         </ScrollView>
       );
     } else if (countryTitle === "Afghanistan") {
       return (
         <ScrollView style={styles.container}>
-          <DepositStatus status={data.status} />
-          <DepositDetails countryTitle={countryTitle} data={data} />
+          <DepositStatus status={data.status} lang={lang} />
+          <DepositDetails countryTitle={countryTitle} data={data} lang={lang} />
           <AfghanistanUploadDocument
             amount={data.money}
             token={token}
             navigation={navigation}
+            lang={lang}
           />
         </ScrollView>
       );
     } else {
       return (
         <ScrollView style={styles.container}>
-          <DepositStatus status={data.status} />
-          <DepositDetails countryTitle={countryTitle} data={data} />
-          <OtherUploadDocument />
+          <DepositStatus status={data.status} lang={lang} />
+          <DepositDetails countryTitle={countryTitle} data={data} lang={lang} />
+          <OtherUploadDocument lang={lang} />
         </ScrollView>
       );
     }
   } else if (data.status === "WaitingForAdministrationApprove") {
     return (
       <ScrollView style={styles.container}>
-        <DepositStatus status={data.status} />
-        <DepositDetails countryTitle={countryTitle} data={data} />
-        <UploadedImage />
+        <DepositStatus status={data.status} lang={lang} />
+        <DepositDetails countryTitle={countryTitle} data={data} lang={lang} />
+        <UploadedImage  />
       </ScrollView>
     );
   } else if (data.status === "Accepted") {
     return (
       <ScrollView style={styles.container}>
-        <DepositStatus status={data.status} />
-        <DepositDetails countryTitle={countryTitle} data={data} />
+        <DepositStatus status={data.status} lang={lang} />
+        <DepositDetails countryTitle={countryTitle} data={data} lang={lang} />
         <UploadedImage />
       </ScrollView>
     );
   } else if (data.status === "Rejected") {
     return (
       <ScrollView style={styles.container}>
-        <DepositStatus status={data.status} />
-        <DepositDetails countryTitle={countryTitle} data={data} />
+        <DepositStatus status={data.status} lang={lang} />
+        <DepositDetails countryTitle={countryTitle} data={data} lang={lang} />
         <UploadedImage />
-        <WhyRejected />
+        <WhyRejected lang={lang} />
       </ScrollView>
     );
   }

@@ -5,28 +5,28 @@ import TransferDetails from "./Transfer/TransferDetails";
 import WaitText from "./Transfer/New/WaitText";
 import WhyRejected from "./Transfer/Rejected/WhyRejected";
 
-const Transfer = ({ data }) => {
+const Transfer = ({ data, lang }) => {
   if (data.status === "New") {
     return (
       <View>
-        <TransferStatus status={data.status} />
-        <TransferDetails data={data} />
-        <WaitText />
+        <TransferStatus status={data.status} lang={lang} />
+        <TransferDetails data={data} lang={lang} />
+        <WaitText lang={lang} />
       </View>
     );
   } else if (data.status === "Accepted") {
     return (
       <View>
-        <TransferStatus status={data.status} />
-        <TransferDetails data={data} />
+        <TransferStatus status={data.status} lang={lang} />
+        <TransferDetails data={data} lang={lang} />
       </View>
     );
   } else if (data.status === "Rejected") {
     return (
       <View>
-        <TransferStatus status={data.status} />
-        <TransferDetails data={data} />
-        <WhyRejected />
+        <TransferStatus status={data.status} lang={lang} />
+        <TransferDetails data={data} lang={lang} />
+        <WhyRejected lang={lang} />
       </View>
     );
   }

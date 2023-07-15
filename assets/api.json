@@ -7,7 +7,7 @@
   "exchanges-data": "http://94.74.145.156:5271/mobile-api/exchange/information",
   "wallet-balances": "http://94.74.145.156:5271/mobile-api/wallet/credit",
   "pending-requests": "http://94.74.145.156:5271/mobile-api/wallet/pending-requests",
-  "user-info": "http://94.74.145.156:5271/api/identity/me",
+  "user-info": "http://94.74.145.156:5271/mobile-api/identity/me",
   "countries": "http://94.74.145.156:5271/api/countries/title-value",
   "cities-1st": "http://94.74.145.156:5271/api/countries/",
   "cities-2nd": "/cities",
@@ -20,5 +20,6 @@
   "site-setting": "http://94.74.145.156:5271/api/daynamicsettings",
   "cancel-exchange-1st": "http://94.74.145.156:5271/mobile-api/exchange/",
   "cancel-exchange-2nd": "/cancel",
-  "edit-exchange": "http://94.74.145.156:5271/mobile-api/exchange/"
+  "edit-exchange": "http://94.74.145.156:5271/mobile-api/exchange/",
+  "update-profile": "http://94.74.145.156:5271/api/identity"
 }

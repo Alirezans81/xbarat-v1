@@ -4,7 +4,7 @@ import axios from "axios";
 import SelectDropdown from "react-native-select-dropdown";
 import UploadDocument from "../../../../MainScreen/ProfileScreen/Tab/IdentityScreen/UploadDocument";
 
-const AfghanistanUploadDocument = ({ token, navigation }) => {
+const AfghanistanUploadDocument = ({ token, navigation, lang }) => {
   const api = require("../../../../../assets/api.json");
 
   const [dropdownData, setDropdownData] = useState([]);
@@ -50,14 +50,14 @@ const AfghanistanUploadDocument = ({ token, navigation }) => {
         renderCustomizedRowChild={(e) => (
           <Text style={styles.dropdownRowText}>{e}</Text>
         )}
-        defaultButtonText="Choose the preferred Office"
+        defaultButtonText={lang["select-preferred-office-text"]}
         onSelect={(e, index) => {
           setSelectedDropdownDataIndex(index);
           setCanUpload(true);
         }}
       />
       <View style={styles.uploadDocumentView}>
-        <UploadDocument editable={canUpload} />
+        <UploadDocument editable={canUpload} lang={lang} />
       </View>
       <TouchableOpacity
         onPress={() => {
@@ -65,7 +65,7 @@ const AfghanistanUploadDocument = ({ token, navigation }) => {
         }}
         style={styles.submitButton}
       >
-        <Text style={styles.submitButtonText}>Submit</Text>
+        <Text style={styles.submitButtonText}>{lang["submit"]}</Text>
       </TouchableOpacity>
     </View>
   );

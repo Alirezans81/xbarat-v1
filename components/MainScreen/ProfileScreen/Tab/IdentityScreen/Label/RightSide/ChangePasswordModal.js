@@ -5,12 +5,13 @@ import {
   Image,
   TouchableOpacity,
   Text,
+  lang,
 } from "react-native";
 import React from "react";
 import Modal from "react-native-modal";
 import { Formik } from "formik";
 
-const ModalContent = ({ setIsVisible }) => (
+const ModalContent = ({ setIsVisible, lang }) => (
   <View style={styles.container}>
     <View style={styles.contentContainer}>
       <TouchableOpacity
@@ -39,7 +40,7 @@ const ModalContent = ({ setIsVisible }) => (
           {({ handleBlur, handleChange, values, handleSubmit }) => (
             <>
               <View style={styles.inputView}>
-                <Text style={styles.inputLabel}>New password</Text>
+                <Text style={styles.inputLabel}>{lang["new-password"]}</Text>
                 <TextInput
                   style={styles.input}
                   name="newPassword"
@@ -51,7 +52,9 @@ const ModalContent = ({ setIsVisible }) => (
                 />
               </View>
               <View style={styles.inputView}>
-                <Text style={styles.inputLabel}>Confirm password</Text>
+                <Text style={styles.inputLabel}>
+                  {lang["confirm password"]}
+                </Text>
                 <TextInput
                   style={styles.input}
                   name="confirmPassword"
@@ -66,7 +69,7 @@ const ModalContent = ({ setIsVisible }) => (
                 onPress={handleSubmit}
                 style={styles.submitButton}
               >
-                <Text style={styles.submitButtonText}>Submit</Text>
+                <Text style={styles.submitButtonText}>{lang["submit"]}</Text>
               </TouchableOpacity>
             </>
           )}

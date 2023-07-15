@@ -18,7 +18,7 @@ const EditExchangeModal = ({
   setIsVisible,
   amount,
   rate,
-  navigation,
+  lang,
   editAlert,
 }) => {
   return (
@@ -45,7 +45,7 @@ const EditExchangeModal = ({
               {({ handleBlur, handleChange, values, handleSubmit }) => (
                 <>
                   <View style={ModalStyles.inputView}>
-                    <Text style={ModalStyles.inputLabel}>Amount</Text>
+                    <Text style={ModalStyles.inputLabel}>{lang["amount"]}</Text>
                     <TextInput
                       style={ModalStyles.input}
                       name="amount"
@@ -57,7 +57,7 @@ const EditExchangeModal = ({
                     />
                   </View>
                   <View style={ModalStyles.inputView}>
-                    <Text style={ModalStyles.inputLabel}>Rate</Text>
+                    <Text style={ModalStyles.inputLabel}>{lang["rate"]}</Text>
                     <TextInput
                       style={ModalStyles.input}
                       name="rate"
@@ -72,7 +72,9 @@ const EditExchangeModal = ({
                     onPress={handleSubmit}
                     style={ModalStyles.submitButton}
                   >
-                    <Text style={ModalStyles.submitButtonText}>Submit</Text>
+                    <Text style={ModalStyles.submitButtonText}>
+                      {lang["submit"]}
+                    </Text>
                   </TouchableOpacity>
                 </>
               )}
@@ -248,6 +250,7 @@ const OrderDetails = ({ route, navigation, token, lang }) => {
         amount={data.sourceMoney + ""}
         rate={data.rate + ""}
         editAlert={editAlert}
+        lang={lang}
       />
       <View>
         <View style={styles.row}>
@@ -256,13 +259,13 @@ const OrderDetails = ({ route, navigation, token, lang }) => {
         <View style={styles.row}>
           <View style={styles.col6}>
             <View style={styles.section}>
-              <Text style={styles.label}>Source</Text>
+              <Text style={styles.label}>{lang["source"]}</Text>
               <Text style={styles.var}>{data.sourceCurrency.abbreviation}</Text>
             </View>
           </View>
           <View style={styles.col6}>
             <View style={styles.section}>
-              <Text style={styles.label}>Source Amount</Text>
+              <Text style={styles.label}>{lang["source-amount"]}</Text>
               <Text style={styles.var}>{convertNumber(data.sourceMoney)}</Text>
             </View>
           </View>
@@ -270,7 +273,7 @@ const OrderDetails = ({ route, navigation, token, lang }) => {
         <View style={styles.row}>
           <View style={styles.col6}>
             <View style={styles.section}>
-              <Text style={styles.label}>Target</Text>
+              <Text style={styles.label}>{lang["target"]}</Text>
               <Text style={styles.var}>
                 {data.destinationCurrency.abbreviation}
               </Text>
@@ -278,7 +281,7 @@ const OrderDetails = ({ route, navigation, token, lang }) => {
           </View>
           <View style={styles.col6}>
             <View style={styles.section}>
-              <Text style={styles.label}>Target Amount</Text>
+              <Text style={styles.label}>{lang["target-amount"]}</Text>
               <Text style={styles.var}>
                 {convertNumber(data.destinationMoney)}
               </Text>
@@ -288,13 +291,13 @@ const OrderDetails = ({ route, navigation, token, lang }) => {
         <View style={styles.row}>
           <View style={styles.col6}>
             <View style={styles.section}>
-              <Text style={styles.label}>Rate</Text>
+              <Text style={styles.label}>{lang["rate"]}</Text>
               <Text style={styles.var}>{convertNumber(data.rate)}</Text>
             </View>
           </View>
           <View style={styles.col6}>
             <View style={styles.section}>
-              <Text style={styles.label}>Date</Text>
+              <Text style={styles.label}>{lang["date"]}</Text>
               <Text style={styles.var}>{convertDate(data.createDate)}</Text>
             </View>
           </View>
@@ -306,7 +309,7 @@ const OrderDetails = ({ route, navigation, token, lang }) => {
           style={[styles.button, styles.editButton]}
         >
           <Text style={[styles.buttonText, styles.editButtonText]}>
-            Edit Exchange
+            {lang["edit-exhcange"]}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -316,7 +319,7 @@ const OrderDetails = ({ route, navigation, token, lang }) => {
           style={[styles.button, styles.cancelButton]}
         >
           <Text style={[styles.buttonText, styles.cancelButtonText]}>
-            Cancel Exchange
+            {lang["cancel-exchange"]}
           </Text>
         </TouchableOpacity>
       </View>

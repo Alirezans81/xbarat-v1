@@ -128,7 +128,7 @@ const WithdrawalForm = ({
               style={styles.submitButton}
               onPress={handleSubmit}
             >
-              <Text style={styles.submitButtonText}>Submit</Text>
+              <Text style={styles.submitButtonText}>{lang["submit"]}</Text>
             </TouchableOpacity>
           </>
         )}

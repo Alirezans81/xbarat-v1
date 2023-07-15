@@ -1,7 +1,7 @@
 import { StyleSheet, ImageBackground, View, Text, Image } from "react-native";
 import React from "react";
 
-const Assignment = () => {
+const Assignment = ({ lang }) => {
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -14,7 +14,7 @@ const Assignment = () => {
             style={styles.checkImg}
             source={require("../../../../assets/App/Tabs/Request/check.png")}
           />
-          <Text style={styles.text}>Please wait for admin assignment.</Text>
+          <Text style={styles.text}>{lang['waiting-for-assignment-text']}</Text>
         </View>
       </ImageBackground>
     </View>

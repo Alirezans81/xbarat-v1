@@ -5,6 +5,7 @@ import ProfileScreen from "../screens/Tabs/ProfileScreen";
 import { Image, StyleSheet } from "react-native";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import MoreScreen from "../screens/Tabs/MoreScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -14,6 +15,7 @@ const TabNavigator = ({
   token,
   refreshToken,
   stackNavigation,
+  setLoggedIn,
 }) => {
   const iconSize = 37;
 
@@ -62,9 +64,6 @@ const TabNavigator = ({
   useEffect(() => {
     getUserInfo();
   }, []);
-
-  const [inventory, setInventory] = useState(0);
-
   return (
     <Tab.Navigator
       screenOptions={{
@@ -124,7 +123,6 @@ const TabNavigator = ({
           ),
         }}
       />
-
       <Tab.Screen
         name="Profile"
         children={() => (
@@ -145,6 +143,32 @@ const TabNavigator = ({
                 focused
                   ? require("../assets/tab-navaigator-icons/active-profile.png")
                   : require("../assets/tab-navaigator-icons/profile.png")
+              }
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="More"
+        children={() => (
+          <MoreScreen
+            setLang={setLang}
+            lang={lang}
+            token={token}
+            refreshToken={refreshToken}
+            stackNavigation={stackNavigation}
+            setLoggedIn={setLoggedIn}
+          />
+        )}
+        options={{
+          tabBarIcon: ({ size, focused, color }) => (
+            <Image
+              style={[{ width: iconSize, height: iconSize }, styles.icon]}
+              resizeMode="stretch"
+              source={
+                focused
+                  ? require("../assets/tab-navaigator-icons/active-more.png")
+                  : require("../assets/tab-navaigator-icons/more.png")
               }
             />
           ),

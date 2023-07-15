@@ -142,6 +142,10 @@ const IdentityScreen = ({ lang, token, refreshToken, userInfo }) => {
     getCities();
   };
 
+  const updateProfile = (valeus) => {
+
+  }
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -149,14 +153,14 @@ const IdentityScreen = ({ lang, token, refreshToken, userInfo }) => {
     >
       <Formik
         initialValues={{
-          email: userInfo ? userInfo.email : "",
-          phoneNumber: userInfo ? userInfo.phoneNumber : "",
+          id: userInfo ? userInfo.id : "",
           firstName: userInfo ? userInfo.firstName : "",
           lastName: userInfo ? userInfo.lastName : "",
+          phoneNumber: userInfo ? userInfo.phoneNumber : "",
+          email: userInfo ? userInfo.email : "",
           nationalCode: userInfo ? userInfo.nationalCode : "",
           tazkareNumber: userInfo ? userInfo.tazkareNumber : "",
           passportNumber: userInfo ? userInfo.passportNumber : "",
-          documentFile: userInfo ? userInfo.documentFile : "",
           shabaNumber: userInfo ? userInfo.shabaNumber : "",
           cartNumber: userInfo ? userInfo.cartNumber : "",
           bankEmail: userInfo ? userInfo.bankEmail : "",

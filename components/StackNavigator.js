@@ -8,7 +8,13 @@ import OrderDetails from "../screens/StackTabs/OrderDetails";
 import Request from "../screens/StackTabs/Request";
 import ReportDetails from "../screens/StackTabs/ReportDetails";
 
-const StackNavigator = ({ lang, setLang, token, refreshToken }) => {
+const StackNavigator = ({
+  lang,
+  setLang,
+  token,
+  refreshToken,
+  setLoggedIn,
+}) => {
   const Stack = createStackNavigator();
 
   return (
@@ -28,6 +34,7 @@ const StackNavigator = ({ lang, setLang, token, refreshToken }) => {
             setLang={setLang}
             token={token}
             refreshToken={refreshToken}
+            setLoggedIn={setLoggedIn}
           />
         )}
         options={{ headerShown: false }}
@@ -83,7 +90,7 @@ const StackNavigator = ({ lang, setLang, token, refreshToken }) => {
       />
       <Stack.Screen
         name="Report Details"
-        children={(props) => <ReportDetails {...props} />}
+        children={(props) => <ReportDetails {...props} lang={lang} />}
       />
     </Stack.Navigator>
   );
