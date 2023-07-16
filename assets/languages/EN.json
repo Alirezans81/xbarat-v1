@@ -107,5 +107,15 @@
   "target-amount": "Target amount",
   "edit-exchange": "Edit Exhcange",
   "cancel-exchange": "Cancel Exhcange",
-  "log-out": "Log out"
+  "log-out": "Log out",
+  "about-us": "About us",
+  "help": "Help",
+  "bottom-sign": "© 2023 Xbarat. All rights reserved",
+  "deposits": "Deposits",
+  "withdrawals": "Withdrawals",
+  "transfers": "Tranfers",
+  "exchanges": "Exchanges",
+  "open-orders": "Open Orders",
+  "done-orders": "Done Orders",
+  "today-orders": "Today Orders"
 }

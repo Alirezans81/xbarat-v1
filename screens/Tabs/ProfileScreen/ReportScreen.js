@@ -49,7 +49,7 @@ const ReportScreen = ({ lang, token, stackNavigation }) => {
   if (type === "deposit") {
     return (
       <KeyboardAvoidingView styles={styles.container}>
-        <TopButtonTabs type={type} setType={setType} />
+        <TopButtonTabs type={type} setType={setType} lang={lang} />
         <View style={styles.flex1}>
           <ScrollView style={styles.TableScrollView}>
             <DepositsTable

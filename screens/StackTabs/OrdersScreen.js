@@ -32,7 +32,7 @@ const OrdersScreen = ({ token, navigation, lang }) => {
   if (type === "open") {
     return (
       <View style={styles.container}>
-        <TopButtonTabs type={type} setType={setType} />
+        <TopButtonTabs type={type} setType={setType} lang={lang} />
         <ScrollView style={{ flex: 1 }}>
           <Table
             lang={lang}
@@ -45,7 +45,7 @@ const OrdersScreen = ({ token, navigation, lang }) => {
   } else if (type === "done") {
     return (
       <View style={styles.container}>
-        <TopButtonTabs type={type} setType={setType} />
+        <TopButtonTabs type={type} setType={setType} lang={lang} />
         <ScrollView style={{ flex: 1 }}>
           <Table
             lang={lang}
@@ -58,7 +58,7 @@ const OrdersScreen = ({ token, navigation, lang }) => {
   } else if (type === "today") {
     return (
       <View style={styles.container}>
-        <TopButtonTabs type={type} setType={setType} />
+        <TopButtonTabs type={type} setType={setType} lang={lang} />
         <ScrollView style={{ flex: 1 }}>
           <Table
             lang={lang}
@@ -71,7 +71,7 @@ const OrdersScreen = ({ token, navigation, lang }) => {
   } else {
     return (
       <View style={styles.container}>
-        <TopButtonTabs type={type} setType={setType} />
+        <TopButtonTabs type={type} setType={setType} lang={lang} />
         <ScrollView style={{ flex: 1 }}>
           <Text>{lang["something-wrong"]}</Text>
         </ScrollView>

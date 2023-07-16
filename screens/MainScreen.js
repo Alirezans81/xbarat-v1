@@ -9,6 +9,8 @@ const MainScreen = ({
   refreshToken,
   navigation,
   setLoggedIn,
+  balances,
+  getBalances,
 }) => {
   return (
     <SafeAreaView style={styles.container}>
@@ -19,6 +21,8 @@ const MainScreen = ({
         refreshToken={refreshToken}
         stackNavigation={navigation}
         setLoggedIn={setLoggedIn}
+        balances={balances}
+        getBalances={getBalances}
       />
     </SafeAreaView>
   );

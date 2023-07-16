@@ -9,7 +9,7 @@ import {
 import React from "react";
 import Forms from "../../components/StackTabs/DepositWithdrawalTransferScreen/Forms";
 
-const DepositWithdrawalTransferScreen = ({ lang, route, navigation, lang }) => {
+const DepositWithdrawalTransferScreen = ({ lang, route, navigation }) => {
   return (
     <ScrollView style={styles.container}>
       <TouchableWithoutFeedback

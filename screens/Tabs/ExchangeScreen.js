@@ -66,9 +66,8 @@ const ExchangeScreen = ({
         param.destinationCurrencyId = target.id;
         param.sourceValue = +amount;
         param.rate = +rate;
-        param.calculationMethod = "";
-
-        console.log(param);
+        param.calculationMethod =
+          source.abbreviation + "/" + target.abbreviation;
 
         const config = {
           headers: {

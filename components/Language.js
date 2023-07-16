@@ -9,7 +9,7 @@ const Language = ({ setLang }) => {
   ]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <SelectDropdown
         data={languages.map((e) => e.abb)}
         onSelect={(selectedItem, index) => {
@@ -38,7 +38,7 @@ const Language = ({ setLang }) => {
         selectedRowStyle={styles.selectedRow}
         selectedRowTextStyle={styles.selectedRowText}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     height: "100%",
     width: "100%",
-    zIndex: 100,
   },
   button: {
     backgroundColor: "#026897",

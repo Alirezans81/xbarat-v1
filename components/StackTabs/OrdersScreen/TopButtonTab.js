@@ -2,7 +2,7 @@ import { StyleSheet, Text, ScrollView, View } from "react-native";
 import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const TopButtonTabs = ({ type, setType }) => {
+const TopButtonTabs = ({ type, setType, lang }) => {
   return (
     <View>
       <ScrollView
@@ -22,7 +22,7 @@ const TopButtonTabs = ({ type, setType }) => {
                 : styles.disabledButtonText
             }
           >
-            Open Orders
+            {lang["open-orders"]}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -37,7 +37,7 @@ const TopButtonTabs = ({ type, setType }) => {
                 : styles.disabledButtonText
             }
           >
-            Done Orders
+            {lang["done-orders"]}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -54,7 +54,7 @@ const TopButtonTabs = ({ type, setType }) => {
                 : styles.disabledButtonText
             }
           >
-            Today Orders
+            {lang["today-orders"]}
           </Text>
         </TouchableOpacity>
       </ScrollView>

@@ -2,7 +2,7 @@ import { StyleSheet, Text, ScrollView, View } from "react-native";
 import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const TopButtonTabs = ({ type, setType }) => {
+const TopButtonTabs = ({ type, setType, lang }) => {
   return (
     <View>
       <ScrollView style={styles.container} horizontal>
@@ -20,7 +20,7 @@ const TopButtonTabs = ({ type, setType }) => {
                 : styles.disabledButtonText
             }
           >
-            Deposits
+            {lang["deposits"]}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -37,7 +37,7 @@ const TopButtonTabs = ({ type, setType }) => {
                 : styles.disabledButtonText
             }
           >
-            Withdrawals
+            {lang["withdrawals"]}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -54,7 +54,7 @@ const TopButtonTabs = ({ type, setType }) => {
                 : styles.disabledButtonText
             }
           >
-            Transfers
+            {lang["transfers"]}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -71,7 +71,7 @@ const TopButtonTabs = ({ type, setType }) => {
                 : styles.disabledButtonText
             }
           >
-            Exchanges
+            {lang["exchanges"]}
           </Text>
         </TouchableOpacity>
       </ScrollView>

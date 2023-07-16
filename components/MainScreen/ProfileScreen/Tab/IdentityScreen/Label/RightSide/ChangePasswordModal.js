@@ -79,9 +79,9 @@ const ModalContent = ({ setIsVisible, lang }) => (
   </View>
 );
 
-const ChangePasswordModal = ({ isVisible, setIsVisible }) => (
+const ChangePasswordModal = ({ isVisible, setIsVisible, lang }) => (
   <Modal isVisible={isVisible} avoidKeyboard={true}>
-    <ModalContent setIsVisible={setIsVisible} />
+    <ModalContent setIsVisible={setIsVisible} lang={lang} />
   </Modal>
 );
 

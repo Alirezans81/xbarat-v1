@@ -1,18 +1,17 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Text, StyleSheet, View } from "react-native";
 import React from "react";
-import Language from "../../components/Language";
+import TopBar from "../../components/MainScreen/MoreScreen/TopBar";
+import ScreenButtons from "../../components/MainScreen/MoreScreen/ScreenButtons";
 
-const MoreScreen = ({ setLang, setLoggedIn, lang }) => {
+const MoreScreen = ({ setLang, setLoggedIn, lang, stackNavigation }) => {
   return (
     <View style={styles.container}>
-      <Language setLang={setLang} />
-      <View style={styles.buttonView}>
-        <TouchableOpacity
-          onPress={() => setLoggedIn(false)}
-          style={styles.button}
-        >
-          <Text style={styles.buttonText}>{lang["log-out"]}</Text>
-        </TouchableOpacity>
+      <View>
+        <TopBar setLang={setLang} setLoggedIn={setLoggedIn} lang={lang} />
+        <ScreenButtons lang={lang} stackNavigation={stackNavigation} />
+      </View>
+      <View style={styles.bottomSignView}>
+        <Text style={styles.bottomSign}>{lang["bottom-sign"]}</Text>
       </View>
     </View>
   );
@@ -24,11 +23,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    paddingHorizontal: 20,
+    justifyContent: "space-between",
   },
   buttonView: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
     paddingTop: "8%",
   },
   button: {
@@ -40,5 +37,12 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#E04B4B",
+  },
+  bottomSignView: {
+    alignItems: "center",
+    paddingVertical: 20,
+  },
+  bottomSign: {
+    color: "#999",
   },
 });

@@ -14,7 +14,7 @@ const Buttons = ({ lang, currency, stackNavigation, balances }) => {
         }}
         style={[styles.button, styles.transferButton]}
       >
-        <Text style={styles.buttonText}>{lang["tranfer"]}</Text>
+        <Text style={styles.buttonText}>{lang["transfer"]}</Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {

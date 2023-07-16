@@ -20,6 +20,8 @@ const EditExchangeModal = ({
   rate,
   lang,
   editAlert,
+  inventory,
+  source,
 }) => {
   return (
     <Modal isVisible={isVisible}>
@@ -36,6 +38,7 @@ const EditExchangeModal = ({
             />
           </TouchableOpacity>
           <View style={ModalStyles.content}>
+            <Inventory lang={lang} source={source} inventory={inventory} />
             <Formik
               initialValues={{ amount, rate }}
               onSubmit={(values) => {
@@ -145,11 +148,26 @@ const ModalStyles = StyleSheet.create({
 import convertNumber from "../../hooks/convertNumber";
 import convertDate from "../../hooks/convertDate";
 import axios from "axios";
+import { useEffect } from "react";
+import Inventory from "../../components/MainScreen/ExchangeScreen/ExchangeForm/Inventory";
 
-const OrderDetails = ({ route, navigation, token, lang }) => {
+const OrderDetails = ({
+  route,
+  navigation,
+  token,
+  lang,
+  balances,
+  getBalances,
+}) => {
   const api = require("../../assets/api.json");
 
   const { data } = route.params;
+
+  const [inventory, setInventory] = useState(0);
+  useEffect(() => {
+    const found = balances.find((e) => e.currencyId === data.sourceCurrency.id);
+    setInventory(found.money);
+  }, []);
 
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
@@ -166,6 +184,7 @@ const OrderDetails = ({ route, navigation, token, lang }) => {
         config
       )
       .then((result) => {
+        getBalances();
         navigation.goBack();
       })
       .catch((error) => {
@@ -239,8 +258,6 @@ const OrderDetails = ({ route, navigation, token, lang }) => {
     ]);
   };
 
-  console.log(data);
-
   return (
     <ScrollView style={styles.container}>
       <EditExchangeModal
@@ -251,6 +268,8 @@ const OrderDetails = ({ route, navigation, token, lang }) => {
         rate={data.rate + ""}
         editAlert={editAlert}
         lang={lang}
+        inventory={inventory + data.sourceMoney}
+        source={data.sourceCurrency.abbreviation}
       />
       <View>
         <View style={styles.row}>
@@ -309,7 +328,7 @@ const OrderDetails = ({ route, navigation, token, lang }) => {
           style={[styles.button, styles.editButton]}
         >
           <Text style={[styles.buttonText, styles.editButtonText]}>
-            {lang["edit-exhcange"]}
+            {lang["edit-exchange"]}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity

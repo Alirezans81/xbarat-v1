@@ -16,33 +16,12 @@ const TabNavigator = ({
   refreshToken,
   stackNavigation,
   setLoggedIn,
+  balances,
+  getBalances,
 }) => {
   const iconSize = 37;
 
   const api = require("../assets/api.json");
-
-  const [balances, setBalances] = useState();
-  const getBalances = async () => {
-    if (refreshToken()) {
-      setBalances([]);
-      try {
-        const config = {
-          headers: {
-            Authorization: "Bearer " + token.accessToken,
-          },
-        };
-
-        const result = await axios.get(api["wallet-balances"], config);
-
-        setBalances(result.data);
-      } catch (error) {
-        console.log(JSON.stringify(error));
-      }
-    }
-  };
-  useEffect(() => {
-    getBalances();
-  }, []);
 
   const [userInfo, setUserInfo] = useState();
   const getUserInfo = async () => {
