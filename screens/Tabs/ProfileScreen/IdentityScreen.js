@@ -17,11 +17,11 @@ const IdentityScreen = ({ lang, token, refreshToken, userInfo }) => {
   const api = require("../../../assets/api.json");
 
   const [nationalities, setNationalities] = useState([
-    { title: "Iranian", value: "3F93CEF6-34CF-4005-AAAD-130F1370C805" },
-    { title: "German", value: "810A3FE6-AB28-4790-B134-14E3D10CDDA7" },
-    { title: "Turkish", value: "55C1C51D-5151-4F44-B1F5-742AD4439969" },
-    { title: "Afghan", value: "ADAE4BDF-FB8A-47FE-BD9D-F8BEC3853C77" },
-    { title: "Canadian", value: "21D65C65-B33E-474C-B903-FF71A867E3ED" },
+    { title: "Iranian", value: "3f93cef6-34cf-4005-aaad-130f1370c805" },
+    { title: "German", value: "810a3fe6-ab28-4790-b134-14e3d10cdda7" },
+    { title: "Turkish", value: "55c1c51d-5151-4f44-b1f5-742ad4439969" },
+    { title: "Afghan", value: "adae4bdf-fb8a-47fe-bd9d-f8bec3853c77" },
+    { title: "Canadian", value: "21d65c65-b33e-474c-b903-ff71a867e3ed" },
   ]);
   const [initialNationalityIndex, setInitalNationalityIndex] = useState();
   const [selectedNationalityIndex, setSelectedNationalityIndex] = useState();
@@ -31,30 +31,48 @@ const IdentityScreen = ({ lang, token, refreshToken, userInfo }) => {
   const [cities, setCities] = useState([]);
   const [initialCityIndex, setInitalCityIndex] = useState();
   const [selectedCityIndex, setSelectedCityIndex] = useState();
-  const [afghanistanOffices, setAfghanistanOffices] = useState([
-    {
-      title: "Harat",
-      address:
-        "Harat - Banke Khoon Road - 19th Emam Moslem Street - Beside Tabassom Clinic",
-      number: "+945345423",
-    },
-    {
-      title: "Mazar Sharif",
-      address:
-        "Mazar Sharif - Yalmareb Majidi Station Market - Third House - Room 47",
-      number: "+949777569",
-    },
-  ]);
+  const [afghanistanOffices, setAfghanistanOffices] = useState([]);
   const [initialAfghanistanOfficeIndex, setInitalAfghanistanOfficeIndex] =
     useState();
   const [selectedAfghanistanOfficeIndex, setSelectedAfghanistanOfficeIndex] =
     useState();
 
+  const getAfghanistanOffices = async () => {
+    setAfghanistanOffices([
+      {
+        title: "Harat",
+        address:
+          "Harat - Banke Khoon Road - 19th Emam Moslem Street - Beside Tabassom Clinic",
+        number: "+945345423",
+      },
+      {
+        title: "Mazar Sharif",
+        address:
+          "Mazar Sharif - Yalmareb Majidi Station Market - Third House - Room 47",
+        number: "+949777569",
+      },
+    ]);
+  };
+  useEffect(() => {
+    getAfghanistanOffices();
+  }, []);
+  const findAfghanistanOfficeIndex = () => {
+    if (userInfo) {
+      const foundIndex = afghanistanOffices.findIndex(
+        (e) => e.address === userInfo.preferredOffice
+      );
+      setSelectedAfghanistanOfficeIndex(foundIndex);
+      setInitalAfghanistanOfficeIndex(foundIndex);
+    }
+  };
+  useEffect(() => {
+    findAfghanistanOfficeIndex();
+  }, [afghanistanOffices]);
+
   const getNationalities = async () => {};
   useEffect(() => {
     getNationalities();
   }, []);
-
   const findNationalityIndex = () => {
     if (userInfo) {
       const foundIndex = nationalities.findIndex(
@@ -80,7 +98,6 @@ const IdentityScreen = ({ lang, token, refreshToken, userInfo }) => {
   useEffect(() => {
     getCountries();
   }, []);
-
   const findCountryIndex = () => {
     if (userInfo) {
       const foundIndex = countries.findIndex(
@@ -116,7 +133,6 @@ const IdentityScreen = ({ lang, token, refreshToken, userInfo }) => {
   useEffect(() => {
     getCities();
   }, [selectedCountryIndex]);
-
   const findCityIndex = () => {
     const foundIndex = cities.findIndex((e) => e.id === userInfo.cityId);
     setSelectedCityIndex(foundIndex);
@@ -142,9 +158,20 @@ const IdentityScreen = ({ lang, token, refreshToken, userInfo }) => {
     getCities();
   };
 
-  const updateProfile = (valeus) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + token.accessToken,
+    },
+  };
 
-  }
+  const updateProfile = async (values) => {
+    await axios
+      .put(api["profile"], values, config)
+      .then((result) => {})
+      .catch((error) => {
+        console.log(JSON.stringify(error));
+      });
+  };
 
   return (
     <KeyboardAvoidingView
@@ -153,19 +180,44 @@ const IdentityScreen = ({ lang, token, refreshToken, userInfo }) => {
     >
       <Formik
         initialValues={{
-          id: userInfo ? userInfo.id : "",
-          firstName: userInfo ? userInfo.firstName : "",
-          lastName: userInfo ? userInfo.lastName : "",
-          phoneNumber: userInfo ? userInfo.phoneNumber : "",
-          email: userInfo ? userInfo.email : "",
-          nationalCode: userInfo ? userInfo.nationalCode : "",
-          tazkareNumber: userInfo ? userInfo.tazkareNumber : "",
-          passportNumber: userInfo ? userInfo.passportNumber : "",
-          shabaNumber: userInfo ? userInfo.shabaNumber : "",
-          cartNumber: userInfo ? userInfo.cartNumber : "",
-          bankEmail: userInfo ? userInfo.bankEmail : "",
+          id: userInfo && userInfo.id ? userInfo.id : "",
+          firstName: userInfo && userInfo.firstName ? userInfo.firstName : "",
+          lastName: userInfo && userInfo.lastName ? userInfo.lastName : "",
+          phoneNumber:
+            userInfo && userInfo.phoneNumber ? userInfo.phoneNumber : "",
+          email: userInfo && userInfo.email ? userInfo.email : "",
+          nationalCode:
+            userInfo && userInfo.nationalCode ? userInfo.nationalCode : "",
+          tazkareNumber:
+            userInfo && userInfo.tazkareNumber ? userInfo.tazkareNumber : "",
+          passportNumber:
+            userInfo && userInfo.passportNumber ? userInfo.passportNumber : "",
+          shabaNumber:
+            userInfo && userInfo.shabaNumber ? userInfo.shabaNumber : "",
+          cartNumber:
+            userInfo && userInfo.cartNumber ? userInfo.cartNumber : "",
+          bankEmail: userInfo && userInfo.bankEmail ? userInfo.bankEmail : "",
         }}
-        onSubmit={(values) => {}}
+        onSubmit={(values) => {
+          let newValues = values;
+
+          newValues.nationalityId = nationalities[selectedNationalityIndex]
+            ? nationalities[selectedNationalityIndex].value
+            : "";
+          newValues.countryId = countries[selectedCountryIndex]
+            ? countries[selectedCountryIndex].value
+            : "";
+          newValues.cityId = cities[selectedCityIndex]
+            ? cities[selectedCityIndex].id
+            : "";
+          newValues.preferredOffice = afghanistanOffices[
+            selectedAfghanistanOfficeIndex
+          ]
+            ? afghanistanOffices[selectedAfghanistanOfficeIndex].address
+            : "";
+
+          updateProfile(newValues);
+        }}
       >
         {({ handleChange, handleBlur, handleSubmit, values, resetForm }) => (
           <>

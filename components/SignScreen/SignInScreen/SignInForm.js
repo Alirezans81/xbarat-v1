@@ -46,7 +46,7 @@ const SignInForm = ({ lang, setLoggedIn, setToken, setLoadingSpinner }) => {
   return (
     <View style={styles.container}>
       <Formik
-        initialValues={{ email: "sina1@gmail.com", password: "test_s_1" }}
+        initialValues={{ email: "fisyjulo@lyft.live", password: "123456" }}
         onSubmit={(values) => {
           if (checkEmail(values) && checkPassword(values)) {
             signin(values.email, values.password);

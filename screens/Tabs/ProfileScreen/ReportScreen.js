@@ -64,7 +64,7 @@ const ReportScreen = ({ lang, token, stackNavigation }) => {
   } else if (type === "withdrawal") {
     return (
       <KeyboardAvoidingView styles={styles.container}>
-        <TopButtonTabs type={type} setType={setType} />
+        <TopButtonTabs type={type} setType={setType} lang={lang} />
         <View style={styles.flex1}>
           <ScrollView style={styles.TableScrollView}>
             <WithdrawalsTable
@@ -79,7 +79,7 @@ const ReportScreen = ({ lang, token, stackNavigation }) => {
   } else if (type === "transfer") {
     return (
       <KeyboardAvoidingView styles={styles.container}>
-        <TopButtonTabs type={type} setType={setType} />
+        <TopButtonTabs type={type} setType={setType} lang={lang} />
         <View style={styles.flex1}>
           <ScrollView style={styles.TableScrollView}>
             <TransfersTable
@@ -94,7 +94,7 @@ const ReportScreen = ({ lang, token, stackNavigation }) => {
   } else if (type === "exchange") {
     return (
       <KeyboardAvoidingView styles={styles.container}>
-        <TopButtonTabs type={type} setType={setType} />
+        <TopButtonTabs type={type} setType={setType} lang={lang} />
         <View style={styles.flex1}>
           <ScrollView style={styles.TableScrollView}>
             <ExchagesTable
@@ -109,10 +109,10 @@ const ReportScreen = ({ lang, token, stackNavigation }) => {
   } else {
     return (
       <KeyboardAvoidingView styles={styles.container}>
-        <TopButtonTabs type={type} setType={setType} />
+        <TopButtonTabs type={type} setType={setType} lang={lang} />
         <View style={styles.flex1}>
           <ScrollView style={styles.TableScrollView}>
-            <Text>Somthing wrong!</Text>
+            <Text>{lang["something-wrong"]}</Text>
           </ScrollView>
         </View>
       </KeyboardAvoidingView>

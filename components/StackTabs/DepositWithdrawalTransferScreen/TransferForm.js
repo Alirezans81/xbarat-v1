@@ -29,7 +29,7 @@ const TransferForm = ({ currencies, currency, balances, lang, navigation }) => {
     }
   }, [internalCurrencies]);
   const findInventory = () => {
-    if (internalCurrencies[selectedCurrencyIndex]) {
+    if (internalCurrencies[selectedCurrencyIndex] && balances) {
       const found = balances.find(
         (e) =>
           e.currency === internalCurrencies[selectedCurrencyIndex].abbreviation

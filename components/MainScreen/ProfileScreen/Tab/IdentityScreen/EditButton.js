@@ -41,6 +41,7 @@ const EditButton = ({
         <TouchableOpacity
           style={styles.submitButton}
           onPress={() => {
+            handleSubmit();
             setEditable(false);
           }}
         >

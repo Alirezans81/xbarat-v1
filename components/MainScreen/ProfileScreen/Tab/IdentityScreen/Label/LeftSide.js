@@ -15,7 +15,9 @@ const LeftSide = ({ lang, userInfo }) => {
           <Text style={styles.personCode}>{userInfo.personCode}</Text>
         </View>
       ) : (
-        <Text style={styles.profileWarn}>{lang["complete-profile-warn"]}</Text>
+        <Text style={styles.profileWarn}>
+          {lang["complete-profile-warn"] + "."}
+        </Text>
       )}
     </View>
   );
@@ -33,9 +35,10 @@ const styles = StyleSheet.create({
     height: 60,
   },
   profileWarn: {
-    fontSize: 17,
+    fontSize: 18,
     marginLeft: 10,
     fontWeight: "300",
+    width: 150,
   },
   personCodeView: {
     marginLeft: 10,
