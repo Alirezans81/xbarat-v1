@@ -1,4 +1,4 @@
-import { StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, ScrollView, Alert } from "react-native";
 import React from "react";
 import DepositStatus from "./Deposit/DepositStatus";
 import DepositDetails from "./Deposit/DepositDetails";
@@ -40,24 +40,102 @@ const Deposit = ({ data, navigation, token, lang }) => {
   const [editRequestModalIsVisible, setEditRequestModalIsVisible] =
     useState(false);
 
+  const config = {
+    headers: {
+      Authorization: "Bearer " + token.accessToken,
+    },
+  };
+
+  const edit = async (newAmount) => {
+    const param = {
+      amount: newAmount,
+      currencyId: data.currencyId,
+      countryId: data.countryId,
+    };
+
+    await axios
+      .put(api["edit-deposit"] + data.id, param, config)
+      .then((result) => {
+        navigation.goBack();
+      })
+      .catch((error) => {
+        console.log(JSON.stringify(error));
+      });
+  };
+  const editAlert = (newAmount) => {
+    const message =
+      "Are you sure you want to change your amount from " +
+      data.money +
+      " to " +
+      newAmount +
+      "?";
+    Alert.alert("Are you sure?", message, [
+      {
+        text: lang["cancel"],
+        onPress: () => {},
+        style: "cancel",
+      },
+      {
+        text: lang["ok"],
+        onPress: () => {
+          edit(newAmount);
+          setEditRequestModalIsVisible(false);
+        },
+      },
+    ]);
+  };
+
+  const cancel = async () => {
+    await axios
+      .patch(
+        api["cancel-deposit-1st"] + data.id + api["cancel-deposit-2nd"],
+        {},
+        config
+      )
+      .then((result) => {
+        navigation.goBack();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const cancelAlert = () => {
+    Alert.alert(
+      "Are you sure?",
+      "Are you sure you want cancel the deposit request?",
+      [
+        {
+          text: lang["cancel"],
+          onPress: () => {},
+          style: "cancel",
+        },
+        {
+          text: lang["ok"],
+          onPress: () => {
+            cancel();
+          },
+        },
+      ]
+    );
+  };
+
   if (data.status === "New") {
     return (
       <ScrollView style={styles.container}>
         <EditRequestModal
-          navigation={navigation}
           amount={data.money + ""}
           isVisible={editRequestModalIsVisible}
           setIsVisible={setEditRequestModalIsVisible}
           lang={lang}
+          editAlert={editAlert}
         />
         <DepositStatus status={data.status} lang={lang} />
         <DepositDetails countryTitle={countryTitle} data={data} lang={lang} />
         <Assignment lang={lang} />
         <Buttons
-          id={data.id}
-          navigation={navigation}
           setEditRequestModalIsVisible={setEditRequestModalIsVisible}
           lang={lang}
+          cancelAlert={cancelAlert}
         />
       </ScrollView>
     );
@@ -102,7 +180,7 @@ const Deposit = ({ data, navigation, token, lang }) => {
       <ScrollView style={styles.container}>
         <DepositStatus status={data.status} lang={lang} />
         <DepositDetails countryTitle={countryTitle} data={data} lang={lang} />
-        <UploadedImage  />
+        <UploadedImage />
       </ScrollView>
     );
   } else if (data.status === "Accepted") {

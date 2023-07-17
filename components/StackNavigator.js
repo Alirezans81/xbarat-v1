@@ -71,6 +71,7 @@ const StackNavigator = ({
         options={{ headerShown: false }}
       />
       <Stack.Screen
+        options={{ title: lang["orders"] }}
         name="Orders"
         children={(props) => (
           <OrdersScreen
@@ -83,6 +84,7 @@ const StackNavigator = ({
         )}
       />
       <Stack.Screen
+        options={{ title: lang["order-details"] }}
         name="Order Details"
         children={(props) => (
           <OrderDetails
@@ -98,7 +100,7 @@ const StackNavigator = ({
       />
       <Stack.Screen
         name="DepositWithdrawalTransfer"
-        options={{ title: "Transaction" }}
+        options={{ title: lang["transaction"] }}
         children={(props) => (
           <DepositWithdrawalTransferScreen
             {...props}
@@ -110,6 +112,7 @@ const StackNavigator = ({
         )}
       />
       <Stack.Screen
+        options={{ title: lang["request"] }}
         name="Request"
         children={(props) => (
           <Request
@@ -122,11 +125,20 @@ const StackNavigator = ({
         )}
       />
       <Stack.Screen
+        options={{ title: lang["report-details"] }}
         name="Report Details"
         children={(props) => <ReportDetails {...props} lang={lang} />}
       />
-      <Stack.Screen name="About Us" children={(props) => <AboutUsScreen />} />
-      <Stack.Screen name="Help" children={(props) => <HelpScreen />} />
+      <Stack.Screen
+        options={{ title: lang["about-us"] }}
+        name="About Us"
+        children={(props) => <AboutUsScreen {...props} />}
+      />
+      <Stack.Screen
+        options={{ title: lang["help"] }}
+        name="Help"
+        children={(props) => <HelpScreen {...props} />}
+      />
     </Stack.Navigator>
   );
 };

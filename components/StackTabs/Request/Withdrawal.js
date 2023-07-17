@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text } from "react-native";
+import { Alert, ScrollView, StyleSheet, Text } from "react-native";
 import React, { useEffect, useState } from "react";
 import WithdrawalStatus from "./Withdrawal/WithdrawalStatus";
 import WithdrawalDetails from "./Withdrawal/WithdrawalDetails";
@@ -10,7 +10,7 @@ import WaitText from "./Withdrawal/WaitingForPayment/WaitText";
 import UploadedImage from "./Withdrawal/UploadedImage";
 import WhyRejected from "./Withdrawal/Rejected/WhyRejected";
 
-const Withdrawal = ({ data, navigation, lang }) => {
+const Withdrawal = ({ data, navigation, lang, token }) => {
   const api = require("../../../assets/api.json");
 
   const [countries, setCountries] = useState([]);
@@ -37,16 +37,96 @@ const Withdrawal = ({ data, navigation, lang }) => {
   const [editRequestModalIsVisible, setEditRequestModalIsVisible] =
     useState(false);
 
+  const config = {
+    headers: {
+      Authorization: "Bearer " + token.accessToken,
+    },
+  };
+
+  const edit = async (newAmount, newDestination) => {
+    const param = {
+      amount: newAmount,
+      destination: newDestination,
+      currencyId: data.currencyId,
+      countryId: data.countryId,
+    };
+
+    await axios
+      .put(api["edit-withdrawal"] + data.id, param, config)
+      .then((result) => {
+        navigation.goBack();
+      })
+      .catch((error) => {
+        console.log(JSON.stringify(error));
+      });
+  };
+  const editAlert = (newAmount, newDestination) => {
+    const message =
+      "Are you sure you want to change your amount from " +
+      data.money +
+      " to " +
+      newAmount +
+      "?";
+    Alert.alert("Are you sure?", message, [
+      {
+        text: lang["cancel"],
+        onPress: () => {},
+        style: "cancel",
+      },
+      {
+        text: lang["ok"],
+        onPress: () => {
+          edit(newAmount, newDestination);
+          setEditRequestModalIsVisible(false);
+        },
+      },
+    ]);
+  };
+
+  const cancel = async () => {
+    await axios
+      .patch(
+        api["cancel-withdrawal-1st"] + data.id + api["cancel-withdrawal-2nd"],
+        {},
+        config
+      )
+      .then((result) => {
+        navigation.goBack();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const cancelAlert = () => {
+    Alert.alert(
+      "Are you sure?",
+      "Are you sure you want cancel the withdrawal request?",
+      [
+        {
+          text: lang["cancel"],
+          onPress: () => {},
+          style: "cancel",
+        },
+        {
+          text: lang["ok"],
+          onPress: () => {
+            cancel();
+          },
+        },
+      ]
+    );
+  };
+
   if (data.status === "New") {
     return (
       <ScrollView>
         <EditRequestModal
-          navigation={navigation}
           amount={data.money + ""}
           destination={data.destination + ""}
           isVisible={editRequestModalIsVisible}
           setIsVisible={setEditRequestModalIsVisible}
           lang={lang}
+          editAlert={editAlert}
         />
         <WithdrawalStatus status={data.status} lang={lang} />
         <WithdrawalDetails
@@ -56,10 +136,9 @@ const Withdrawal = ({ data, navigation, lang }) => {
         />
         <Assignment lang={lang} />
         <Buttons
-          id={data.id}
-          navigation={navigation}
           setEditRequestModalIsVisible={setEditRequestModalIsVisible}
           lang={lang}
+          cancelAlert={cancelAlert}
         />
       </ScrollView>
     );

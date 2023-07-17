@@ -19,7 +19,7 @@ const TransferDetails = ({ data, lang }) => {
       <View>
         <View style={styles.elementView}>
           <Text style={styles.label}>
-            {lang["Amount"] + "/" + lang["Currency"]}
+            {lang["amount"] + "/" + lang["currency"]}
           </Text>
           <View style={styles.amountCurrencyView}>
             <Text style={[styles.text, styles.amount]}>
@@ -29,7 +29,7 @@ const TransferDetails = ({ data, lang }) => {
           </View>
         </View>
         <View style={styles.elementView}>
-          <Text style={styles.label}>{lang["Date"]}</Text>
+          <Text style={styles.label}>{lang["date"]}</Text>
           <Text style={styles.text}>{convertDate(data.createDate)}</Text>
         </View>
       </View>

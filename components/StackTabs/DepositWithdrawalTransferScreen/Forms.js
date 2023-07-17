@@ -5,7 +5,7 @@ import WithdrawalForm from "./WithdrawalForm";
 import TransferForm from "./TransferForm";
 import axios from "axios";
 
-const SwitchButtons = ({ transactionType, setTransactionType }) => {
+const SwitchButtons = ({ transactionType, setTransactionType, lang }) => {
   return (
     <View style={switchButtonsStyles.container}>
       <TouchableOpacity
@@ -26,7 +26,7 @@ const SwitchButtons = ({ transactionType, setTransactionType }) => {
               : switchButtonsStyles.disabledButtonText,
           ]}
         >
-          Deposit
+          {lang["deposit-button-text"]}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -47,7 +47,7 @@ const SwitchButtons = ({ transactionType, setTransactionType }) => {
               : switchButtonsStyles.disabledButtonText,
           ]}
         >
-          Withdrawals
+          {lang["withdrawal-button-text"]}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -68,7 +68,7 @@ const SwitchButtons = ({ transactionType, setTransactionType }) => {
               : switchButtonsStyles.disabledButtonText,
           ]}
         >
-          Transfer
+          {lang["transfer"]}
         </Text>
       </TouchableOpacity>
     </View>
@@ -123,7 +123,7 @@ const switchButtonsStyles = StyleSheet.create({
   transferButtonText: {},
 });
 
-const Forms = ({ route, lang, navigation }) => {
+const Forms = ({ route, lang, navigation, token }) => {
   const { type, currency, balances } = route.params;
   const [transactionType, setTransactionType] = useState("");
   useEffect(() => {
@@ -151,11 +151,13 @@ const Forms = ({ route, lang, navigation }) => {
         <SwitchButtons
           transactionType={transactionType}
           setTransactionType={setTransactionType}
+          lang={lang}
         />
         <DepositForm
           lang={lang}
           currencies={currencies ? currencies : []}
           navigation={navigation}
+          token={token}
         />
       </View>
     );
@@ -165,6 +167,7 @@ const Forms = ({ route, lang, navigation }) => {
         <SwitchButtons
           transactionType={transactionType}
           setTransactionType={setTransactionType}
+          lang={lang}
         />
         <WithdrawalForm
           navigation={navigation}
@@ -172,6 +175,7 @@ const Forms = ({ route, lang, navigation }) => {
           currency={currency}
           balances={balances}
           lang={lang}
+          token={token}
         />
       </View>
     );
@@ -181,6 +185,7 @@ const Forms = ({ route, lang, navigation }) => {
         <SwitchButtons
           transactionType={transactionType}
           setTransactionType={setTransactionType}
+          lang={lang}
         />
         <TransferForm
           navigation={navigation}
@@ -188,6 +193,7 @@ const Forms = ({ route, lang, navigation }) => {
           currency={currency}
           balances={balances}
           lang={lang}
+          token={token}
         />
       </View>
     );

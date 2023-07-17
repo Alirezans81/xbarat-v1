@@ -15,8 +15,8 @@ const EditRequestModal = ({
   setIsVisible,
   amount,
   destination,
-  navigation,
   lang,
+  editAlert,
 }) => {
   return (
     <Modal isVisible={isVisible}>
@@ -38,8 +38,7 @@ const EditRequestModal = ({
             <Formik
               initialValues={{ amount, destination }}
               onSubmit={(values) => {
-                setIsVisible(false);
-                navigation.goBack();
+                editAlert(values.amount, values.destination);
               }}
             >
               {({ handleBlur, handleChange, values, handleSubmit }) => (

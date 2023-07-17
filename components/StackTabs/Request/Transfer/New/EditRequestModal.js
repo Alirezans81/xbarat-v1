@@ -14,6 +14,7 @@ const EditRequestModal = ({
   isVisible,
   setIsVisible,
   amount,
+  destination,
   lang,
   editAlert,
 }) => {
@@ -35,9 +36,9 @@ const EditRequestModal = ({
           </TouchableOpacity>
           <View style={ModalStyles.content}>
             <Formik
-              initialValues={{ amount }}
+              initialValues={{ amount, destination }}
               onSubmit={(values) => {
-                editAlert(values.amount);
+                editAlert(values.amount, values.destination);
               }}
             >
               {({ handleBlur, handleChange, values, handleSubmit }) => (
@@ -50,6 +51,19 @@ const EditRequestModal = ({
                       onChangeText={handleChange("amount")}
                       onBlur={handleBlur("amount")}
                       value={values.amount}
+                      inputMode="decimal"
+                    />
+                  </View>
+                  <View style={ModalStyles.inputView}>
+                    <Text style={ModalStyles.inputLabel}>
+                      {lang["destination"]}
+                    </Text>
+                    <TextInput
+                      style={ModalStyles.input}
+                      name="destination"
+                      onChangeText={handleChange("destination")}
+                      onBlur={handleBlur("destination")}
+                      value={values.destination}
                       inputMode="decimal"
                     />
                   </View>

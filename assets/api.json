@@ -21,5 +21,17 @@
   "cancel-exchange-1st": "http://94.74.145.156:5271/mobile-api/exchange/",
   "cancel-exchange-2nd": "/cancel",
   "edit-exchange": "http://94.74.145.156:5271/mobile-api/exchange/",
-  "profile": "http://94.74.145.156:5271/api/identity"
+  "profile": "http://94.74.145.156:5271/api/identity",
+  "deposit": "http://94.74.145.156:5271/mobile-api/deposit",
+  "cancel-deposit-1st": "http://94.74.145.156:5271/mobile-api/deposit/",
+  "cancel-deposit-2nd": "/cancel",
+  "edit-deposit": "http://94.74.145.156:5271/mobile-api/deposit/",
+  "cancel-withdrawal-1st": "http://94.74.145.156:5271/mobile-api/withdrawal/",
+  "cancel-withdrawal-2nd": "/cancel",
+  "edit-withdrawal": "http://94.74.145.156:5271/mobile-api/withdrawal/",
+  "withdarwal": "http://94.74.145.156:5271/mobile-api/withdrawal",
+  "transfer": "http://94.74.145.156:5271/mobile-api/transfer",
+  "cancel-transfer-1st": "http://94.74.145.156:5271/mobile-api/transfer/",
+  "cancel-transfer-2nd": "/cancel",
+  "edit-transfer": "http://94.74.145.156:5271/mobile-api/transfer/"
 }

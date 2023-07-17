@@ -32,7 +32,12 @@ const Request = ({ token, route, navigation, lang }) => {
   } else if (data.type.toLowerCase() === "transfer") {
     return (
       <View style={styles.container}>
-        <Transfer data={data} lang={lang} />
+        <Transfer
+          data={data}
+          lang={lang}
+          navigation={navigation}
+          token={token}
+        />
       </View>
     );
   } else {
@@ -47,5 +52,8 @@ const Request = ({ token, route, navigation, lang }) => {
 export default Request;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
 });

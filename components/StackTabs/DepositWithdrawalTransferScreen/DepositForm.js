@@ -8,8 +8,9 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import { Formik } from "formik";
 import SelectDropdown from "react-native-select-dropdown";
+import axios from "axios";
 
-const DepositForm = ({ currencies, navigation, lang }) => {
+const DepositForm = ({ currencies, navigation, lang, token }) => {
   const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState();
 
   const [locations, setLocations] = useState();
@@ -25,19 +26,47 @@ const DepositForm = ({ currencies, navigation, lang }) => {
     setSelectedLocationIndex(null);
   }, [locations]);
 
+  const api = require("../../../assets/api.json");
+  const deposit = async (amount, currencyId, countryId) => {
+    const param = { amount, currencyId, countryId };
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token.accessToken,
+      },
+    };
+    await axios
+      .post(api["deposit"], param, config)
+      .then((result) => {
+        navigation.goBack();
+      })
+      .catch((error) => {
+        console.log(JSON.stringify(error));
+      });
+  };
+
   return (
     <View style={styles.container}>
       <Formik
         initialValues={{ amount: "" }}
         onSubmit={(values) => {
-          navigation.goBack();
+          if (
+            currencies[selectedCurrencyIndex] &&
+            locations[selectedLocationIndex] &&
+            values.amount !== 0
+          ) {
+            deposit(
+              values.amount,
+              currencies[selectedCurrencyIndex].id,
+              locations[selectedLocationIndex].countryId
+            );
+          }
         }}
       >
         {({ handleBlur, handleChange, values, handleSubmit }) => (
           <>
             <SelectDropdown
               data={currencies && currencies.map((e) => e.abbreviation)}
-              defaultButtonText="Choose your currency"
+              defaultButtonText={lang["select-currency-placeholder"]}
               buttonStyle={styles.dropdownButton}
               buttonTextStyle={styles.dropdownButtonText}
               dropdownStyle={styles.dropdown}
@@ -49,7 +78,7 @@ const DepositForm = ({ currencies, navigation, lang }) => {
               onBlur={handleBlur("amount")}
               onChangeText={handleChange("amount")}
               value={values.amount}
-              placeholder="Amount"
+              placeholder={lang["input-amount-placeholder"]}
               style={styles.input}
               keyboardType="numeric"
             />
@@ -57,7 +86,7 @@ const DepositForm = ({ currencies, navigation, lang }) => {
               ref={loactionDropdownRef}
               data={locations && locations.map((e) => e.title)}
               disabled={!selectedCurrencyIndex}
-              defaultButtonText="Choose the location"
+              defaultButtonText={lang["select-location-placeholder"]}
               buttonStyle={styles.dropdownButton}
               buttonTextStyle={styles.dropdownButtonText}
               dropdownStyle={styles.dropdown}

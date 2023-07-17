@@ -9,7 +9,12 @@ import {
 import React from "react";
 import Forms from "../../components/StackTabs/DepositWithdrawalTransferScreen/Forms";
 
-const DepositWithdrawalTransferScreen = ({ lang, route, navigation }) => {
+const DepositWithdrawalTransferScreen = ({
+  lang,
+  route,
+  navigation,
+  token,
+}) => {
   return (
     <ScrollView style={styles.container}>
       <TouchableWithoutFeedback
@@ -19,7 +24,12 @@ const DepositWithdrawalTransferScreen = ({ lang, route, navigation }) => {
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-          <Forms route={route} lang={lang} navigation={navigation} />
+          <Forms
+            route={route}
+            lang={lang}
+            navigation={navigation}
+            token={token}
+          />
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     </ScrollView>

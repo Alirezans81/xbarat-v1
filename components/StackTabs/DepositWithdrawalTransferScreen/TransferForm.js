@@ -9,8 +9,16 @@ import React, { useEffect, useRef, useState } from "react";
 import { Formik } from "formik";
 import SelectDropdown from "react-native-select-dropdown";
 import Inventory from "../../MainScreen/ExchangeScreen/ExchangeForm/Inventory";
+import axios from "axios";
 
-const TransferForm = ({ currencies, currency, balances, lang, navigation }) => {
+const TransferForm = ({
+  currencies,
+  currency,
+  balances,
+  lang,
+  navigation,
+  token,
+}) => {
   const [inventory, setInventory] = useState();
   const [internalCurrencies, setInternalCurrencies] = useState([]);
   const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState();
@@ -41,12 +49,41 @@ const TransferForm = ({ currencies, currency, balances, lang, navigation }) => {
     findInventory();
   }, [selectedCurrencyIndex]);
 
+  const api = require("../../../assets/api.json");
+  const transfer = async (amount, receiverPersonCode, currencyId) => {
+    const param = { amount, receiverPersonCode, currencyId };
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token.accessToken,
+      },
+    };
+
+    await axios
+      .post(api["transfer"], param, config)
+      .then((result) => {
+        navigation.goBack();
+      })
+      .catch((error) => {
+        console.log(JSON.stringify(error));
+      });
+  };
+
   return (
     <View style={styles.container}>
       <Formik
         initialValues={{ amount: "", destination: "" }}
         onSubmit={(values) => {
-          navigation.goBack();
+          if (
+            values.amount !== 0 &&
+            values.destination !== "" &&
+            currencies[selectedCurrencyIndex]
+          ) {
+            transfer(
+              values.amount,
+              values.destination,
+              currencies[selectedCurrencyIndex].id
+            );
+          }
         }}
       >
         {({ handleBlur, handleChange, values, handleSubmit }) => (
@@ -71,7 +108,7 @@ const TransferForm = ({ currencies, currency, balances, lang, navigation }) => {
                   ? internalCurrencies.map((e) => e.abbreviation)
                   : []
               }
-              defaultButtonText="Choose your currency"
+              defaultButtonText={lang["select-currency-placeholder"]}
               buttonStyle={styles.dropdownButton}
               buttonTextStyle={styles.dropdownButtonText}
               dropdownStyle={styles.dropdown}
@@ -83,7 +120,7 @@ const TransferForm = ({ currencies, currency, balances, lang, navigation }) => {
               onBlur={handleBlur("amount")}
               onChangeText={handleChange("amount")}
               value={values.amount}
-              placeholder="Amount"
+              placeholder={lang["input-amount-placeholder"]}
               style={styles.input}
               keyboardType="numeric"
             />
@@ -91,7 +128,7 @@ const TransferForm = ({ currencies, currency, balances, lang, navigation }) => {
               onBlur={handleBlur("destination")}
               onChangeText={handleChange("destination")}
               value={values.destination}
-              placeholder="Destination person code"
+              placeholder={lang["input-destination-person-code-placeholder"]}
               style={styles.input2}
               autoCorrect={false}
             />

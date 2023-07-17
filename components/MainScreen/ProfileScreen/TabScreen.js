@@ -16,6 +16,7 @@ function TabScreen({ lang, token, refreshToken, userInfo, stackNavigation }) {
       }}
     >
       <Tab.Screen
+        options={{ title: lang["identity"] }}
         name="Identity"
         children={() => (
           <IdentityScreen
@@ -27,6 +28,7 @@ function TabScreen({ lang, token, refreshToken, userInfo, stackNavigation }) {
         )}
       />
       <Tab.Screen
+        options={{ title: lang["reports"] }}
         name="Report"
         children={() => (
           <ReportScreen

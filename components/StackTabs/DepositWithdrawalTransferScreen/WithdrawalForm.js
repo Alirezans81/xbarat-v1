@@ -9,12 +9,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { Formik } from "formik";
 import SelectDropdown from "react-native-select-dropdown";
 import Inventory from "../../MainScreen/ExchangeScreen/ExchangeForm/Inventory";
+import axios from "axios";
 
 const WithdrawalForm = ({
   currencies,
   currency,
   balances,
   lang,
+  token,
   navigation,
 }) => {
   const [inventory, setInventory] = useState();
@@ -57,12 +59,43 @@ const WithdrawalForm = ({
     setSelectedLocationIndex(null);
   }, [locations]);
 
+  const api = require("../../../assets/api.json");
+  const withdarwal = async (amount, destination, currencyId, countryId) => {
+    const param = { amount, destination, currencyId, countryId };
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token.accessToken,
+      },
+    };
+
+    await axios
+      .post(api["withdarwal"], param, config)
+      .then((result) => {
+        navigation.goBack();
+      })
+      .catch((error) => {
+        console.log(JSON.stringify(error));
+      });
+  };
+
   return (
     <View style={styles.container}>
       <Formik
         initialValues={{ amount: "", destination: "" }}
         onSubmit={(values) => {
-          navigation.goBack();
+          if (
+            values.amount !== 0 &&
+            values.destination !== "" &&
+            currencies[selectedCurrencyIndex] &&
+            locations[selectedLocationIndex]
+          ) {
+            withdarwal(
+              values.amount,
+              values.destination,
+              currencies[selectedCurrencyIndex].id,
+              locations[selectedLocationIndex].countryId
+            );
+          }
         }}
       >
         {({ handleBlur, handleChange, values, handleSubmit }) => (
@@ -87,7 +120,7 @@ const WithdrawalForm = ({
                   ? internalCurrencies.map((e) => e.abbreviation)
                   : []
               }
-              defaultButtonText="Choose your currency"
+              defaultButtonText={lang["select-currency-placeholder"]}
               buttonStyle={styles.dropdownButton}
               buttonTextStyle={styles.dropdownButtonText}
               dropdownStyle={styles.dropdown}
@@ -99,7 +132,7 @@ const WithdrawalForm = ({
               onBlur={handleBlur("amount")}
               onChangeText={handleChange("amount")}
               value={values.amount}
-              placeholder="Amount"
+              placeholder={lang["input-amount-placeholder"]}
               style={styles.input}
               keyboardType="numeric"
             />
@@ -108,7 +141,7 @@ const WithdrawalForm = ({
               ref={loactionDropdownRef}
               data={locations ? locations.map((e) => e.title) : []}
               disabled={!selectedCurrencyIndex}
-              defaultButtonText="Choose the location"
+              defaultButtonText={lang["select-location-placeholder"]}
               buttonStyle={styles.dropdownButton}
               buttonTextStyle={styles.dropdownButtonText}
               dropdownStyle={styles.dropdown}
@@ -120,7 +153,7 @@ const WithdrawalForm = ({
               onBlur={handleBlur("destination")}
               onChangeText={handleChange("destination")}
               value={values.destination}
-              placeholder="Destination"
+              placeholder={lang["input-destination-placeholder"]}
               style={styles.input}
               keyboardType="numeric"
             />
