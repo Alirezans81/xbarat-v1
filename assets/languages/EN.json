@@ -29,7 +29,7 @@
   "loading": "Loading...",
   "confirm-exchange-message": "You are exchangin your money as fallows:",
   "cancel": "Cancel",
-  "are-you-sure": "Are you sure?",
+  "are-you-sure": "Are you sure",
   "ok": "OK",
   "with-rate-of": "with rate of",
   "exchanges-table-label": "Exchanges Rates",
@@ -128,5 +128,13 @@
   "request": "Request",
   "report-details": "Report Details",
   "identity": "Identity",
-  "reports": "Reports"
+  "reports": "Reports",
+  "edit-message": "Are you sure you want to change your amount from",
+  "to": "to",
+  "cancel-deposit-message": "Are you sure you want cancel the deposit request",
+  "and-change-your-destination-from": "and change your destination from",
+  "cancel-transfer-message": "Are you sure you want cancel the transfer request",
+  "cancel-withdrawal-message": "Are you sure you want cancel the withdrawal request",
+  "cancel-exchange-message": "Are you sure you want cancel the exchange",
+  "and-your-rate-from": "and your rate from"
 }

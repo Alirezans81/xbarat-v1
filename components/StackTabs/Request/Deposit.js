@@ -65,12 +65,15 @@ const Deposit = ({ data, navigation, token, lang, refreshToken }) => {
   const editAlert = (newAmount) => {
     if (refreshToken()) {
       const message =
-        "Are you sure you want to change your amount from " +
+        lang["edit-message"] +
+        " " +
         data.money +
-        " to " +
+        " " +
+        lang["to"] +
+        " " +
         newAmount +
         "?";
-      Alert.alert("Are you sure?", message, [
+      Alert.alert(lang["are-you-sure"] + "?", message, [
         {
           text: lang["cancel"],
           onPress: () => {},
@@ -104,8 +107,8 @@ const Deposit = ({ data, navigation, token, lang, refreshToken }) => {
   const cancelAlert = () => {
     if (refreshToken()) {
       Alert.alert(
-        "Are you sure?",
-        "Are you sure you want cancel the deposit request?",
+        lang["are-you-sure"] + "?",
+        lang["cancel-deposit-message"] + "?",
         [
           {
             text: lang["cancel"],

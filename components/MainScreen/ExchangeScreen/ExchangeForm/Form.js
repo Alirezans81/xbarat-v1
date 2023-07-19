@@ -30,7 +30,7 @@ const Form = ({
       lang["with-rate-of"] +
       " " +
       rate;
-    Alert.alert(lang["are-you-sure"], message, [
+    Alert.alert(lang["are-you-sure"] + "?", message, [
       {
         text: lang["cancel"],
         onPress: () => {},

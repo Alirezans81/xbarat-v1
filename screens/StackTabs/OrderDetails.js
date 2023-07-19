@@ -196,8 +196,8 @@ const OrderDetails = ({
   const cancelAlert = () => {
     if (refreshToken()) {
       Alert.alert(
-        "Are you sure?",
-        "Are you sure you want cancel the exchange?",
+        lang["are-you-sure"] + "?",
+        lang["cancel-exchange-message"] + "?",
         [
           {
             text: lang["cancel"],
@@ -235,16 +235,23 @@ const OrderDetails = ({
   const editAlert = (newAmount, newRate) => {
     if (refreshToken()) {
       const message =
-        "Are you sure you want to change your amount from " +
+        lang["edit-message"] +
+        " " +
         data.sourceMoney +
-        " to " +
+        " " +
+        lang["to"] +
+        " " +
         newAmount +
-        " and your rate from " +
+        " " +
+        lang["and-your-rate-from"] +
+        " " +
         data.rate +
-        " to " +
+        " " +
+        lang["to"] +
+        " " +
         newRate +
         "?";
-      Alert.alert("Are you sure?", message, [
+      Alert.alert(lang["are-you-sure"] + "?", message, [
         {
           text: lang["cancel"],
           onPress: () => {},

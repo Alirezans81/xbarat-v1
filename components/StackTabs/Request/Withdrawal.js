@@ -63,12 +63,15 @@ const Withdrawal = ({ data, navigation, lang, token, refreshToken }) => {
   const editAlert = (newAmount, newDestination) => {
     if (refreshToken()) {
       const message =
-        "Are you sure you want to change your amount from " +
+        lang["edit-message"] +
+        " " +
         data.money +
-        " to " +
+        " " +
+        lang["to"] +
+        " " +
         newAmount +
         "?";
-      Alert.alert("Are you sure?", message, [
+      Alert.alert(lang["are-you-sure"] + "?", message, [
         {
           text: lang["cancel"],
           onPress: () => {},
@@ -102,8 +105,8 @@ const Withdrawal = ({ data, navigation, lang, token, refreshToken }) => {
   const cancelAlert = () => {
     if (refreshToken()) {
       Alert.alert(
-        "Are you sure?",
-        "Are you sure you want cancel the withdrawal request?",
+        lang["are-you-sure"] + "?",
+        lang["cancel-withdrawal-message"] + "?",
         [
           {
             text: lang["cancel"],

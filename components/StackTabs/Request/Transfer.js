@@ -39,16 +39,23 @@ const Transfer = ({ data, navigation, token, lang, refreshToken }) => {
   const editAlert = (newAmount, newDestination) => {
     if (refreshToken()) {
       const message =
-        "Are you sure you want to change your amount from " +
+        lang["edit-message"] +
+        " " +
         data.money +
-        " to " +
+        " " +
+        lang["to"] +
+        " " +
         newAmount +
-        " and change your destination from " +
+        " " +
+        lang["and-change-your-destination-from"] +
+        " " +
         data.personCode +
-        " to " +
+        " " +
+        lang["to"] +
+        " " +
         newDestination +
         "?";
-      Alert.alert("Are you sure?", message, [
+      Alert.alert(lang["are-you-sure"] + "?", message, [
         {
           text: lang["cancel"],
           onPress: () => {},
@@ -82,8 +89,8 @@ const Transfer = ({ data, navigation, token, lang, refreshToken }) => {
   const cancelAlert = () => {
     if (refreshToken()) {
       Alert.alert(
-        "Are you sure?",
-        "Are you sure you want cancel the transfer request?",
+        lang["are-you-sure"] + "?",
+        lang["cancel-transfer-message"] + "?",
         [
           {
             text: lang["cancel"],
