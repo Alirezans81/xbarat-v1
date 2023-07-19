@@ -7,8 +7,9 @@ import TransferDetails from "./Transfer/TransferDetails";
 import WaitText from "./Transfer/New/WaitText";
 import WhyRejected from "./Transfer/Rejected/WhyRejected";
 import axios from "axios";
+import { useEffect } from "react";
 
-const Transfer = ({ data, navigation, token, lang }) => {
+const Transfer = ({ data, navigation, token, lang, refreshToken }) => {
   const [editRequestModalIsVisible, setEditRequestModalIsVisible] =
     useState(false);
 
@@ -36,30 +37,32 @@ const Transfer = ({ data, navigation, token, lang }) => {
       });
   };
   const editAlert = (newAmount, newDestination) => {
-    const message =
-      "Are you sure you want to change your amount from " +
-      data.money +
-      " to " +
-      newAmount +
-      " and change your destination from " +
-      data.personCode +
-      " to " +
-      newDestination +
-      "?";
-    Alert.alert("Are you sure?", message, [
-      {
-        text: lang["cancel"],
-        onPress: () => {},
-        style: "cancel",
-      },
-      {
-        text: lang["ok"],
-        onPress: () => {
-          edit(newAmount, newDestination);
-          setEditRequestModalIsVisible(false);
+    if (refreshToken()) {
+      const message =
+        "Are you sure you want to change your amount from " +
+        data.money +
+        " to " +
+        newAmount +
+        " and change your destination from " +
+        data.personCode +
+        " to " +
+        newDestination +
+        "?";
+      Alert.alert("Are you sure?", message, [
+        {
+          text: lang["cancel"],
+          onPress: () => {},
+          style: "cancel",
         },
-      },
-    ]);
+        {
+          text: lang["ok"],
+          onPress: () => {
+            edit(newAmount, newDestination);
+            setEditRequestModalIsVisible(false);
+          },
+        },
+      ]);
+    }
   };
 
   const cancel = async () => {
@@ -77,24 +80,30 @@ const Transfer = ({ data, navigation, token, lang }) => {
       });
   };
   const cancelAlert = () => {
-    Alert.alert(
-      "Are you sure?",
-      "Are you sure you want cancel the transfer request?",
-      [
-        {
-          text: lang["cancel"],
-          onPress: () => {},
-          style: "cancel",
-        },
-        {
-          text: lang["ok"],
-          onPress: () => {
-            cancel();
+    if (refreshToken()) {
+      Alert.alert(
+        "Are you sure?",
+        "Are you sure you want cancel the transfer request?",
+        [
+          {
+            text: lang["cancel"],
+            onPress: () => {},
+            style: "cancel",
           },
-        },
-      ]
-    );
+          {
+            text: lang["ok"],
+            onPress: () => {
+              cancel();
+            },
+          },
+        ]
+      );
+    }
   };
+
+  useEffect(() => {
+    refreshToken();
+  }, []);
 
   if (data.status === "New") {
     return (

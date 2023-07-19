@@ -13,7 +13,7 @@ import OtherUploadDocument from "./Deposit/WaitingForPayment/OtherUploadDocument
 import UploadedImage from "./Deposit/UploadedImage";
 import WhyRejected from "./Deposit/Rejected/WhyRejected";
 
-const Deposit = ({ data, navigation, token, lang }) => {
+const Deposit = ({ data, navigation, token, lang, refreshToken }) => {
   const api = require("../../../assets/api.json");
 
   const [countries, setCountries] = useState([]);
@@ -63,26 +63,28 @@ const Deposit = ({ data, navigation, token, lang }) => {
       });
   };
   const editAlert = (newAmount) => {
-    const message =
-      "Are you sure you want to change your amount from " +
-      data.money +
-      " to " +
-      newAmount +
-      "?";
-    Alert.alert("Are you sure?", message, [
-      {
-        text: lang["cancel"],
-        onPress: () => {},
-        style: "cancel",
-      },
-      {
-        text: lang["ok"],
-        onPress: () => {
-          edit(newAmount);
-          setEditRequestModalIsVisible(false);
+    if (refreshToken()) {
+      const message =
+        "Are you sure you want to change your amount from " +
+        data.money +
+        " to " +
+        newAmount +
+        "?";
+      Alert.alert("Are you sure?", message, [
+        {
+          text: lang["cancel"],
+          onPress: () => {},
+          style: "cancel",
         },
-      },
-    ]);
+        {
+          text: lang["ok"],
+          onPress: () => {
+            edit(newAmount);
+            setEditRequestModalIsVisible(false);
+          },
+        },
+      ]);
+    }
   };
 
   const cancel = async () => {
@@ -100,32 +102,36 @@ const Deposit = ({ data, navigation, token, lang }) => {
       });
   };
   const cancelAlert = () => {
-    Alert.alert(
-      "Are you sure?",
-      "Are you sure you want cancel the deposit request?",
-      [
-        {
-          text: lang["cancel"],
-          onPress: () => {},
-          style: "cancel",
-        },
-        {
-          text: lang["ok"],
-          onPress: () => {
-            cancel();
+    if (refreshToken()) {
+      Alert.alert(
+        "Are you sure?",
+        "Are you sure you want cancel the deposit request?",
+        [
+          {
+            text: lang["cancel"],
+            onPress: () => {},
+            style: "cancel",
           },
-        },
-      ]
-    );
+          {
+            text: lang["ok"],
+            onPress: () => {
+              cancel();
+            },
+          },
+        ]
+      );
+    }
   };
 
   const [specificData, setSpecificData] = useState();
   const getSpecificData = async () => {
-    try {
-      const result = await axios.get(api["deposit-data"] + data.id, config);
-      setSpecificData(result.data);
-    } catch (error) {
-      console.log(JSON.stringify(error));
+    if (refreshToken()) {
+      try {
+        const result = await axios.get(api["deposit-data"] + data.id, config);
+        setSpecificData(result.data);
+      } catch (error) {
+        console.log(JSON.stringify(error));
+      }
     }
   };
   useEffect(() => {

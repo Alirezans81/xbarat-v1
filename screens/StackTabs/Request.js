@@ -4,7 +4,7 @@ import Deposit from "../../components/StackTabs/Request/Deposit";
 import Withdrawal from "../../components/StackTabs/Request/Withdrawal";
 import Transfer from "../../components/StackTabs/Request/Transfer";
 
-const Request = ({ token, route, navigation, lang }) => {
+const Request = ({ token, route, navigation, lang, refreshToken }) => {
   const { data } = route.params;
 
   if (data.type.toLowerCase() === "deposit") {
@@ -15,6 +15,7 @@ const Request = ({ token, route, navigation, lang }) => {
           data={data}
           navigation={navigation}
           lang={lang}
+          refreshToken={refreshToken}
         />
       </View>
     );
@@ -26,6 +27,7 @@ const Request = ({ token, route, navigation, lang }) => {
           data={data}
           navigation={navigation}
           lang={lang}
+          refreshToken={refreshToken}
         />
       </View>
     );
@@ -37,6 +39,7 @@ const Request = ({ token, route, navigation, lang }) => {
           lang={lang}
           navigation={navigation}
           token={token}
+          refreshToken={refreshToken}
         />
       </View>
     );

@@ -9,6 +9,7 @@ const SignInScreen = ({
   setLoggedIn,
   setToken,
   setLoadingSpinner,
+  storeAccessToken,
 }) => {
   return (
     <View style={styles.container}>
@@ -18,6 +19,7 @@ const SignInScreen = ({
         lang={lang}
         setToken={setToken}
         setLoadingSpinner={setLoadingSpinner}
+        storeAccessToken={storeAccessToken}
       />
     </View>
   );

@@ -9,7 +9,13 @@ import React, { useState } from "react";
 import { Formik } from "formik";
 import axios from "axios";
 
-const SignInForm = ({ lang, setLoggedIn, setToken, setLoadingSpinner }) => {
+const SignInForm = ({
+  lang,
+  setLoggedIn,
+  setToken,
+  setLoadingSpinner,
+  storeAccessToken,
+}) => {
   const [emailError, setEmailError] = useState(false);
   const checkEmail = (values) => {
     if (values.email === "") setEmailError(true);
@@ -34,6 +40,7 @@ const SignInForm = ({ lang, setLoggedIn, setToken, setLoadingSpinner }) => {
       .post(api["login"], { email, password })
       .then((result) => {
         setLoadingSpinner(false);
+        storeAccessToken(result.data);
         setToken(result.data);
         setLoggedIn(true);
       })
@@ -46,7 +53,7 @@ const SignInForm = ({ lang, setLoggedIn, setToken, setLoadingSpinner }) => {
   return (
     <View style={styles.container}>
       <Formik
-        initialValues={{ email: "sina1@gmail.com", password: "test_s_1" }}
+        initialValues={{ email: "", password: "" }}
         onSubmit={(values) => {
           if (checkEmail(values) && checkPassword(values)) {
             signin(values.email, values.password);

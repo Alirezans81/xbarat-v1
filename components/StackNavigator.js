@@ -18,6 +18,7 @@ const StackNavigator = ({
   token,
   refreshToken,
   setLoggedIn,
+  storeAccessToken,
 }) => {
   const api = require("../assets/api.json");
 
@@ -66,6 +67,7 @@ const StackNavigator = ({
             setLoggedIn={setLoggedIn}
             balances={balances}
             getBalances={getBalances}
+            storeAccessToken={storeAccessToken}
           />
         )}
         options={{ headerShown: false }}

@@ -158,6 +158,7 @@ const OrderDetails = ({
   lang,
   balances,
   getBalances,
+  refreshToken,
 }) => {
   const api = require("../../assets/api.json");
 
@@ -171,12 +172,13 @@ const OrderDetails = ({
 
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
+  const config = {
+    headers: {
+      Authorization: "Bearer " + token.accessToken,
+    },
+  };
+
   const cancelExchange = async () => {
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token.accessToken,
-      },
-    };
     await axios
       .patch(
         api["cancel-exchange-1st"] + data.id + api["cancel-exchange-2nd"],
@@ -192,28 +194,28 @@ const OrderDetails = ({
       });
   };
   const cancelAlert = () => {
-    Alert.alert("Are you sure?", "Are you sure you want cancel the exchange?", [
-      {
-        text: lang["cancel"],
-        onPress: () => {},
-        style: "cancel",
-      },
-      {
-        text: lang["ok"],
-        onPress: () => {
-          cancelExchange();
-        },
-      },
-    ]);
+    if (refreshToken()) {
+      Alert.alert(
+        "Are you sure?",
+        "Are you sure you want cancel the exchange?",
+        [
+          {
+            text: lang["cancel"],
+            onPress: () => {},
+            style: "cancel",
+          },
+          {
+            text: lang["ok"],
+            onPress: () => {
+              cancelExchange();
+            },
+          },
+        ]
+      );
+    }
   };
 
   const editExchange = async (newAmount, newRate) => {
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token.accessToken,
-      },
-    };
-
     let param = {};
     param.sourceCurrencyId = data.sourceCurrency.id;
     param.destinationCurrencyId = data.destinationMoney.id;
@@ -231,30 +233,32 @@ const OrderDetails = ({
       });
   };
   const editAlert = (newAmount, newRate) => {
-    const message =
-      "Are you sure you want to change your amount from " +
-      data.sourceMoney +
-      " to " +
-      newAmount +
-      " and your rate from " +
-      data.rate +
-      " to " +
-      newRate +
-      "?";
-    Alert.alert("Are you sure?", message, [
-      {
-        text: lang["cancel"],
-        onPress: () => {},
-        style: "cancel",
-      },
-      {
-        text: lang["ok"],
-        onPress: () => {
-          setModalIsVisible(false);
-          editExchange(newAmount, newRate);
+    if (refreshToken()) {
+      const message =
+        "Are you sure you want to change your amount from " +
+        data.sourceMoney +
+        " to " +
+        newAmount +
+        " and your rate from " +
+        data.rate +
+        " to " +
+        newRate +
+        "?";
+      Alert.alert("Are you sure?", message, [
+        {
+          text: lang["cancel"],
+          onPress: () => {},
+          style: "cancel",
         },
-      },
-    ]);
+        {
+          text: lang["ok"],
+          onPress: () => {
+            setModalIsVisible(false);
+            editExchange(newAmount, newRate);
+          },
+        },
+      ]);
+    }
   };
 
   return (

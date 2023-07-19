@@ -1,42 +1,61 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, View, StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import SignScreen from "./screens/SignScreen";
 import axios from "axios";
 import "react-native-gesture-handler";
 import StackNavigator from "./components/StackNavigator";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App() {
-  const api = require("./assets/api.json");
-
   const [lang, setLang] = useState(require("./assets/languages/EN.json"));
   const [loggedIn, setLoggedIn] = useState(false);
   const [token, setToken] = useState({});
 
-  const refreshToken = async () => {
+  const refreshToken = () => {
     if (new Date(token.expiration) < new Date()) {
-      try {
-        let config = {
-          headers: {
-            Authorization: "Bearer " + token.accessToken,
-          },
-        };
-        const result = await axios.post(
-          api["refresh-token"],
-          token.refreshToken,
-          config
-        );
-
-        setToken(result.data);
-      } catch (error) {
-        console.log(JSON.stringify(error));
-      }
+      storeAccessToken({})
+        .then(() => {
+          setLoggedIn(false);
+        })
+        .catch((error) => {
+          console.log(JSON.stringify(error));
+        });
 
       return false;
     } else {
       return true;
     }
   };
+
+  const storeAccessToken = async (token) => {
+    try {
+      await AsyncStorage.setItem("Authorization", JSON.stringify(token));
+    } catch (error) {
+      console.log(JSON.stringify(error));
+    }
+  };
+  const getAccessTokenFromStorage = async () => {
+    await AsyncStorage.getItem("Authorization")
+      .then((token) => {
+        const parsedToken = JSON.parse(token);
+
+        if (parsedToken && new Date(parsedToken.expiration) > new Date()) {
+          setToken(parsedToken);
+          setLoggedIn(true);
+
+          return true;
+        } else {
+          return false;
+        }
+      })
+      .catch((error) => {
+        console.log(JSON.stringify(error));
+      });
+  };
+  useEffect(() => {
+    getAccessTokenFromStorage();
+  }, []);
 
   return (
     <NavigationContainer>
@@ -50,6 +69,7 @@ export default function App() {
               token={token}
               refreshToken={refreshToken}
               setLoggedIn={setLoggedIn}
+              storeAccessToken={storeAccessToken}
             />
           </>
         ) : (
@@ -60,6 +80,7 @@ export default function App() {
               setLang={setLang}
               setLoggedIn={setLoggedIn}
               setToken={setToken}
+              storeAccessToken={storeAccessToken}
             />
           </>
         )}

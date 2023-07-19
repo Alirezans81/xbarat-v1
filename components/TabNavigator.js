@@ -18,6 +18,7 @@ const TabNavigator = ({
   setLoggedIn,
   balances,
   getBalances,
+  storeAccessToken,
 }) => {
   const iconSize = 37;
 
@@ -137,6 +138,7 @@ const TabNavigator = ({
             refreshToken={refreshToken}
             stackNavigation={stackNavigation}
             setLoggedIn={setLoggedIn}
+            storeAccessToken={storeAccessToken}
           />
         )}
         options={{

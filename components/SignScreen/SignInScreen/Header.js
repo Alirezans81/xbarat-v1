@@ -5,7 +5,11 @@ const Header = ({ setSign, lang }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.loginText}>{lang["login"]}</Text>
-      <TouchableOpacity onPress={() => setSign("up")}>
+      <TouchableOpacity
+        onPress={() => {
+          // setSign("up");
+        }}
+      >
         <Text style={styles.signupButtonText}>{lang["signup button"]}</Text>
       </TouchableOpacity>
     </View>

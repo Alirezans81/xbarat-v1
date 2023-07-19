@@ -5,7 +5,13 @@ import SignInScreen from "./SignScreen/SignInScreen";
 import SignUpScreen from "./SignScreen/SignUpScreen";
 import Language from "../components/Language";
 
-const SignScreen = ({ lang, setLang, setLoggedIn, setToken }) => {
+const SignScreen = ({
+  lang,
+  setLang,
+  setLoggedIn,
+  setToken,
+  storeAccessToken,
+}) => {
   const [sign, setSign] = useState("in");
 
   const backgroundImg = require("../assets/SignScreenBackground.png");
@@ -30,6 +36,7 @@ const SignScreen = ({ lang, setLang, setLoggedIn, setToken }) => {
             setLoggedIn={setLoggedIn}
             setToken={setToken}
             setLoadingSpinner={setLoadingSpinner}
+            storeAccessToken={storeAccessToken}
           />
         ) : (
           <SignUpScreen

@@ -123,7 +123,14 @@ const switchButtonsStyles = StyleSheet.create({
   transferButtonText: {},
 });
 
-const Forms = ({ route, lang, navigation, token, setLoadingSpinner }) => {
+const Forms = ({
+  route,
+  lang,
+  navigation,
+  token,
+  setLoadingSpinner,
+  refreshToken,
+}) => {
   const { type, currency, balances } = route.params;
   const [transactionType, setTransactionType] = useState("");
   useEffect(() => {
@@ -159,6 +166,7 @@ const Forms = ({ route, lang, navigation, token, setLoadingSpinner }) => {
           navigation={navigation}
           token={token}
           setLoadingSpinner={setLoadingSpinner}
+          refreshToken={refreshToken}
         />
       </View>
     );
@@ -178,6 +186,7 @@ const Forms = ({ route, lang, navigation, token, setLoadingSpinner }) => {
           lang={lang}
           token={token}
           setLoadingSpinner={setLoadingSpinner}
+          refreshToken={refreshToken}
         />
       </View>
     );
@@ -197,6 +206,7 @@ const Forms = ({ route, lang, navigation, token, setLoadingSpinner }) => {
           lang={lang}
           token={token}
           setLoadingSpinner={setLoadingSpinner}
+          refreshToken={refreshToken}
         />
       </View>
     );

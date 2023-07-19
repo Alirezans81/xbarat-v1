@@ -16,6 +16,7 @@ const DepositForm = ({
   lang,
   token,
   setLoadingSpinner,
+  refreshToken,
 }) => {
   const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState();
 
@@ -34,24 +35,26 @@ const DepositForm = ({
 
   const api = require("../../../assets/api.json");
   const deposit = async (amount, currencyId, countryId) => {
-    const param = { amount, currencyId, countryId };
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token.accessToken,
-      },
-    };
+    if (refreshToken()) {
+      const param = { amount, currencyId, countryId };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token.accessToken,
+        },
+      };
 
-    setLoadingSpinner(true);
-    await axios
-      .post(api["deposit"], param, config)
-      .then((result) => {
-        setLoadingSpinner(false);
-        navigation.goBack();
-      })
-      .catch((error) => {
-        console.log(JSON.stringify(error));
-        setLoadingSpinner(false);
-      });
+      setLoadingSpinner(true);
+      await axios
+        .post(api["deposit"], param, config)
+        .then((result) => {
+          setLoadingSpinner(false);
+          navigation.goBack();
+        })
+        .catch((error) => {
+          console.log(JSON.stringify(error));
+          setLoadingSpinner(false);
+        });
+    }
   };
 
   return (

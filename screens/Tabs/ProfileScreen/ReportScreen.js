@@ -13,7 +13,7 @@ import TransfersTable from "../../../components/MainScreen/ProfileScreen/Tab/Rep
 import ExchagesTable from "../../../components/MainScreen/ProfileScreen/Tab/ReportScreen/ExchagesTable";
 import axios from "axios";
 
-const ReportScreen = ({ lang, token, stackNavigation }) => {
+const ReportScreen = ({ lang, token, stackNavigation, refreshToken }) => {
   const [type, setType] = useState("deposit");
 
   const api = require("../../../assets/api.json");
@@ -23,23 +23,25 @@ const ReportScreen = ({ lang, token, stackNavigation }) => {
   const [transferReports, setTransferReports] = useState();
   const [exchangeReports, setExchangeReports] = useState();
   const getReports = async () => {
-    try {
-      const config = {
-        headers: {
-          Authorization: "Bearer " + token.accessToken,
-        },
-      };
-      const deposit = await axios.get(api["deposit-reports"], config);
-      const withdrawal = await axios.get(api["withdrawal-reports"], config);
-      const transfer = await axios.get(api["transfer-reports"], config);
-      const exchange = await axios.get(api["exchange-reports"], config);
+    if (refreshToken()) {
+      try {
+        const config = {
+          headers: {
+            Authorization: "Bearer " + token.accessToken,
+          },
+        };
+        const deposit = await axios.get(api["deposit-reports"], config);
+        const withdrawal = await axios.get(api["withdrawal-reports"], config);
+        const transfer = await axios.get(api["transfer-reports"], config);
+        const exchange = await axios.get(api["exchange-reports"], config);
 
-      setDepositReports(deposit.data);
-      setWithdrawalReports(withdrawal.data);
-      setTransferReports(transfer.data);
-      setExchangeReports(exchange.data);
-    } catch (error) {
-      console.log(JSON.stringify(error));
+        setDepositReports(deposit.data);
+        setWithdrawalReports(withdrawal.data);
+        setTransferReports(transfer.data);
+        setExchangeReports(exchange.data);
+      } catch (error) {
+        console.log(JSON.stringify(error));
+      }
     }
   };
   useEffect(() => {

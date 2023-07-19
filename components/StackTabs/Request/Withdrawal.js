@@ -10,7 +10,7 @@ import WaitText from "./Withdrawal/WaitingForPayment/WaitText";
 import UploadedImage from "./Withdrawal/UploadedImage";
 import WhyRejected from "./Withdrawal/Rejected/WhyRejected";
 
-const Withdrawal = ({ data, navigation, lang, token }) => {
+const Withdrawal = ({ data, navigation, lang, token, refreshToken }) => {
   const api = require("../../../assets/api.json");
 
   const [countries, setCountries] = useState([]);
@@ -61,26 +61,28 @@ const Withdrawal = ({ data, navigation, lang, token }) => {
       });
   };
   const editAlert = (newAmount, newDestination) => {
-    const message =
-      "Are you sure you want to change your amount from " +
-      data.money +
-      " to " +
-      newAmount +
-      "?";
-    Alert.alert("Are you sure?", message, [
-      {
-        text: lang["cancel"],
-        onPress: () => {},
-        style: "cancel",
-      },
-      {
-        text: lang["ok"],
-        onPress: () => {
-          edit(newAmount, newDestination);
-          setEditRequestModalIsVisible(false);
+    if (refreshToken()) {
+      const message =
+        "Are you sure you want to change your amount from " +
+        data.money +
+        " to " +
+        newAmount +
+        "?";
+      Alert.alert("Are you sure?", message, [
+        {
+          text: lang["cancel"],
+          onPress: () => {},
+          style: "cancel",
         },
-      },
-    ]);
+        {
+          text: lang["ok"],
+          onPress: () => {
+            edit(newAmount, newDestination);
+            setEditRequestModalIsVisible(false);
+          },
+        },
+      ]);
+    }
   };
 
   const cancel = async () => {
@@ -98,32 +100,39 @@ const Withdrawal = ({ data, navigation, lang, token }) => {
       });
   };
   const cancelAlert = () => {
-    Alert.alert(
-      "Are you sure?",
-      "Are you sure you want cancel the withdrawal request?",
-      [
-        {
-          text: lang["cancel"],
-          onPress: () => {},
-          style: "cancel",
-        },
-        {
-          text: lang["ok"],
-          onPress: () => {
-            cancel();
+    if (refreshToken()) {
+      Alert.alert(
+        "Are you sure?",
+        "Are you sure you want cancel the withdrawal request?",
+        [
+          {
+            text: lang["cancel"],
+            onPress: () => {},
+            style: "cancel",
           },
-        },
-      ]
-    );
+          {
+            text: lang["ok"],
+            onPress: () => {
+              cancel();
+            },
+          },
+        ]
+      );
+    }
   };
 
   const [specificData, setSpecificData] = useState();
   const getSpecificData = async () => {
-    try {
-      const result = await axios.get(api["withdrawal-data"] + data.id, config);
-      setSpecificData(result.data);
-    } catch (error) {
-      console.log(JSON.stringify(error));
+    if (refreshToken()) {
+      try {
+        const result = await axios.get(
+          api["withdrawal-data"] + data.id,
+          config
+        );
+        setSpecificData(result.data);
+      } catch (error) {
+        console.log(JSON.stringify(error));
+      }
     }
   };
   useEffect(() => {

@@ -3,11 +3,22 @@ import React from "react";
 import TopBar from "../../components/MainScreen/MoreScreen/TopBar";
 import ScreenButtons from "../../components/MainScreen/MoreScreen/ScreenButtons";
 
-const MoreScreen = ({ setLang, setLoggedIn, lang, stackNavigation }) => {
+const MoreScreen = ({
+  setLang,
+  setLoggedIn,
+  lang,
+  stackNavigation,
+  storeAccessToken,
+}) => {
   return (
     <View style={styles.container}>
       <View>
-        <TopBar setLang={setLang} setLoggedIn={setLoggedIn} lang={lang} />
+        <TopBar
+          setLang={setLang}
+          setLoggedIn={setLoggedIn}
+          lang={lang}
+          storeAccessToken={storeAccessToken}
+        />
         <ScreenButtons lang={lang} stackNavigation={stackNavigation} />
       </View>
       <View style={styles.bottomSignView}>

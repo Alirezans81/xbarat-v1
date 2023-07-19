@@ -3,7 +3,7 @@ import React from "react";
 import SelectDropdown from "react-native-select-dropdown";
 import { useState } from "react";
 
-const TopBar = ({ setLoggedIn, lang, setLang }) => {
+const TopBar = ({ setLoggedIn, lang, setLang, storeAccessToken }) => {
   const [languages, setLanguages] = useState([
     { abb: "EN", id: "ienfejsgbnrsjgbnrsjg" },
     { abb: "FA", id: "ienfejsgbnrsjgbnrsjg" },
@@ -31,7 +31,10 @@ const TopBar = ({ setLoggedIn, lang, setLang }) => {
       />
       <View style={styles.buttonView}>
         <TouchableOpacity
-          onPress={() => setLoggedIn(false)}
+          onPress={() => {
+            storeAccessToken({});
+            setLoggedIn(false);
+          }}
           style={styles.button}
         >
           <Text style={styles.buttonText}>{lang["log-out"]}</Text>

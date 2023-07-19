@@ -6,23 +6,25 @@ import Table from "../../components/StackTabs/OrdersScreen/Table";
 import { useEffect } from "react";
 import axios from "axios";
 
-const OrdersScreen = ({ token, navigation, lang }) => {
+const OrdersScreen = ({ token, navigation, lang, refreshToken }) => {
   const api = require("../../assets/api.json");
 
   const [type, setType] = useState("open");
 
   const [exhcanges, setExchanges] = useState(null);
   const getExchanges = async () => {
-    try {
-      const config = {
-        headers: {
-          Authorization: "Bearer " + token.accessToken,
-        },
-      };
-      const result = await axios.get(api["exhcanges"], config);
-      setExchanges(result.data);
-    } catch (error) {
-      console.log(JSON.stringify(error));
+    if (refreshToken()) {
+      try {
+        const config = {
+          headers: {
+            Authorization: "Bearer " + token.accessToken,
+          },
+        };
+        const result = await axios.get(api["exhcanges"], config);
+        setExchanges(result.data);
+      } catch (error) {
+        console.log(JSON.stringify(error));
+      }
     }
   };
   useEffect(() => {

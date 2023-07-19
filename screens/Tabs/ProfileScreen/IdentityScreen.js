@@ -112,22 +112,24 @@ const IdentityScreen = ({ lang, token, refreshToken, userInfo }) => {
   }, [countries]);
 
   const getCities = async () => {
-    try {
-      const config = {
-        headers: {
-          Authorization: "Bearer " + token.accessToken,
-        },
-      };
-      const result = await axios.get(
-        api["cities-1st"] +
-          countries[selectedCountryIndex].value +
-          api["cities-2nd"],
-        config
-      );
+    if (refreshToken()) {
+      try {
+        const config = {
+          headers: {
+            Authorization: "Bearer " + token.accessToken,
+          },
+        };
+        const result = await axios.get(
+          api["cities-1st"] +
+            countries[selectedCountryIndex].value +
+            api["cities-2nd"],
+          config
+        );
 
-      setCities(result.data);
-    } catch (error) {
-      console.log(JSON.stringify(error));
+        setCities(result.data);
+      } catch (error) {
+        console.log(JSON.stringify(error));
+      }
     }
   };
   useEffect(() => {
@@ -165,12 +167,14 @@ const IdentityScreen = ({ lang, token, refreshToken, userInfo }) => {
   };
 
   const updateProfile = async (values) => {
-    await axios
-      .put(api["profile"], values, config)
-      .then((result) => {})
-      .catch((error) => {
-        console.log(JSON.stringify(error));
-      });
+    if (refreshToken()) {
+      await axios
+        .put(api["profile"], values, config)
+        .then((result) => {})
+        .catch((error) => {
+          console.log(JSON.stringify(error));
+        });
+    }
   };
 
   return (

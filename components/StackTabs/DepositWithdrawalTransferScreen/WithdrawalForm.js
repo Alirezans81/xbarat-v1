@@ -19,6 +19,7 @@ const WithdrawalForm = ({
   token,
   navigation,
   setLoadingSpinner,
+  refreshToken,
 }) => {
   const [inventory, setInventory] = useState();
   const [internalCurrencies, setInternalCurrencies] = useState([]);
@@ -62,24 +63,26 @@ const WithdrawalForm = ({
 
   const api = require("../../../assets/api.json");
   const withdarwal = async (amount, destination, currencyId, countryId) => {
-    const param = { amount, destination, currencyId, countryId };
-    const config = {
-      headers: {
-        Authorization: "Bearer " + token.accessToken,
-      },
-    };
+    if (refreshToken()) {
+      const param = { amount, destination, currencyId, countryId };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token.accessToken,
+        },
+      };
 
-    setLoadingSpinner(true);
-    await axios
-      .post(api["withdarwal"], param, config)
-      .then((result) => {
-        setLoadingSpinner(false);
-        navigation.goBack();
-      })
-      .catch((error) => {
-        console.log(JSON.stringify(error));
-        setLoadingSpinner(false);
-      });
+      setLoadingSpinner(true);
+      await axios
+        .post(api["withdarwal"], param, config)
+        .then((result) => {
+          setLoadingSpinner(false);
+          navigation.goBack();
+        })
+        .catch((error) => {
+          console.log(JSON.stringify(error));
+          setLoadingSpinner(false);
+        });
+    }
   };
 
   return (

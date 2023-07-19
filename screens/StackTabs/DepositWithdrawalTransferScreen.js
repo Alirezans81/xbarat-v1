@@ -16,6 +16,7 @@ const DepositWithdrawalTransferScreen = ({
   route,
   navigation,
   token,
+  refreshToken,
 }) => {
   const [loadingSpinner, setLoadingSpinner] = useState(false);
 
@@ -35,6 +36,7 @@ const DepositWithdrawalTransferScreen = ({
             navigation={navigation}
             token={token}
             setLoadingSpinner={setLoadingSpinner}
+            refreshToken={refreshToken}
           />
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>

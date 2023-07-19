@@ -60,35 +60,38 @@ const ExchangeScreen = ({
     setTarget(sourceTemp);
   };
   const exchange = async (amount, rate) => {
-    if (amount !== 0 && amount <= inventory && rate !== 0 && source.id) {
-      if (refreshToken()) {
-        let param = {};
-        param.sourceCurrencyId = source.id;
-        param.destinationCurrencyId = target.id;
-        param.sourceValue = +amount;
-        param.rate = +rate;
-        param.calculationMethod =
-          source.abbreviation + "/" + target.abbreviation;
+    if (
+      refreshToken() &&
+      amount !== 0 &&
+      amount <= inventory &&
+      rate !== 0 &&
+      source.id
+    ) {
+      let param = {};
+      param.sourceCurrencyId = source.id;
+      param.destinationCurrencyId = target.id;
+      param.sourceValue = +amount;
+      param.rate = +rate;
+      param.calculationMethod = source.abbreviation + "/" + target.abbreviation;
 
-        const config = {
-          headers: {
-            Authorization: "Bearer " + token.accessToken,
-          },
-        };
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token.accessToken,
+        },
+      };
 
-        setLoadingSpinner(true);
-        await axios
-          .post(api["exchange"], param, config)
-          .then((result) => {
-            getBalances();
-            setLoadingSpinner(false);
-            stackNavigation.navigate("Orders");
-          })
-          .catch((error) => {
-            setLoadingSpinner(false);
-            console.log(JSON.stringify(error));
-          });
-      }
+      setLoadingSpinner(true);
+      await axios
+        .post(api["exchange"], param, config)
+        .then((result) => {
+          getBalances();
+          setLoadingSpinner(false);
+          stackNavigation.navigate("Orders");
+        })
+        .catch((error) => {
+          setLoadingSpinner(false);
+          console.log(JSON.stringify(error));
+        });
     }
   };
   const initalInventory = () => {
