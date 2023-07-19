@@ -15,6 +15,7 @@ import ExchangeForm from "../../components/MainScreen/ExchangeScreen/ExchangeFor
 import Requests from "../../components/MainScreen/ExchangeScreen/Requests";
 import Exchanges from "../../components/MainScreen/ExchangeScreen/Exchanges";
 import { useRef } from "react";
+import Loader from "react-native-modal-loader";
 
 const ExchangeScreen = ({
   lang,
@@ -74,13 +75,17 @@ const ExchangeScreen = ({
             Authorization: "Bearer " + token.accessToken,
           },
         };
+
+        setLoadingSpinner(true);
         await axios
           .post(api["exchange"], param, config)
           .then((result) => {
             getBalances();
+            setLoadingSpinner(false);
             stackNavigation.navigate("Orders");
           })
           .catch((error) => {
+            setLoadingSpinner(false);
             console.log(JSON.stringify(error));
           });
       }
@@ -143,6 +148,8 @@ const ExchangeScreen = ({
     getRequestsAndExchangesData();
   }, [availableSources]);
 
+  const [loadingSpinner, setLoadingSpinner] = useState(false);
+
   return (
     <View style={styles.container}>
       <Image
@@ -155,6 +162,7 @@ const ExchangeScreen = ({
         style={styles.KeyboardAvoidingView}
       >
         <ScrollView>
+          <Loader loading={loadingSpinner} color="#03A9F4" />
           <Header lang={lang} stackNavigation={stackNavigation} />
           <WatchTable
             lang={lang}

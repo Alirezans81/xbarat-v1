@@ -96,7 +96,7 @@ const Deposit = ({ data, navigation, token, lang }) => {
         navigation.goBack();
       })
       .catch((error) => {
-        console.log(error);
+        console.log(JSON.stringify(error));
       });
   };
   const cancelAlert = () => {
@@ -118,6 +118,19 @@ const Deposit = ({ data, navigation, token, lang }) => {
       ]
     );
   };
+
+  const [specificData, setSpecificData] = useState();
+  const getSpecificData = async () => {
+    try {
+      const result = await axios.get(api["deposit-data"] + data.id, config);
+      setSpecificData(result.data);
+    } catch (error) {
+      console.log(JSON.stringify(error));
+    }
+  };
+  useEffect(() => {
+    data.status === "WaitingForAdministrationApprove" && getSpecificData();
+  }, []);
 
   if (data.status === "New") {
     return (
@@ -180,7 +193,13 @@ const Deposit = ({ data, navigation, token, lang }) => {
       <ScrollView style={styles.container}>
         <DepositStatus status={data.status} lang={lang} />
         <DepositDetails countryTitle={countryTitle} data={data} lang={lang} />
-        <UploadedImage />
+        <UploadedImage
+          uri={
+            specificData
+              ? api["deposit-identity"] + specificData.paymentIdentity
+              : ""
+          }
+        />
       </ScrollView>
     );
   } else if (data.status === "Accepted") {
@@ -188,7 +207,13 @@ const Deposit = ({ data, navigation, token, lang }) => {
       <ScrollView style={styles.container}>
         <DepositStatus status={data.status} lang={lang} />
         <DepositDetails countryTitle={countryTitle} data={data} lang={lang} />
-        <UploadedImage />
+        <UploadedImage
+          uri={
+            specificData
+              ? api["deposit-identity"] + specificData.paymentIdentity
+              : ""
+          }
+        />
       </ScrollView>
     );
   } else if (data.status === "Rejected") {
@@ -196,7 +221,13 @@ const Deposit = ({ data, navigation, token, lang }) => {
       <ScrollView style={styles.container}>
         <DepositStatus status={data.status} lang={lang} />
         <DepositDetails countryTitle={countryTitle} data={data} lang={lang} />
-        <UploadedImage />
+        <UploadedImage
+          uri={
+            specificData
+              ? api["deposit-identity"] + specificData.paymentIdentity
+              : ""
+          }
+        />
         <WhyRejected lang={lang} />
       </ScrollView>
     );

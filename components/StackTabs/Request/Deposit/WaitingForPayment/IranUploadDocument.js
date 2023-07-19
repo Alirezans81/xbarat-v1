@@ -64,7 +64,12 @@ const IranUploadDocument = ({ token, amount, navigation, lang }) => {
         }}
       />
       <View style={styles.uploadDocumentView}>
-        <UploadDocument editable={canUpload} lang={lang} />
+        <UploadDocument
+          api={api["upload-deposit-document"]}
+          editable={canUpload}
+          lang={lang}
+          token={token}
+        />
       </View>
       <TouchableOpacity
         onPress={() => {

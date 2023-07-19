@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import React from "react";
 import Forms from "../../components/StackTabs/DepositWithdrawalTransferScreen/Forms";
+import Loader from "react-native-modal-loader";
+import { useState } from "react";
 
 const DepositWithdrawalTransferScreen = ({
   lang,
@@ -15,6 +17,8 @@ const DepositWithdrawalTransferScreen = ({
   navigation,
   token,
 }) => {
+  const [loadingSpinner, setLoadingSpinner] = useState(false);
+
   return (
     <ScrollView style={styles.container}>
       <TouchableWithoutFeedback
@@ -24,11 +28,13 @@ const DepositWithdrawalTransferScreen = ({
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
+          <Loader loading={loadingSpinner} color="#03A9F4" />
           <Forms
             route={route}
             lang={lang}
             navigation={navigation}
             token={token}
+            setLoadingSpinner={setLoadingSpinner}
           />
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>

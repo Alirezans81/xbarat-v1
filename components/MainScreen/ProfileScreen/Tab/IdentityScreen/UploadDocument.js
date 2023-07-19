@@ -1,11 +1,12 @@
 import { StyleSheet, View, Text } from "react-native";
 import { TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
 import ImageModal from "react-native-image-modal";
+import axios from "axios";
 
-const UploadDocument = ({ editable, lang }) => {
+const UploadDocument = ({ editable, lang, api, setImageString, token }) => {
   const [image, setImage] = useState(null);
   const [imageDimension, setImageDimension] = useState();
 
@@ -27,6 +28,33 @@ const UploadDocument = ({ editable, lang }) => {
     setImage(null);
   };
 
+  const upload = async () => {
+    let filename = image.split("/").pop();
+
+    let match = /\.(\w+)$/.exec(filename);
+    let type = match ? `image/${match[1]}` : `image`;
+
+    let formData = new FormData();
+    formData.append("photo", { uri: image, name: filename, type });
+
+    await axios
+      .post(api, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+        Authorization: "Bearer " + token.accessToken,
+      })
+      .then((result) => {
+        // setImageString(result.data);
+        console.log(result.data);
+      })
+      .catch((error) => {
+        console.log(JSON.stringify(error));
+      });
+  };
+
+  useEffect(() => {
+    image && upload();
+  }, [image]);
+
   return (
     <View
       style={styles.container}
@@ -36,7 +64,9 @@ const UploadDocument = ({ editable, lang }) => {
     >
       <TouchableOpacity
         style={editable ? styles.button : styles.disabledButton}
-        onPress={pickImage}
+        onPress={() => {
+          pickImage();
+        }}
         disabled={!editable}
       >
         <Text style={editable ? styles.buttonText : styles.disabledButtonText}>

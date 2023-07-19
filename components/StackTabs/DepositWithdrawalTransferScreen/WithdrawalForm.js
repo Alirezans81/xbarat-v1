@@ -18,6 +18,7 @@ const WithdrawalForm = ({
   lang,
   token,
   navigation,
+  setLoadingSpinner,
 }) => {
   const [inventory, setInventory] = useState();
   const [internalCurrencies, setInternalCurrencies] = useState([]);
@@ -68,13 +69,16 @@ const WithdrawalForm = ({
       },
     };
 
+    setLoadingSpinner(true);
     await axios
       .post(api["withdarwal"], param, config)
       .then((result) => {
+        setLoadingSpinner(false);
         navigation.goBack();
       })
       .catch((error) => {
         console.log(JSON.stringify(error));
+        setLoadingSpinner(false);
       });
   };
 

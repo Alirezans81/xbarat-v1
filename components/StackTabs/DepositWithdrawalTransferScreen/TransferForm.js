@@ -18,6 +18,7 @@ const TransferForm = ({
   lang,
   navigation,
   token,
+  setLoadingSpinner,
 }) => {
   const [inventory, setInventory] = useState();
   const [internalCurrencies, setInternalCurrencies] = useState([]);
@@ -58,13 +59,16 @@ const TransferForm = ({
       },
     };
 
+    setLoadingSpinner(true);
     await axios
       .post(api["transfer"], param, config)
       .then((result) => {
+        setLoadingSpinner(false);
         navigation.goBack();
       })
       .catch((error) => {
         console.log(JSON.stringify(error));
+        setLoadingSpinner(false);
       });
   };
 

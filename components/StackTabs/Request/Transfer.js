@@ -73,7 +73,7 @@ const Transfer = ({ data, navigation, token, lang }) => {
         navigation.goBack();
       })
       .catch((error) => {
-        console.log(error);
+        console.log(JSON.stringify(error));
       });
   };
   const cancelAlert = () => {

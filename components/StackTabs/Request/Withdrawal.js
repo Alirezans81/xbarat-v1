@@ -94,7 +94,7 @@ const Withdrawal = ({ data, navigation, lang, token }) => {
         navigation.goBack();
       })
       .catch((error) => {
-        console.log(error);
+        console.log(JSON.stringify(error));
       });
   };
   const cancelAlert = () => {
@@ -116,6 +116,20 @@ const Withdrawal = ({ data, navigation, lang, token }) => {
       ]
     );
   };
+
+  const [specificData, setSpecificData] = useState();
+  const getSpecificData = async () => {
+    try {
+      const result = await axios.get(api["withdrawal-data"] + data.id, config);
+      setSpecificData(result.data);
+    } catch (error) {
+      console.log(JSON.stringify(error));
+    }
+  };
+  useEffect(() => {
+    (data.status === "Accepted" || data.status === "Rejected") &&
+      getSpecificData();
+  }, []);
 
   if (data.status === "New") {
     return (
@@ -163,7 +177,13 @@ const Withdrawal = ({ data, navigation, lang, token }) => {
           data={data}
           lang={lang}
         />
-        <UploadedImage />
+        <UploadedImage
+          uri={
+            specificData
+              ? api["deposit-identity"] + specificData.paymentIdentity
+              : "/"
+          }
+        />
       </ScrollView>
     );
   } else if (data.status === "Rejected") {
@@ -175,7 +195,13 @@ const Withdrawal = ({ data, navigation, lang, token }) => {
           data={data}
           lang={lang}
         />
-        <UploadedImage />
+        <UploadedImage
+          uri={
+            specificData
+              ? api["deposit-identity"] + specificData.paymentIdentity
+              : "/"
+          }
+        />
         <WhyRejected lang={lang} />
       </ScrollView>
     );

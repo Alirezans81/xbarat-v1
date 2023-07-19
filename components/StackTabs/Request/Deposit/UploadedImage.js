@@ -4,10 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import ImageModal from "react-native-image-modal";
 
-const UploadedImage = () => {
-  const [image, setImage] = useState(
-    require("../../../../assets/test-document.png")
-  );
+const UploadedImage = ({ uri }) => {
   const [imageDimension, setImageDimension] = useState();
 
   const getImage = async () => {
@@ -37,7 +34,7 @@ const UploadedImage = () => {
           },
         ]}
         modalImageStyle={styles.modalImage}
-        source={image}
+        source={{ uri }}
       />
     </View>
   );

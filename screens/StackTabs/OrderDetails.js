@@ -224,7 +224,6 @@ const OrderDetails = ({
     await axios
       .put(api["edit-exchange"] + data.id, param, config)
       .then((result) => {
-        console.log(result);
         navigation.goBack();
       })
       .catch((error) => {

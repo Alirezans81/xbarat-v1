@@ -25,6 +25,7 @@ const Forms = ({
   selectedAfghanistanOfficeIndex,
   setSelectedAfghanistanOfficeIndex,
   citiesDropdown,
+  token,
 }) => {
   return (
     <View style={styles.container}>
@@ -62,6 +63,7 @@ const Forms = ({
             ? nationalities[selectedNationalityIndex].title.toLowerCase()
             : ""
         }
+        token={token}
       />
       <BankInfoForm
         lang={lang}

@@ -10,7 +10,13 @@ import { Formik } from "formik";
 import SelectDropdown from "react-native-select-dropdown";
 import axios from "axios";
 
-const DepositForm = ({ currencies, navigation, lang, token }) => {
+const DepositForm = ({
+  currencies,
+  navigation,
+  lang,
+  token,
+  setLoadingSpinner,
+}) => {
   const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState();
 
   const [locations, setLocations] = useState();
@@ -34,13 +40,17 @@ const DepositForm = ({ currencies, navigation, lang, token }) => {
         Authorization: "Bearer " + token.accessToken,
       },
     };
+
+    setLoadingSpinner(true);
     await axios
       .post(api["deposit"], param, config)
       .then((result) => {
+        setLoadingSpinner(false);
         navigation.goBack();
       })
       .catch((error) => {
         console.log(JSON.stringify(error));
+        setLoadingSpinner(false);
       });
   };
 

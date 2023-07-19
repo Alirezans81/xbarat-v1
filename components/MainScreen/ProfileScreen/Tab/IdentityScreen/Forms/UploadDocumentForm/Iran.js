@@ -2,7 +2,15 @@ import { StyleSheet, Text, View, TextInput } from "react-native";
 import React from "react";
 import UploadDocument from "../../UploadDocument";
 
-const Iran = ({ lang, handleChange, handleBlur, values, editable }) => {
+const Iran = ({
+  lang,
+  handleChange,
+  handleBlur,
+  values,
+  editable,
+  token,
+  api,
+}) => {
   return (
     <View style={styles.formView}>
       <View style={styles.inputView}>
@@ -18,7 +26,12 @@ const Iran = ({ lang, handleChange, handleBlur, values, editable }) => {
       </View>
       <View style={styles.inputView}>
         <Text style={styles.label}>{lang["upload-document"]}</Text>
-        <UploadDocument editable={editable} lang={lang} />
+        <UploadDocument
+          token={token}
+          editable={editable}
+          lang={lang}
+          api={api}
+        />
       </View>
     </View>
   );

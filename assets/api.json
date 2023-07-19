@@ -33,5 +33,9 @@
   "transfer": "http://94.74.145.156:5271/mobile-api/transfer",
   "cancel-transfer-1st": "http://94.74.145.156:5271/mobile-api/transfer/",
   "cancel-transfer-2nd": "/cancel",
-  "edit-transfer": "http://94.74.145.156:5271/mobile-api/transfer/"
+  "edit-transfer": "http://94.74.145.156:5271/mobile-api/transfer/",
+  "upload-profile-document": "http://94.74.145.156:5271/api/identity/document-identity",
+  "deposit-data": "http://94.74.145.156:5271/mobile-api/deposit/",
+  "deposit-identity": "http://94.74.145.156:5271//images/deposit-identity/",
+  "withdrawal-data": "http://94.74.145.156:5271/mobile-api/withdrawal/"
 }

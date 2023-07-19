@@ -4,8 +4,6 @@ import convertNumber from "../../../hooks/convertNumber";
 import convertDate from "../../../hooks/convertDate";
 
 const DepositWithdrawalTransferDetails = ({ data, lang }) => {
-  console.log(data);
-
   return (
     <ScrollView style={styles.scrollViewContainer}>
       <View style={styles.outerContainer}>

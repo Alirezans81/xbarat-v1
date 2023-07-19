@@ -18,7 +18,6 @@ const Form = ({
   exchange,
   selectedIndex,
   setSelectedIndex,
-  stackNavigation,
 }) => {
   const alert = (amount, rate) => {
     const message =
