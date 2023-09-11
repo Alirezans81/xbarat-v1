@@ -36,7 +36,11 @@ const DepositForm = ({
   const api = require("../../../assets/api.json");
   const deposit = async (amount, currencyId, countryId) => {
     if (refreshToken()) {
-      const param = { amount, currencyId, countryId };
+      const param = {
+        amount: +amount,
+        countryId,
+        currencyId,
+      };
       const config = {
         headers: {
           Authorization: "Bearer " + token.accessToken,

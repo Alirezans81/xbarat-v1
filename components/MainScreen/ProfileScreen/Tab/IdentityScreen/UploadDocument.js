@@ -4,11 +4,20 @@ import React, { useEffect } from "react";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
 import ImageModal from "react-native-image-modal";
-import axios from "axios";
 
-const UploadDocument = ({ editable, lang, api, setImageString, token }) => {
-  const [image, setImage] = useState(null);
+const UploadDocument = ({
+  editable,
+  lang,
+  setOuterImage,
+  initialImage,
+  chooseButtonShowJustOnInit,
+}) => {
+  const [image, setImage] = useState();
   const [imageDimension, setImageDimension] = useState();
+
+  const getImageApi = require("../../../../../assets/api.json")[
+    "get-uploaded-profile-document"
+  ];
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -21,34 +30,12 @@ const UploadDocument = ({ editable, lang, api, setImageString, token }) => {
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+      setOuterImage(result.assets[0].uri);
     }
   };
 
-  const clearImage = () => {
-    setImage(null);
-  };
-
   const upload = async () => {
-    let filename = image.split("/").pop();
-
-    let match = /\.(\w+)$/.exec(filename);
-    let type = match ? `image/${match[1]}` : `image`;
-
-    let formData = new FormData();
-    formData.append("photo", { uri: image, name: filename, type });
-
-    await axios
-      .post(api, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-        Authorization: "Bearer " + token.accessToken,
-      })
-      .then((result) => {
-        // setImageString(result.data);
-        console.log(result.data);
-      })
-      .catch((error) => {
-        console.log(JSON.stringify(error));
-      });
+    
   };
 
   useEffect(() => {
@@ -62,17 +49,21 @@ const UploadDocument = ({ editable, lang, api, setImageString, token }) => {
         setImageDimension(event.nativeEvent.layout.width);
       }}
     >
-      <TouchableOpacity
-        style={editable ? styles.button : styles.disabledButton}
-        onPress={() => {
-          pickImage();
-        }}
-        disabled={!editable}
-      >
-        <Text style={editable ? styles.buttonText : styles.disabledButtonText}>
-          {lang["upload-your-document"]}
-        </Text>
-      </TouchableOpacity>
+      {(!initialImage || !chooseButtonShowJustOnInit) && (
+        <TouchableOpacity
+          style={editable ? styles.button : styles.disabledButton}
+          onPress={() => {
+            pickImage();
+          }}
+          disabled={!editable}
+        >
+          <Text
+            style={editable ? styles.buttonText : styles.disabledButtonText}
+          >
+            {lang["upload-your-document"]}
+          </Text>
+        </TouchableOpacity>
+      )}
       {image && (
         <ImageModal
           resizeMode="contain"
@@ -86,6 +77,22 @@ const UploadDocument = ({ editable, lang, api, setImageString, token }) => {
           modalImageStyle={styles.modalImage}
           source={{
             uri: image,
+          }}
+        />
+      )}
+      {initialImage && (
+        <ImageModal
+          resizeMode="contain"
+          style={[
+            styles.image,
+            {
+              width: imageDimension,
+              height: imageDimension,
+            },
+          ]}
+          modalImageStyle={styles.modalImage}
+          source={{
+            uri: getImageApi + initialImage,
           }}
         />
       )}

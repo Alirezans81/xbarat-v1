@@ -10,7 +10,14 @@ import WaitText from "./Withdrawal/WaitingForPayment/WaitText";
 import UploadedImage from "./Withdrawal/UploadedImage";
 import WhyRejected from "./Withdrawal/Rejected/WhyRejected";
 
-const Withdrawal = ({ data, navigation, lang, token, refreshToken }) => {
+const Withdrawal = ({
+  data,
+  navigation,
+  lang,
+  token,
+  refreshToken,
+  getBalances,
+}) => {
   const api = require("../../../assets/api.json");
 
   const [countries, setCountries] = useState([]);
@@ -54,6 +61,7 @@ const Withdrawal = ({ data, navigation, lang, token, refreshToken }) => {
     await axios
       .put(api["edit-withdrawal"] + data.id, param, config)
       .then((result) => {
+        getBalances();
         navigation.goBack();
       })
       .catch((error) => {
@@ -96,6 +104,7 @@ const Withdrawal = ({ data, navigation, lang, token, refreshToken }) => {
         config
       )
       .then((result) => {
+        getBalances();
         navigation.goBack();
       })
       .catch((error) => {

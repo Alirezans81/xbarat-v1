@@ -3,8 +3,6 @@ import ExchangeScreen from "../screens/Tabs/ExchangeScreen";
 import WalletScreen from "../screens/Tabs/WalletScreen";
 import ProfileScreen from "../screens/Tabs/ProfileScreen";
 import { Image, StyleSheet } from "react-native";
-import { useEffect, useState } from "react";
-import axios from "axios";
 import MoreScreen from "../screens/Tabs/MoreScreen";
 
 const Tab = createBottomTabNavigator();
@@ -19,31 +17,10 @@ const TabNavigator = ({
   balances,
   getBalances,
   storeAccessToken,
+  userInfo,
 }) => {
   const iconSize = 37;
 
-  const api = require("../assets/api.json");
-
-  const [userInfo, setUserInfo] = useState();
-  const getUserInfo = async () => {
-    if (refreshToken()) {
-      try {
-        const config = {
-          headers: {
-            Authorization: "Bearer " + token.accessToken,
-          },
-        };
-
-        const result = await axios.get(api["user-info"], config);
-        setUserInfo(result.data);
-      } catch (error) {
-        console.log(JSON.stringify(error));
-      }
-    }
-  };
-  useEffect(() => {
-    getUserInfo();
-  }, []);
   return (
     <Tab.Navigator
       screenOptions={{
@@ -54,11 +31,13 @@ const TabNavigator = ({
     >
       <Tab.Screen
         name="Exchange"
-        children={() => (
+        children={(props) => (
           <ExchangeScreen
+            {...props}
             lang={lang}
             token={token}
             refreshToken={refreshToken}
+            userInfo={userInfo}
             balances={balances}
             stackNavigation={stackNavigation}
             getBalances={getBalances}

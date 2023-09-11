@@ -11,6 +11,8 @@ import { Formik } from "formik";
 import axios from "axios";
 
 const SignUpForm = ({ lang, setSign, setLoadingSpinner }) => {
+  const [step, setStep] = useState("enter-email");
+
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [submitEnabled, setSubmitEnabled] = useState(false);
 
@@ -30,6 +32,17 @@ const SignUpForm = ({ lang, setSign, setLoadingSpinner }) => {
     return !passwordError;
   };
 
+  const [otpError, setOtpError] = useState(false);
+  const checkOTP = (values) => {
+    if (values.otp !== "") {
+      setOtpError(false);
+    } else {
+      setOtpError(true);
+    }
+
+    return !otpError;
+  };
+
   const [passwordCheck, setPasswordCheck] = useState(true);
   const checkConfirmPassword = (values) => {
     if (values.confirmPassword !== values.password && values.password !== "") {
@@ -41,123 +54,194 @@ const SignUpForm = ({ lang, setSign, setLoadingSpinner }) => {
     return passwordCheck;
   };
 
-  const signup = async (email, password, confirmPassword) => {
-    const api = require("../../../assets/api.json");
+  const api = require("../../../assets/api.json");
+
+  const sendOTP = async (email) => {
     setLoadingSpinner(true);
     await axios
-      .post(api["signup"], {
-        email,
-        password,
-        confirmPassword,
-      })
+      .post(api["send-otp"], { email, code: "", checkTerms: true })
       .then((result) => {
+        setStep("enter-otp");
         setLoadingSpinner(false);
-        console.log(result.data);
       })
       .catch((error) => {
-        setLoadingSpinner(false);
         console.log(JSON.stringify(error));
+        setLoadingSpinner(false);
       });
+  };
+
+  const verifyOTP = async (email, code) => {
+    setLoadingSpinner(true);
+    await axios
+      .post(api["verify-otp"], { email, code })
+      .then((result) => {
+        setStep("enter-password");
+        setLoadingSpinner(false);
+      })
+      .catch((error) => {
+        console.log(JSON.stringify(error));
+        setLoadingSpinner(false);
+      });
+  };
+
+  const signup = async (email, password, confirmPassword) => {
+    if (password === confirmPassword && password !== "") {
+      setLoadingSpinner(true);
+      await axios
+        .post(api["signup"], { email, password, confirmPassword })
+        .then((result) => {
+          setLoadingSpinner(false);
+          setSign("in");
+        })
+        .catch((error) => {
+          console.log(JSON.stringify(error));
+          setLoadingSpinner(false);
+        });
+    }
   };
 
   return (
     <View style={styles.container}>
       <Formik
-        initialValues={{ email: "", password: "", confirmPassword: "" }}
+        initialValues={{
+          email: "",
+          otp: "",
+          password: "",
+          confirmPassword: "",
+        }}
         onSubmit={(values) => {
-          if (
-            checkEmail(values) &&
-            checkPassword(values) &&
-            checkConfirmPassword(values)
-          ) {
+          if (step === "enter-email") {
+            sendOTP(values.email);
+          } else if (step === "enter-otp") {
+            verifyOTP(values.email, values.otp);
+          } else if (step === "enter-password") {
             signup(values.email, values.password, values.confirmPassword);
           }
         }}
       >
         {({ handleChange, handleBlur, handleSubmit, values }) => (
           <>
-            <TextInput
-              name="email"
-              placeholder={lang["email"]}
-              style={styles.textInput}
-              onChangeText={handleChange("email")}
-              onBlur={() => {
-                handleBlur("email");
-                checkEmail(values);
-              }}
-              value={values.email}
-              keyboardType="email-address"
-              textAlign="left"
-              autoCapitalize="none"
-            />
-            <Text
-              style={[styles.error, emailError ? styles.show : styles.hide]}
-            >
-              {lang["enter your email error"]}
-            </Text>
-            <TextInput
-              name="password"
-              placeholder={lang["password"]}
-              style={styles.textInput}
-              onChangeText={handleChange("password")}
-              onBlur={() => {
-                handleBlur("password");
-                checkPassword(values);
-              }}
-              value={values.password}
-              secureTextEntry
-              textAlign="left"
-            />
-            <Text
-              style={[styles.error, passwordError ? styles.show : styles.hide]}
-            >
-              {lang["enter the password error"]}
-            </Text>
-            <TextInput
-              name="confirmPassword"
-              placeholder={lang["confirm password"]}
-              style={styles.textInput}
-              onChangeText={handleChange("confirmPassword")}
-              onBlur={() => {
-                handleBlur("confirmPassword");
-                checkConfirmPassword(values);
-              }}
-              value={values.confirmPassword}
-              secureTextEntry
-              textAlign="left"
-            />
-            <Text
-              style={[
-                styles.error,
-                !passwordCheck ? styles.enabled : styles.disabled,
-              ]}
-            >
-              {lang["password match error"]}
-            </Text>
-            <View style={styles.acceptTermsContainer}>
-              <View style={styles.acceptTermsView}>
-                <TouchableOpacity
-                  onPress={() => {
-                    setAcceptTerms(!acceptTerms);
-                    setSubmitEnabled(!submitEnabled);
+            {step === "enter-email" && (
+              <>
+                <TextInput
+                  name="email"
+                  placeholder={lang["email"]}
+                  style={styles.textInput}
+                  onChangeText={handleChange("email")}
+                  onBlur={() => {
+                    handleBlur("email");
+                    checkEmail(values);
                   }}
-                  style={[
-                    styles.Checkbox,
-                    acceptTerms
-                      ? styles.CheckboxEnabled
-                      : styles.CheckboxDisabled,
-                  ]}
+                  value={values.email}
+                  keyboardType="email-address"
+                  textAlign="left"
+                  autoCapitalize="none"
                 />
-                <TouchableOpacity style={styles.acceptTermsButton}>
-                  <Text style={styles.acceptTermsText}>
-                    {lang["i aggree with all "]}
-                  </Text>
-                  <Text style={[styles.acceptTermsText, styles.textBlue]}>
-                    {lang["terms"]}
-                  </Text>
-                </TouchableOpacity>
+                <Text
+                  style={[styles.error, emailError ? styles.show : styles.hide]}
+                >
+                  {lang["enter your email error"]}
+                </Text>
+              </>
+            )}
+
+            {step === "enter-otp" && (
+              <>
+                <TextInput
+                  name="otp"
+                  placeholder={lang["otp"]}
+                  style={styles.textInput}
+                  onChangeText={handleChange("otp")}
+                  onBlur={() => {
+                    handleBlur("otp");
+                    checkOTP(values);
+                  }}
+                  value={values.otp}
+                  textAlign="left"
+                />
+                <Text style={styles.spamWarning}>
+                  {lang["spam-check-warning"]}
+                </Text>
+                <Text
+                  style={[styles.error, otpError ? styles.show : styles.hide]}
+                >
+                  {lang["enter the otp error"]}
+                </Text>
+              </>
+            )}
+
+            {step === "enter-password" && (
+              <>
+                <TextInput
+                  name="password"
+                  placeholder={lang["password"]}
+                  style={styles.textInput}
+                  onChangeText={handleChange("password")}
+                  onBlur={() => {
+                    handleBlur("password");
+                    checkPassword(values);
+                  }}
+                  value={values.password}
+                  secureTextEntry
+                  textAlign="left"
+                />
+                <Text
+                  style={[
+                    styles.error,
+                    passwordError ? styles.show : styles.hide,
+                  ]}
+                >
+                  {lang["enter the password error"]}
+                </Text>
+                <TextInput
+                  name="confirmPassword"
+                  placeholder={lang["confirm password"]}
+                  style={styles.textInput}
+                  onChangeText={handleChange("confirmPassword")}
+                  onBlur={() => {
+                    handleBlur("confirmPassword");
+                    checkConfirmPassword(values);
+                  }}
+                  value={values.confirmPassword}
+                  secureTextEntry
+                  textAlign="left"
+                />
+                <Text
+                  style={[
+                    styles.error,
+                    !passwordCheck ? styles.enabled : styles.disabled,
+                  ]}
+                >
+                  {lang["password match error"]}
+                </Text>
+              </>
+            )}
+            {step === "enter-email" && (
+              <View style={styles.acceptTermsContainer}>
+                <View style={styles.acceptTermsView}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setAcceptTerms(!acceptTerms);
+                      setSubmitEnabled(!submitEnabled);
+                    }}
+                    style={[
+                      styles.Checkbox,
+                      acceptTerms
+                        ? styles.CheckboxEnabled
+                        : styles.CheckboxDisabled,
+                    ]}
+                  />
+                  <TouchableOpacity style={styles.acceptTermsButton}>
+                    <Text style={styles.acceptTermsText}>
+                      {lang["i aggree with all "]}
+                    </Text>
+                    <Text style={[styles.acceptTermsText, styles.textBlue]}>
+                      {lang["terms"]}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
+            )}
             <TouchableOpacity
               disabled={!submitEnabled}
               style={submitEnabled ? styles.button : styles.disabledButton}
@@ -231,7 +315,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    width: "85%",
+    width: "90%",
     borderRadius: 100,
     marginLeft: "5%",
     height: 40,
@@ -258,7 +342,9 @@ const styles = StyleSheet.create({
   textBlue: {
     color: "#03A9F4",
   },
-  enabled: {},
+  spamWarning: {
+    color: "#F99417",
+  },
   disabled: {
     display: "none",
   },

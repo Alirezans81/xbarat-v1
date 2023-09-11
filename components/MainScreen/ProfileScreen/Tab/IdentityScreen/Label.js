@@ -3,11 +3,11 @@ import React from "react";
 import LeftSide from "./Label/LeftSide";
 import RightSide from "./Label/RightSide";
 
-const Label = ({ lang, userInfo }) => {
+const Label = ({ lang, userInfo, token }) => {
   return (
     <View style={styles.container}>
       <LeftSide lang={lang} userInfo={userInfo} />
-      <RightSide lang={lang} />
+      <RightSide lang={lang} token={token} />
     </View>
   );
 };

@@ -3,12 +3,14 @@
   "signup button": "Sign Up",
   "email": "Email",
   "enter your email error": "Enter your email",
+  "enter the otp error": "Enter the otp code",
   "password": "Password",
   "enter the password error": "Enter the password",
   "submit": "Submit",
   "signup": "Sign Up",
   "signin button": "Sign In",
   "confirm password": "Confirm Password",
+  "otp": "OTP code",
   "password match error": "The password is not the same",
   "i aggree with all ": "I aggree with all ",
   "terms": "terms",
@@ -72,6 +74,7 @@
   "passport-number": "Passport Number",
   "bank-email": "Bank Email",
   "upload-your-document": "Upload your document",
+  "current-password": "Current password",
   "new-password": "New password",
   "source": "Source",
   "target": "Target",
@@ -137,4 +140,18 @@
   "cancel-withdrawal-message": "Are you sure you want cancel the withdrawal request",
   "cancel-exchange-message": "Are you sure you want cancel the exchange",
   "and-your-rate-from": "and your rate from"
+
+  ,"xbarat-description": "Xbrat is a network of those who want to transfer their money from their place of residence to another country; As these people get to know each other, the middleman called exchange is removed and people can directly enter into transactions with each other and make their transfers with currencies that can be traded in the system",
+  "offices": "Offices",
+  "herat": "Herat",
+  "bamyan": "Bamyan",
+  "kabul": "Kabul",
+  "mazar-sharif": "Mazar Sharif",
+  "mashhad": "Mashhad",
+  "office-head": "Office Head",
+  "full-address": "Full Address",
+  "not-completed-profile-error": "Please complete your profile first",
+  "help-button-text": "Guide to working with the application",
+  "spam-check-warning": "Be sure to check the spam section of your email"
+
 }

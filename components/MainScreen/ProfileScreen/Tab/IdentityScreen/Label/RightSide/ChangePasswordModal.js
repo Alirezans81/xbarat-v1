@@ -10,8 +10,9 @@ import {
 import React from "react";
 import Modal from "react-native-modal";
 import { Formik } from "formik";
+import axios from "axios";
 
-const ModalContent = ({ setIsVisible, lang }) => (
+const ModalContent = ({ setIsVisible, lang, changePassword }) => (
   <View style={styles.container}>
     <View style={styles.contentContainer}>
       <TouchableOpacity
@@ -26,19 +27,33 @@ const ModalContent = ({ setIsVisible, lang }) => (
       </TouchableOpacity>
       <View style={styles.content}>
         <Formik
-          initialValues={{ newPassword: "", confirmPassword: "" }}
+          initialValues={{
+            currentPassword: "",
+            newPassword: "",
+            confirmPassword: "",
+          }}
           onSubmit={(values) => {
-            if (
-              values.newPassword === values.confirmPassword &&
-              values.newPassword !== ""
-            ) {
-              console.log(values.newPassword);
-              setIsVisible(false);
-            }
+            values.newPassword === values.confirmPassword &&
+              values.newPassword !== "" &&
+              changePassword(values.currentPassword, values.newPassword);
           }}
         >
           {({ handleBlur, handleChange, values, handleSubmit }) => (
             <>
+              <View style={styles.inputView}>
+                <Text style={styles.inputLabel}>
+                  {lang["current-password"]}
+                </Text>
+                <TextInput
+                  style={styles.input}
+                  name="currentPassword"
+                  onChangeText={handleChange("currentPassword")}
+                  onBlur={handleBlur("currentPassword")}
+                  value={values.currentPassword}
+                  textContentType="password"
+                  secureTextEntry
+                />
+              </View>
               <View style={styles.inputView}>
                 <Text style={styles.inputLabel}>{lang["new-password"]}</Text>
                 <TextInput
@@ -79,11 +94,45 @@ const ModalContent = ({ setIsVisible, lang }) => (
   </View>
 );
 
-const ChangePasswordModal = ({ isVisible, setIsVisible, lang }) => (
-  <Modal isVisible={isVisible} avoidKeyboard={true}>
-    <ModalContent setIsVisible={setIsVisible} lang={lang} />
-  </Modal>
-);
+const ChangePasswordModal = ({ isVisible, setIsVisible, lang, token }) => {
+  const changePassword = async (currentPassword, newPassword) => {
+    const api = require("../../../../../../../assets/api.json");
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token.accessToken,
+      },
+    };
+
+    await axios
+      .patch(
+        api["change-password"],
+        {
+          currentPassword,
+          password: newPassword,
+          confirmPassword: newPassword,
+        },
+        config
+      )
+      .then((result) => {
+        setIsVisible(false);
+      })
+      .catch((error) => {
+        console.log(JSON.stringify(error));
+        setIsVisible(false);
+      });
+  };
+
+  return (
+    <Modal isVisible={isVisible} avoidKeyboard={true}>
+      <ModalContent
+        setIsVisible={setIsVisible}
+        lang={lang}
+        changePassword={changePassword}
+      />
+    </Modal>
+  );
+};
 
 export default ChangePasswordModal;
 

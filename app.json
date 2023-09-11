@@ -15,7 +15,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.xbarat.xbaratv1"
     },
     "android": {
       "adaptiveIcon": {
@@ -25,13 +26,19 @@
       "package": "com.xbarat.xbaratv1"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/icon.png"
     },
     "extra": {
       "eas": {
         "projectId": "45b4ed90-3a97-4771-955f-97fe6f640106"
       }
     },
-    "owner": "alirezansr81"
+    "owner": "alirezansr81",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/45b4ed90-3a97-4771-955f-97fe6f640106"
+    }
   }
 }

@@ -36,6 +36,7 @@ const IdentityScreen = ({ lang, token, refreshToken, userInfo }) => {
     useState();
   const [selectedAfghanistanOfficeIndex, setSelectedAfghanistanOfficeIndex] =
     useState();
+  const [document, setDocument] = useState();
 
   const getAfghanistanOffices = async () => {
     setAfghanistanOffices([
@@ -166,6 +167,28 @@ const IdentityScreen = ({ lang, token, refreshToken, userInfo }) => {
     },
   };
 
+  const uploadDocument = async () => {
+    let filename = document.split("/").pop();
+
+    let match = /\.(\w+)$/.exec(filename);
+    let type = match ? `image/${match[1]}` : `image`;
+
+    let formData = new FormData();
+    formData.append("file", { uri: document, name: filename, type });
+
+    await axios
+      .post(api["upload-profile-document"], formData, {
+        headers: {
+          "Content-Type": "multipart/form-data; boundary=----",
+          Authorization: "Bearer " + token.accessToken,
+        },
+      })
+      .then((result) => {})
+      .catch((error) => {
+        console.log(JSON.stringify(error));
+      });
+  };
+
   const updateProfile = async (values) => {
     if (refreshToken()) {
       await axios
@@ -201,6 +224,8 @@ const IdentityScreen = ({ lang, token, refreshToken, userInfo }) => {
           cartNumber:
             userInfo && userInfo.cartNumber ? userInfo.cartNumber : "",
           bankEmail: userInfo && userInfo.bankEmail ? userInfo.bankEmail : "",
+          documentFile:
+            userInfo && userInfo.documentFile ? userInfo.documentFile : "",
         }}
         onSubmit={(values) => {
           let newValues = values;
@@ -220,6 +245,7 @@ const IdentityScreen = ({ lang, token, refreshToken, userInfo }) => {
             ? afghanistanOffices[selectedAfghanistanOfficeIndex].address
             : "";
 
+          uploadDocument();
           updateProfile(newValues);
         }}
       >
@@ -236,7 +262,7 @@ const IdentityScreen = ({ lang, token, refreshToken, userInfo }) => {
               style={styles.container}
               contentContainerStyle={styles.content}
             >
-              <Label lang={lang} userInfo={userInfo} />
+              <Label lang={lang} token={token} userInfo={userInfo} />
               <Forms
                 lang={lang}
                 editable={editable}
@@ -244,7 +270,6 @@ const IdentityScreen = ({ lang, token, refreshToken, userInfo }) => {
                 handleChange={handleChange}
                 handleBlur={handleBlur}
                 values={values}
-                token={token}
                 nationalities={nationalities}
                 selectedNationalityIndex={selectedNationalityIndex}
                 setSelectedNationalityIndex={setSelectedNationalityIndex}
@@ -260,6 +285,7 @@ const IdentityScreen = ({ lang, token, refreshToken, userInfo }) => {
                   setSelectedAfghanistanOfficeIndex
                 }
                 citiesDropdown={citiesDropdown}
+                setDocument={setDocument}
               />
             </ScrollView>
           </>

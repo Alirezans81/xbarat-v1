@@ -10,6 +10,7 @@ const WalletScreen = ({
   balances,
   stackNavigation,
 }) => {
+
   return (
     <ScrollView style={styles.container}>
       <Wallet

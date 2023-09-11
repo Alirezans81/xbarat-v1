@@ -12,6 +12,7 @@ const MainScreen = ({
   balances,
   getBalances,
   storeAccessToken,
+  userInfo,
 }) => {
   return (
     <SafeAreaView style={styles.container}>
@@ -25,6 +26,7 @@ const MainScreen = ({
         balances={balances}
         getBalances={getBalances}
         storeAccessToken={storeAccessToken}
+        userInfo={userInfo}
       />
     </SafeAreaView>
   );

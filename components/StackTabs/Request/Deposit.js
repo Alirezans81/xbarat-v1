@@ -13,7 +13,14 @@ import OtherUploadDocument from "./Deposit/WaitingForPayment/OtherUploadDocument
 import UploadedImage from "./Deposit/UploadedImage";
 import WhyRejected from "./Deposit/Rejected/WhyRejected";
 
-const Deposit = ({ data, navigation, token, lang, refreshToken }) => {
+const Deposit = ({
+  data,
+  navigation,
+  token,
+  lang,
+  refreshToken,
+  getBalances,
+}) => {
   const api = require("../../../assets/api.json");
 
   const [countries, setCountries] = useState([]);
@@ -128,17 +135,15 @@ const Deposit = ({ data, navigation, token, lang, refreshToken }) => {
 
   const [specificData, setSpecificData] = useState();
   const getSpecificData = async () => {
-    if (refreshToken()) {
-      try {
-        const result = await axios.get(api["deposit-data"] + data.id, config);
-        setSpecificData(result.data);
-      } catch (error) {
-        console.log(JSON.stringify(error));
-      }
+    try {
+      const result = await axios.get(api["deposit-data"] + data.id, config);
+      setSpecificData(result.data);
+    } catch (error) {
+      console.log(JSON.stringify(error));
     }
   };
   useEffect(() => {
-    data.status === "WaitingForAdministrationApprove" && getSpecificData();
+    data.status !== "New" && data !== "WaitingForPayment" && getSpecificData();
   }, []);
 
   if (data.status === "New") {
@@ -168,6 +173,7 @@ const Deposit = ({ data, navigation, token, lang, refreshToken }) => {
           <DepositStatus status={data.status} lang={lang} />
           <DepositDetails countryTitle={countryTitle} data={data} lang={lang} />
           <IranUploadDocument
+            depositId={data.id}
             amount={data.money}
             token={token}
             navigation={navigation}
@@ -181,6 +187,7 @@ const Deposit = ({ data, navigation, token, lang, refreshToken }) => {
           <DepositStatus status={data.status} lang={lang} />
           <DepositDetails countryTitle={countryTitle} data={data} lang={lang} />
           <AfghanistanUploadDocument
+            depositId={data.id}
             amount={data.money}
             token={token}
             navigation={navigation}
@@ -193,7 +200,13 @@ const Deposit = ({ data, navigation, token, lang, refreshToken }) => {
         <ScrollView style={styles.container}>
           <DepositStatus status={data.status} lang={lang} />
           <DepositDetails countryTitle={countryTitle} data={data} lang={lang} />
-          <OtherUploadDocument lang={lang} />
+          <OtherUploadDocument
+            depositId={data.id}
+            amount={data.money}
+            token={token}
+            navigation={navigation}
+            lang={lang}
+          />
         </ScrollView>
       );
     }
@@ -206,7 +219,7 @@ const Deposit = ({ data, navigation, token, lang, refreshToken }) => {
           uri={
             specificData
               ? api["deposit-identity"] + specificData.paymentIdentity
-              : ""
+              : null
           }
         />
       </ScrollView>
@@ -220,7 +233,7 @@ const Deposit = ({ data, navigation, token, lang, refreshToken }) => {
           uri={
             specificData
               ? api["deposit-identity"] + specificData.paymentIdentity
-              : ""
+              : null
           }
         />
       </ScrollView>
@@ -234,7 +247,7 @@ const Deposit = ({ data, navigation, token, lang, refreshToken }) => {
           uri={
             specificData
               ? api["deposit-identity"] + specificData.paymentIdentity
-              : ""
+              : null
           }
         />
         <WhyRejected lang={lang} />

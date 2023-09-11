@@ -1,6 +1,8 @@
-import { StyleSheet, Text, SafeAreaView, View } from "react-native";
-import React, { useState } from "react";
+import { StyleSheet, View } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
 import SelectDropdown from "react-native-select-dropdown";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { SafeAreaView } from "react-native";
 
 const Language = ({ setLang }) => {
   const [languages, setLanguages] = useState([
@@ -8,14 +10,42 @@ const Language = ({ setLang }) => {
     { abb: "FA", id: "ienfejsgbnrsjgbnrsjg" },
   ]);
 
+  const save = async (lang) => {
+    await AsyncStorage.setItem("Language", lang)
+      .then((result) => {
+        console.log(JSON.stringify(result));
+      })
+      .catch((error) => {
+        console.log(JSON.stringify(error));
+      });
+  };
+
+  const langRef = useRef();
+  const getLangIndex = async () => {
+    await AsyncStorage.getItem("Language")
+      .then((result) => {
+        const foundIndex = languages.findIndex((e) => e.abb === result);
+        langRef.current.selectIndex(foundIndex ? foundIndex : 0);
+      })
+      .catch((error) => {
+        console.log(JSON.stringify(error));
+      });
+  };
+  useEffect(() => {
+    getLangIndex();
+  }, []);
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <SelectDropdown
+        ref={langRef}
         data={languages.map((e) => e.abb)}
         onSelect={(selectedItem, index) => {
           if (selectedItem === "EN") {
+            save(selectedItem);
             setLang(require("../assets/languages/EN.json"));
           } else if (selectedItem === "FA") {
+            save(selectedItem);
             setLang(require("../assets/languages/FA.json"));
           }
         }}
@@ -38,7 +68,7 @@ const Language = ({ setLang }) => {
         selectedRowStyle={styles.selectedRow}
         selectedRowTextStyle={styles.selectedRowText}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -54,7 +84,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#026897",
     width: 80,
     height: 40,
-    top: "7%",
     left: "2%",
     borderRadius: 100,
   },

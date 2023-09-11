@@ -4,19 +4,19 @@ import axios from "axios";
 import SelectDropdown from "react-native-select-dropdown";
 import UploadDocument from "../../../../MainScreen/ProfileScreen/Tab/IdentityScreen/UploadDocument";
 
-const IranUploadDocument = ({ token, amount, navigation, lang }) => {
+const IranUploadDocument = ({ token, amount, navigation, lang, depositId }) => {
   const api = require("../../../../../assets/api.json");
 
   const [dropdownData, setDropdownData] = useState([]);
   const [selectedDropdownDataIndex, setSelectedDropdownDataIndex] = useState();
+
+  const config = {
+    headers: {
+      Authorization: "Bearer " + token.accessToken,
+    },
+  };
   const getDropdownData = async () => {
     try {
-      const config = {
-        headers: {
-          Authorization: "Bearer " + token.accessToken,
-        },
-      };
-
       const result = await axios.get(api["site-setting"], config);
 
       if (amount < 100000000) {
@@ -44,6 +44,59 @@ const IranUploadDocument = ({ token, amount, navigation, lang }) => {
 
   const [canUpload, setCanUpload] = useState(false);
 
+  const [image, setImage] = useState();
+  const upload = async () => {
+    let filename = image.split("/").pop();
+
+    let match = /\.(\w+)$/.exec(filename);
+    let type = match ? `image/${match[1]}` : `image`;
+
+    let formData = new FormData();
+    formData.append("file", { uri: image, name: filename, type });
+
+    await axios
+      .post(
+        api["upload-deposit-document-1st"] +
+          depositId +
+          api["upload-deposit-document-2nd"],
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data; boundary=----",
+            Authorization: "Bearer " + token.accessToken,
+          },
+        }
+      )
+      .then((result) => {
+        submit(result.data);
+      })
+      .catch((error) => {
+        console.log(JSON.stringify(error));
+      });
+  };
+
+  const submit = async (imageFileName) => {
+    const params = {
+      destination: dropdownData[selectedDropdownDataIndex],
+      peymentIdnetity: imageFileName,
+    };
+
+    await axios
+      .post(
+        api["submit-deposit-document-1st"] +
+          depositId +
+          api["submit-deposit-document-2nd"],
+        params,
+        config
+      )
+      .then((result) => {
+        navigation.goBack();
+      })
+      .catch((error) => {
+        console.log(JSON.stringify(error));
+      });
+  };
+
   return (
     <View style={styles.container}>
       <SelectDropdown
@@ -65,15 +118,14 @@ const IranUploadDocument = ({ token, amount, navigation, lang }) => {
       />
       <View style={styles.uploadDocumentView}>
         <UploadDocument
-          api={api["upload-deposit-document"]}
+          setOuterImage={setImage}
           editable={canUpload}
           lang={lang}
-          token={token}
         />
       </View>
       <TouchableOpacity
         onPress={() => {
-          navigation.goBack();
+          image && upload();
         }}
         style={styles.submitButton}
       >

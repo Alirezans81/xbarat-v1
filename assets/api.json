@@ -1,5 +1,7 @@
 {
   "login": "http://94.74.145.156:5271/mobile-api/identity/login",
+  "send-otp": "http://94.74.145.156:5271/api/identity/send-otp",
+  "verify-otp": "http://94.74.145.156:5271/api/identity/verify-otp",
   "signup": "http://94.74.145.156:5271/mobile-api/identity/register",
   "refresh-token": "http://94.74.145.156:5271/mobile-api/identity/refresh",
   "watch-table": "http://94.74.145.156:5271/mobile-api/exchange/watch-table",
@@ -37,5 +39,11 @@
   "upload-profile-document": "http://94.74.145.156:5271/api/identity/document-identity",
   "deposit-data": "http://94.74.145.156:5271/mobile-api/deposit/",
   "deposit-identity": "http://94.74.145.156:5271//images/deposit-identity/",
-  "withdrawal-data": "http://94.74.145.156:5271/mobile-api/withdrawal/"
+  "withdrawal-data": "http://94.74.145.156:5271/mobile-api/withdrawal/",
+  "get-uploaded-profile-document": "http://94.74.145.156:5271/images/user-identity/",
+  "upload-deposit-document-1st": "http://94.74.145.156:5271/mobile-api/deposit/",
+  "upload-deposit-document-2nd": "/payment-identity",
+  "submit-deposit-document-1st": "http://94.74.145.156:5271/api/deposits/",
+  "submit-deposit-document-2nd": "/waiting-for-administration-approve",
+  "change-password": "http://94.74.145.156:5271/api/identity/change-password"
 }

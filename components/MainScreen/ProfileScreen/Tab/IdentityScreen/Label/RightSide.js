@@ -3,7 +3,7 @@ import React from "react";
 import ChangePasswordModal from "./RightSide/ChangePasswordModal";
 import { useState } from "react";
 
-const RightSide = ({ lang }) => {
+const RightSide = ({ lang, token }) => {
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
   return (
@@ -18,6 +18,7 @@ const RightSide = ({ lang }) => {
         lang={lang}
         isVisible={modalIsVisible}
         setIsVisible={setModalIsVisible}
+        token={token}
       />
     </>
   );

@@ -20,6 +20,7 @@ const WithdrawalForm = ({
   navigation,
   setLoadingSpinner,
   refreshToken,
+  getBalances,
 }) => {
   const [inventory, setInventory] = useState();
   const [internalCurrencies, setInternalCurrencies] = useState([]);
@@ -76,6 +77,7 @@ const WithdrawalForm = ({
         .post(api["withdarwal"], param, config)
         .then((result) => {
           setLoadingSpinner(false);
+          getBalances();
           navigation.goBack();
         })
         .catch((error) => {

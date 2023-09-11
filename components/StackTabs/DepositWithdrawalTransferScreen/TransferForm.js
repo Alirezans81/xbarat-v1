@@ -19,7 +19,7 @@ const TransferForm = ({
   navigation,
   token,
   setLoadingSpinner,
-  refreshToken,
+  getBalances,
 }) => {
   const [inventory, setInventory] = useState();
   const [internalCurrencies, setInternalCurrencies] = useState([]);
@@ -53,26 +53,25 @@ const TransferForm = ({
 
   const api = require("../../../assets/api.json");
   const transfer = async (amount, receiverPersonCode, currencyId) => {
-    if (refreshToken()) {
-      const param = { amount, receiverPersonCode, currencyId };
-      const config = {
-        headers: {
-          Authorization: "Bearer " + token.accessToken,
-        },
-      };
+    const param = { amount: +amount, receiverPersonCode, currencyId };
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token.accessToken,
+      },
+    };
 
-      setLoadingSpinner(true);
-      await axios
-        .post(api["transfer"], param, config)
-        .then((result) => {
-          setLoadingSpinner(false);
-          navigation.goBack();
-        })
-        .catch((error) => {
-          console.log(JSON.stringify(error));
-          setLoadingSpinner(false);
-        });
-    }
+    setLoadingSpinner(true);
+    await axios
+      .post(api["transfer"], param, config)
+      .then((result) => {
+        setLoadingSpinner(false);
+        getBalances();
+        navigation.goBack();
+      })
+      .catch((error) => {
+        console.log(JSON.stringify(error));
+        setLoadingSpinner(false);
+      });
   };
 
   return (

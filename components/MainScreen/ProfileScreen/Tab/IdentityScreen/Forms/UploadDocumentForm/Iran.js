@@ -8,8 +8,7 @@ const Iran = ({
   handleBlur,
   values,
   editable,
-  token,
-  api,
+  setDocument,
 }) => {
   return (
     <View style={styles.formView}>
@@ -27,10 +26,11 @@ const Iran = ({
       <View style={styles.inputView}>
         <Text style={styles.label}>{lang["upload-document"]}</Text>
         <UploadDocument
-          token={token}
+          initialImage={values.documentFile}
           editable={editable}
           lang={lang}
-          api={api}
+          chooseButtonShowJustOnInit={true}
+          setOuterImage={setDocument}
         />
       </View>
     </View>

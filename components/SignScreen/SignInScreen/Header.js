@@ -7,7 +7,7 @@ const Header = ({ setSign, lang }) => {
       <Text style={styles.loginText}>{lang["login"]}</Text>
       <TouchableOpacity
         onPress={() => {
-          // setSign("up");
+          setSign("up");
         }}
       >
         <Text style={styles.signupButtonText}>{lang["signup button"]}</Text>

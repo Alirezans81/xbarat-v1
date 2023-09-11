@@ -11,9 +11,8 @@ const UploadDocumentForm = ({
   values,
   editable,
   nationality,
-  token,
+  setDocument,
 }) => {
-  const api = require("../../../../../../assets/api.json");
 
   if (nationality === "iranian") {
     return (
@@ -25,8 +24,7 @@ const UploadDocumentForm = ({
           handleBlur={handleBlur}
           values={values}
           editable={editable}
-          token={token}
-          api={api["upload-profile-document"]}
+          setDocument={setDocument}
         />
       </View>
     );
@@ -40,8 +38,7 @@ const UploadDocumentForm = ({
           handleBlur={handleBlur}
           values={values}
           editable={editable}
-          token={token}
-          api={api["upload-profile-document"]}
+          setDocument={setDocument}
         />
       </View>
     );
@@ -55,8 +52,7 @@ const UploadDocumentForm = ({
           handleBlur={handleBlur}
           values={values}
           editable={editable}
-          token={token}
-          api={api["upload-profile-document"]}
+          setDocument={setDocument}
         />
       </View>
     );

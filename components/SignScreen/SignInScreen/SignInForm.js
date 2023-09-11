@@ -75,6 +75,7 @@ const SignInForm = ({
               keyboardType="email-address"
               textAlign="left"
               autoCapitalize="none"
+              autoComplete="email"
             />
             <Text
               style={[styles.error, emailError ? styles.show : styles.hide]}

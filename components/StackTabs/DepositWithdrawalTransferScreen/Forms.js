@@ -130,6 +130,7 @@ const Forms = ({
   token,
   setLoadingSpinner,
   refreshToken,
+  getBalances,
 }) => {
   const { type, currency, balances } = route.params;
   const [transactionType, setTransactionType] = useState("");
@@ -183,6 +184,7 @@ const Forms = ({
           currencies={currencies ? currencies : []}
           currency={currency}
           balances={balances}
+          getBalances={getBalances}
           lang={lang}
           token={token}
           setLoadingSpinner={setLoadingSpinner}
@@ -203,6 +205,7 @@ const Forms = ({
           currencies={currencies ? currencies : []}
           currency={currency}
           balances={balances}
+          getBalances={getBalances}
           lang={lang}
           token={token}
           setLoadingSpinner={setLoadingSpinner}

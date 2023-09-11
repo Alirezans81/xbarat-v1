@@ -8,8 +8,7 @@ const Others = ({
   handleBlur,
   values,
   editable,
-  token,
-  api,
+  setDocument,
 }) => {
   return (
     <View style={styles.formView}>
@@ -27,10 +26,10 @@ const Others = ({
       <View style={styles.inputView}>
         <Text style={styles.label}>{lang["upload-document"]}</Text>
         <UploadDocument
+          initialImage={values.documentFile}
           editable={editable}
           lang={lang}
-          token={token}
-          api={api}
+          setOuterImage={setDocument}
         />
       </View>
     </View>

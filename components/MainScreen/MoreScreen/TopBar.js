@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import SelectDropdown from "react-native-select-dropdown";
 import { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const TopBar = ({ setLoggedIn, lang, setLang, storeAccessToken }) => {
   const [languages, setLanguages] = useState([
@@ -9,14 +10,38 @@ const TopBar = ({ setLoggedIn, lang, setLang, storeAccessToken }) => {
     { abb: "FA", id: "ienfejsgbnrsjgbnrsjg" },
   ]);
 
+  const saveLang = async (lang) => {
+    await AsyncStorage.setItem("Language", lang).catch((error) => {
+      console.log(JSON.stringify(error));
+    });
+  };
+
+  const langRef = useRef();
+  const getLangIndex = async () => {
+    await AsyncStorage.getItem("Language")
+      .then((result) => {
+        const foundIndex = languages.findIndex((e) => e.abb === result);
+        langRef.current.selectIndex(foundIndex ? foundIndex : 0);
+      })
+      .catch((error) => {
+        console.log(JSON.stringify(error));
+      });
+  };
+  useEffect(() => {
+    getLangIndex();
+  }, []);
+
   return (
     <View style={styles.container}>
       <SelectDropdown
+        ref={langRef}
         data={languages.map((e) => e.abb)}
         onSelect={(selectedItem, index) => {
           if (selectedItem === "EN") {
+            saveLang(selectedItem);
             setLang(require("../../../assets/languages/EN.json"));
           } else if (selectedItem === "FA") {
+            saveLang(selectedItem);
             setLang(require("../../../assets/languages/FA.json"));
           }
         }}

@@ -24,10 +24,9 @@ const StackNavigator = ({
 
   const Stack = createStackNavigator();
 
-  const [balances, setBalances] = useState();
-  const getBalances = async () => {
+  const [userInfo, setUserInfo] = useState();
+  const getUserInfo = async () => {
     if (refreshToken()) {
-      setBalances([]);
       try {
         const config = {
           headers: {
@@ -35,12 +34,32 @@ const StackNavigator = ({
           },
         };
 
-        const result = await axios.get(api["wallet-balances"], config);
-
-        setBalances(result.data);
+        const result = await axios.get(api["user-info"], config);
+        setUserInfo(result.data);
       } catch (error) {
         console.log(JSON.stringify(error));
       }
+    }
+  };
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
+  const [balances, setBalances] = useState();
+  const getBalances = async () => {
+    setBalances([]);
+    try {
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token.accessToken,
+        },
+      };
+
+      const result = await axios.get(api["wallet-balances"], config);
+
+      setBalances(result.data);
+    } catch (error) {
+      console.log(JSON.stringify(error));
     }
   };
   useEffect(() => {
@@ -68,6 +87,7 @@ const StackNavigator = ({
             balances={balances}
             getBalances={getBalances}
             storeAccessToken={storeAccessToken}
+            userInfo={userInfo}
           />
         )}
         options={{ headerShown: false }}
@@ -110,6 +130,8 @@ const StackNavigator = ({
             setLang={setLang}
             token={token}
             refreshToken={refreshToken}
+            getBalances={getBalances}
+            userInfo={userInfo}
           />
         )}
       />
@@ -123,6 +145,7 @@ const StackNavigator = ({
             setLang={setLang}
             token={token}
             refreshToken={refreshToken}
+            getBalances={getBalances}
           />
         )}
       />
@@ -134,7 +157,7 @@ const StackNavigator = ({
       <Stack.Screen
         options={{ title: lang["about-us"] }}
         name="About Us"
-        children={(props) => <AboutUsScreen {...props} />}
+        children={(props) => <AboutUsScreen {...props} lang={lang} />}
       />
       <Stack.Screen
         options={{ title: lang["help"] }}

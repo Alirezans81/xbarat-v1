@@ -24,7 +24,13 @@ const ExchangeScreen = ({
   balances,
   stackNavigation,
   getBalances,
+  userInfo,
+  navigation,
 }) => {
+  useEffect(() => {
+    userInfo && userInfo.isActive && navigation.navigate("Profile");
+  }, []);
+
   const api = require("../../assets/api.json");
   const refreshTime = 10000;
 

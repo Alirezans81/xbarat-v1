@@ -9,7 +9,14 @@ import WhyRejected from "./Transfer/Rejected/WhyRejected";
 import axios from "axios";
 import { useEffect } from "react";
 
-const Transfer = ({ data, navigation, token, lang, refreshToken }) => {
+const Transfer = ({
+  data,
+  navigation,
+  token,
+  lang,
+  refreshToken,
+  getBalances,
+}) => {
   const [editRequestModalIsVisible, setEditRequestModalIsVisible] =
     useState(false);
 
@@ -30,6 +37,7 @@ const Transfer = ({ data, navigation, token, lang, refreshToken }) => {
     await axios
       .put(api["edit-transfer"] + data.id, param, config)
       .then((result) => {
+        getBalances();
         navigation.goBack();
       })
       .catch((error) => {
@@ -80,6 +88,7 @@ const Transfer = ({ data, navigation, token, lang, refreshToken }) => {
         config
       )
       .then((result) => {
+        getBalances();
         navigation.goBack();
       })
       .catch((error) => {

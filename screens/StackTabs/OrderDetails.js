@@ -190,7 +190,7 @@ const OrderDetails = ({
         navigation.goBack();
       })
       .catch((error) => {
-        console.log(JSON.parse(error));
+        console.log(JSON.stringify(error));
       });
   };
   const cancelAlert = () => {
