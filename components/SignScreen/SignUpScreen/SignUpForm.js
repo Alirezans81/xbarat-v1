@@ -5,6 +5,7 @@ import {
   TextInput,
   Text,
   Platform,
+  Linking,
 } from "react-native";
 import React, { useState } from "react";
 import { Formik } from "formik";
@@ -231,7 +232,12 @@ const SignUpForm = ({ lang, setSign, setLoadingSpinner }) => {
                         : styles.CheckboxDisabled,
                     ]}
                   />
-                  <TouchableOpacity style={styles.acceptTermsButton}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      Linking.openURL("http://www.xbarat.net/privacy-policy")
+                    }
+                    style={styles.acceptTermsButton}
+                  >
                     <Text style={styles.acceptTermsText}>
                       {lang["i aggree with all "]}
                     </Text>

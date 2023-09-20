@@ -162,7 +162,7 @@ const StackNavigator = ({
       <Stack.Screen
         options={{ title: lang["help"] }}
         name="Help"
-        children={(props) => <HelpScreen {...props} />}
+        children={(props) => <HelpScreen {...props} lang={lang} />}
       />
     </Stack.Navigator>
   );

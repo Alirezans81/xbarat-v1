@@ -1,6 +1,6 @@
 import { Image, StyleSheet, View, ScrollView, Text } from "react-native";
 import React, { useRef } from "react";
-import MapView, { Marker } from "react-native-maps";
+// import MapView, { Marker } from "react-native-maps";
 
 const AboutUsScreen = ({ lang }) => {
   const mapRef = useRef();
@@ -74,7 +74,7 @@ const AboutUsScreen = ({ lang }) => {
           {lang["xbarat-description"] + "."}
         </Text>
         <Text style={styles.label}>{lang["offices"]}</Text>
-        <MapView
+        {/* <MapView
           ref={mapRef}
           onMapReady={() => {
             mapRef.current.fitToSuppliedMarkers(
@@ -120,7 +120,7 @@ const AboutUsScreen = ({ lang }) => {
             description={offices.mashhad.address}
             coordinate={offices.mashhad.coordinate}
           />
-        </MapView>
+        </MapView> */}
         <View style={styles.addressesView}>
           <View style={styles.officeDetailsView}>
             <Text style={styles.h3}>{lang["herat"]}</Text>

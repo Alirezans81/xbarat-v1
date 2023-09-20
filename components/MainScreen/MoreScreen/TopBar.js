@@ -21,7 +21,9 @@ const TopBar = ({ setLoggedIn, lang, setLang, storeAccessToken }) => {
     await AsyncStorage.getItem("Language")
       .then((result) => {
         const foundIndex = languages.findIndex((e) => e.abb === result);
-        langRef.current.selectIndex(foundIndex ? foundIndex : 0);
+        foundIndex
+          ? langRef.current.selectIndex(foundIndex)
+          : langRef.current.selectIndex(0);
       })
       .catch((error) => {
         console.log(JSON.stringify(error));
