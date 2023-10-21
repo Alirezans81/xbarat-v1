@@ -9,6 +9,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Formik } from "formik";
 import SelectDropdown from "react-native-select-dropdown";
 import axios from "axios";
+import addComma from "../../../hooks/addComma";
 
 const DepositForm = ({
   currencies,
@@ -94,7 +95,7 @@ const DepositForm = ({
             <TextInput
               onBlur={handleBlur("amount")}
               onChangeText={handleChange("amount")}
-              value={values.amount}
+              value={addComma(values.amount)}
               placeholder={lang["input-amount-placeholder"]}
               style={styles.input}
               keyboardType="numeric"

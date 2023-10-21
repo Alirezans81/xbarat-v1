@@ -10,6 +10,7 @@ import { Formik } from "formik";
 import SelectDropdown from "react-native-select-dropdown";
 import Inventory from "../../MainScreen/ExchangeScreen/ExchangeForm/Inventory";
 import axios from "axios";
+import addComma from "../../../hooks/addComma";
 
 const WithdrawalForm = ({
   currencies,
@@ -140,7 +141,7 @@ const WithdrawalForm = ({
             <TextInput
               onBlur={handleBlur("amount")}
               onChangeText={handleChange("amount")}
-              value={values.amount}
+              value={addComma(values.amount)}
               placeholder={lang["input-amount-placeholder"]}
               style={styles.input}
               keyboardType="numeric"

@@ -41,16 +41,20 @@ const IdentityScreen = ({ lang, token, refreshToken, userInfo }) => {
   const getAfghanistanOffices = async () => {
     setAfghanistanOffices([
       {
-        title: "Harat",
-        address:
-          "Harat - Banke Khoon Road - 19th Emam Moslem Street - Beside Tabassom Clinic",
-        number: "+945345423",
+        title: "هرات",
+        address: "هرات ، جاده بانک خون - امام مسلم ۱۹ - جنب کلینیک تبسم",
+        number: "+93783846788",
       },
       {
-        title: "Mazar Sharif",
+        title: "کابل",
         address:
-          "Mazar Sharif - Yalmareb Majidi Station Market - Third House - Room 47",
-        number: "+949777569",
+          "کابل - دوکان نمبر ۳و۴، منزل سوم، شهزاد سیتی سنتر، جوار برچی سیتی سنتر، دشت برچی",
+        number: "+93779074323",
+      },
+      {
+        title: "مزار شریف",
+        address: "مزار شریف - ایستگاه یلمرب مجیدی مارکیت منزل سوم اتاق ۴۷",
+        number: "+93791535953",
       },
     ]);
   };

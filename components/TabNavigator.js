@@ -65,6 +65,7 @@ const TabNavigator = ({
             token={token}
             refreshToken={refreshToken}
             balances={balances}
+            getBalances={getBalances}
             stackNavigation={stackNavigation}
           />
         )}

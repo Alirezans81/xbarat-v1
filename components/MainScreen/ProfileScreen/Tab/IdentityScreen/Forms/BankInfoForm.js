@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import { StyleSheet, Text, View, Keyboard } from "react-native";
 import React from "react";
 import Iran from "./BankInfoForm/Iran";
 import Afghanistan from "./BankInfoForm/Afqhanistan";
@@ -17,7 +17,13 @@ const BankInfoForm = ({
 }) => {
   if (country === "iran") {
     return (
-      <View style={styles.container}>
+      <View
+        style={
+          Keyboard.isVisible
+            ? [styles.container, { marginBottom: 120 }]
+            : styles.container
+        }
+      >
         <Text style={styles.head}>{lang["bank-information"]}</Text>
         <Iran
           lang={lang}
@@ -30,7 +36,13 @@ const BankInfoForm = ({
     );
   } else if (country === "afghanistan") {
     return (
-      <View style={styles.container}>
+      <View
+        style={
+          Keyboard.isVisible
+            ? [styles.container, { marginBottom: 120 }]
+            : styles.container
+        }
+      >
         <Text style={styles.head}>{lang["bank-information"]}</Text>
         <Afghanistan
           lang={lang}
@@ -43,7 +55,13 @@ const BankInfoForm = ({
     );
   } else {
     return (
-      <View style={styles.container}>
+      <View
+        style={
+          Keyboard.isVisible
+            ? [styles.container, { marginBottom: 120 }]
+            : styles.container
+        }
+      >
         <Text style={styles.head}>{lang["bank-information"]}</Text>
         <Others
           lang={lang}

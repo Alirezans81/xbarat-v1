@@ -9,6 +9,7 @@ import {
 import React, { useRef } from "react";
 import { Formik } from "formik";
 import Dropdown from "react-native-select-dropdown";
+import addComma from "../../../../hooks/addComma";
 
 const Form = ({
   lang,
@@ -91,7 +92,7 @@ const Form = ({
                 onBlur={() => {
                   handleBlur("amount");
                 }}
-                value={values.amount}
+                value={addComma(values.amount)}
                 textAlign="left"
                 inputMode="decimal"
               />
@@ -118,7 +119,7 @@ const Form = ({
                 onBlur={() => {
                   handleBlur("rate");
                 }}
-                value={values.rate}
+                value={addComma(values.rate)}
                 textAlign="left"
                 inputMode="decimal"
               />

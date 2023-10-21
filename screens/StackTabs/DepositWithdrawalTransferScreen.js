@@ -37,7 +37,6 @@ const DepositWithdrawalTransferScreen = ({
           {userInfo.isActive ? (
             <>
               <Loader loading={loadingSpinner} color="#03A9F4" />
-
               <Forms
                 route={route}
                 lang={lang}

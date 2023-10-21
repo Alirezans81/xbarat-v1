@@ -1,27 +1,36 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import React from "react";
 
-const Header = ({ lang, stackNavigation }) => {
+const Header = ({ lang, stackNavigation, getBalances }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{lang["wallet-label"]}</Text>
-      <TouchableOpacity
-        onPress={() => {
-          stackNavigation.navigate("DepositWithdrawalTransfer", {
-            type: "deposit",
-          });
-        }}
-        style={[styles.button, styles.depositeButton]}
-      >
-        <Image
-          resizeMode="cover"
-          style={styles.depositeIcon}
-          source={require("../../../../assets/App/MainScreen/WalletScreen/deposite.png")}
-        />
-        <Text style={styles.depositeButtonText}>
-          {lang["deposit-button-text"]}
-        </Text>
-      </TouchableOpacity>
+      <View style={styles.buttonsView}>
+        <TouchableOpacity onPress={getBalances}>
+          <Image
+            resizeMethod="cover"
+            style={styles.refreshIcon}
+            source={require("../../../../assets/App/MainScreen/WalletScreen/refresh.png")}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            stackNavigation.navigate("DepositWithdrawalTransfer", {
+              type: "deposit",
+            });
+          }}
+          style={[styles.button, styles.depositeButton]}
+        >
+          <Image
+            resizeMode="cover"
+            style={styles.depositeIcon}
+            source={require("../../../../assets/App/MainScreen/WalletScreen/deposite.png")}
+          />
+          <Text style={styles.depositeButtonText}>
+            {lang["deposit-button-text"]}
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -58,9 +67,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
   },
+  buttonsView: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
   depositeIcon: {
     height: 20,
     width: 20,
     marginRight: 5,
+  },
+  refreshIcon: {
+    height: 30,
+    width: 30,
   },
 });

@@ -121,7 +121,7 @@ export default function App() {
               <Stack.Screen
                 options={{ title: lang["help"] }}
                 name="HelpScreen"
-                children={(props) => <HelpScreen {...props} />}
+                children={(props) => <HelpScreen {...props} lang={lang} />}
               />
             </Stack.Navigator>
           </>

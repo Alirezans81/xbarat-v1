@@ -8,14 +8,15 @@ const WalletScreen = ({
   token,
   refreshToken,
   balances,
+  getBalances,
   stackNavigation,
 }) => {
-
   return (
     <ScrollView style={styles.container}>
       <Wallet
         lang={lang}
         balances={balances}
+        getBalances={getBalances}
         stackNavigation={stackNavigation}
       />
       <PendingRequests
