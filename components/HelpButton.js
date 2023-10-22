@@ -50,7 +50,8 @@ const styles = StyleSheet.create({
     height: 35,
   },
   text: {
-    marginHorizontal: 10,
+    marginLeft: 15,
+    marginRight: 8,
     fontSize: 16,
   },
 });

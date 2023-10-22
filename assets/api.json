@@ -3,6 +3,7 @@
   "send-otp": "http://94.74.145.156:5271/api/identity/send-otp",
   "verify-otp": "http://94.74.145.156:5271/api/identity/verify-otp",
   "signup": "http://94.74.145.156:5271/mobile-api/identity/register",
+  "forgot-password": "http://94.74.145.156:5271/api/identity/forgot",
   "refresh-token": "http://94.74.145.156:5271/mobile-api/identity/refresh",
   "watch-table": "http://94.74.145.156:5271/mobile-api/exchange/watch-table",
   "exchange" : "http://94.74.145.156:5271/mobile-api/exchange",

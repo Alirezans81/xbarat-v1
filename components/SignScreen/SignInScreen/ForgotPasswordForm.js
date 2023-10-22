@@ -1,22 +1,15 @@
 import {
   StyleSheet,
+  Text,
   View,
   TouchableOpacity,
   TextInput,
-  Text,
 } from "react-native";
 import React, { useState } from "react";
 import { Formik } from "formik";
 import axios from "axios";
 
-const SignInForm = ({
-  lang,
-  setLoggedIn,
-  setToken,
-  setLoadingSpinner,
-  storeAccessToken,
-  setForgotPassword,
-}) => {
+const ForgotPasswordForm = ({ lang, setForgotPassword, setLoadingSpinner }) => {
   const [emailError, setEmailError] = useState(false);
   const checkEmail = (values) => {
     if (values.email === "") setEmailError(true);
@@ -25,25 +18,15 @@ const SignInForm = ({
     return !emailError;
   };
 
-  const [passwordError, setPasswordError] = useState(false);
-  const checkPassword = (values) => {
-    if (values.password === "") setPasswordError(true);
-    else setPasswordError(false);
-
-    return !passwordError;
-  };
-
   const [errors, setErrors] = useState([]);
-  const signin = async (email, password) => {
+  const sendForgotPasswordEmail = async (email) => {
     const api = require("../../../assets/api.json");
     setLoadingSpinner(true);
     await axios
-      .post(api["login"], { email, password })
+      .post(api["forgot-password"], { email })
       .then((result) => {
         setLoadingSpinner(false);
-        storeAccessToken(result.data);
-        setToken(result.data);
-        setLoggedIn(true);
+        setForgotPassword(false);
       })
       .catch((error) => {
         setLoadingSpinner(false);
@@ -54,15 +37,21 @@ const SignInForm = ({
   return (
     <View style={styles.container}>
       <Formik
-        initialValues={{ email: "", password: "" }}
+        initialValues={{ email: "" }}
         onSubmit={(values) => {
-          if (checkEmail(values) && checkPassword(values)) {
-            signin(values.email, values.password);
+          if (checkEmail(values) && values.email !== "") {
+            sendForgotPasswordEmail(values.email);
           }
         }}
       >
         {({ handleChange, handleBlur, handleSubmit, values }) => (
           <>
+            <Text style={styles.forgotPasswordMessage}>
+              {lang["forgot-password-message-1st"] + "."}
+            </Text>
+            <Text style={styles.forgotPasswordMessage}>
+              {lang["forgot-password-message-2nd"] + "."}
+            </Text>
             <TextInput
               name="email"
               placeholder={lang["email"]}
@@ -83,33 +72,15 @@ const SignInForm = ({
             >
               {lang["enter your email error"]}
             </Text>
-            <TextInput
-              name="password"
-              placeholder={lang["password"]}
-              style={styles.textInput}
-              onChangeText={handleChange("password")}
-              onBlur={() => {
-                handleBlur("password");
-                checkPassword(values);
-              }}
-              value={values.password}
-              secureTextEntry
-              textAlign="left"
-            />
-            <Text
-              style={[styles.error, passwordError ? styles.show : styles.hide]}
-            >
-              {lang["enter the password error"]}
-            </Text>
             {errors.map((error) => (
               <Text>{error}</Text>
             ))}
             <TouchableOpacity
-              onPress={() => setForgotPassword(true)}
-              style={styles.forgotPasswordButton}
+              style={styles.backToLoginButton}
+              onPress={() => setForgotPassword(false)}
             >
-              <Text style={styles.forgotPasswordButtonText}>
-                {lang["forgot-password-button"]}
+              <Text style={styles.backToLoginButtonText}>
+                {lang["back-to-login"]}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={handleSubmit}>
@@ -122,7 +93,7 @@ const SignInForm = ({
   );
 };
 
-export default SignInForm;
+export default ForgotPasswordForm;
 
 const styles = StyleSheet.create({
   container: {
@@ -169,10 +140,13 @@ const styles = StyleSheet.create({
   hide: {
     display: "none",
   },
-  forgotPasswordButton: {
+  forgotPasswordMessage: {
+    marginBottom: 7,
+  },
+  backToLoginButton: {
     marginTop: 7,
   },
-  forgotPasswordButtonText: {
+  backToLoginButtonText: {
     color: "#03A9F4",
   },
 });

@@ -17,7 +17,7 @@ const Row = ({ data, stackNavigation }) => {
         <Text style={styles.currency}>{data.destinationCurrency}</Text>
       </View>
       <TouchableOpacity
-        onPress={() => stackNavigation.navigate("Report Details", { data })}
+        // onPress={() => stackNavigation.navigate("Report Details", { data })}
         style={styles.width4}
       >
         <Image
