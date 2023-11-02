@@ -7,6 +7,7 @@ import StackNavigator from "./components/StackNavigator";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createStackNavigator } from "@react-navigation/stack";
 import HelpScreen from "./screens/StackTabs/HelpScreen";
+import { LoaderProvider, useLoaderState } from "./providers/LoaderProvider";
 
 const Stack = createStackNavigator();
 
@@ -79,55 +80,58 @@ export default function App() {
     getAccessTokenFromStorage();
   }, []);
 
+
   return (
-    <NavigationContainer>
-      <View style={styles.container}>
-        {loggedIn ? (
-          <>
-            <StatusBar backgroundColor="#eee" barStyle="dark-content" />
-            <StackNavigator
-              lang={lang}
-              setLang={setLang}
-              token={token}
-              refreshToken={refreshToken}
-              setLoggedIn={setLoggedIn}
-              storeAccessToken={storeAccessToken}
-            />
-          </>
-        ) : (
-          <>
-            <StatusBar barStyle="light-content" />
-            <Stack.Navigator
-              screenOptions={{
-                headerBackTitleVisible: false,
-                headerTintColor: "#03A9F4",
-                headerTitleStyle: styles.headerTitle,
-              }}
-            >
-              <Stack.Screen
-                options={{ headerShown: false }}
-                name="SignScreen"
-                children={(props) => (
-                  <SignScreen
-                    {...props}
-                    lang={lang}
-                    setLang={setLang}
-                    setLoggedIn={setLoggedIn}
-                    setToken={setToken}
-                    storeAccessToken={storeAccessToken}
-                  />
-                )}
+    <LoaderProvider>
+      <NavigationContainer>
+        <View style={styles.container}>
+          {loggedIn ? (
+            <>
+              <StatusBar backgroundColor="#eee" barStyle="dark-content" />
+              <StackNavigator
+                lang={lang}
+                setLang={setLang}
+                token={token}
+                refreshToken={refreshToken}
+                setLoggedIn={setLoggedIn}
+                storeAccessToken={storeAccessToken}
               />
-              <Stack.Screen
-                options={{ title: lang["help"] }}
-                name="HelpScreen"
-                children={(props) => <HelpScreen {...props} lang={lang} />}
-              />
-            </Stack.Navigator>
-          </>
-        )}
-      </View>
-    </NavigationContainer>
+            </>
+          ) : (
+            <>
+              <StatusBar barStyle="light-content" />
+              <Stack.Navigator
+                screenOptions={{
+                  headerBackTitleVisible: false,
+                  headerTintColor: "#03A9F4",
+                  headerTitleStyle: styles.headerTitle,
+                }}
+              >
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="SignScreen"
+                  children={(props) => (
+                    <SignScreen
+                      {...props}
+                      lang={lang}
+                      setLang={setLang}
+                      setLoggedIn={setLoggedIn}
+                      setToken={setToken}
+                      storeAccessToken={storeAccessToken}
+                    />
+                  )}
+                />
+                <Stack.Screen
+                  options={{ title: lang["help"] }}
+                  name="HelpScreen"
+                  children={(props) => <HelpScreen {...props} lang={lang} />}
+                />
+              </Stack.Navigator>
+            </>
+          )}
+        </View>
+      </NavigationContainer>
+    </LoaderProvider>
   );
 }
 

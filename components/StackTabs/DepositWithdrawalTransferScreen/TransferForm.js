@@ -54,7 +54,11 @@ const TransferForm = ({
 
   const api = require("../../../assets/api.json");
   const transfer = async (amount, receiverPersonCode, currencyId) => {
-    const param = { amount: +amount, receiverPersonCode, currencyId };
+    const param = {
+      amount: +amount.replaceAll(",", ""),
+      receiverPersonCode,
+      currencyId,
+    };
     const config = {
       headers: {
         Authorization: "Bearer " + token.accessToken,

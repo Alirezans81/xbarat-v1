@@ -10,6 +10,7 @@ import EditButton from "../../../components/MainScreen/ProfileScreen/Tab/Identit
 import Forms from "../../../components/MainScreen/ProfileScreen/Tab/IdentityScreen/Forms";
 import { Formik } from "formik";
 import axios from "axios";
+import { useLoaderSetState } from "../../../providers/LoaderProvider";
 
 const IdentityScreen = ({ lang, token, refreshToken, userInfo }) => {
   const [editable, setEditable] = useState(false);
@@ -39,24 +40,18 @@ const IdentityScreen = ({ lang, token, refreshToken, userInfo }) => {
   const [document, setDocument] = useState();
 
   const getAfghanistanOffices = async () => {
-    setAfghanistanOffices([
-      {
-        title: "هرات",
-        address: "هرات ، جاده بانک خون - امام مسلم ۱۹ - جنب کلینیک تبسم",
-        number: "+93783846788",
-      },
-      {
-        title: "کابل",
-        address:
-          "کابل - دوکان نمبر ۳و۴، منزل سوم، شهزاد سیتی سنتر، جوار برچی سیتی سنتر، دشت برچی",
-        number: "+93779074323",
-      },
-      {
-        title: "مزار شریف",
-        address: "مزار شریف - ایستگاه یلمرب مجیدی مارکیت منزل سوم اتاق ۴۷",
-        number: "+93791535953",
-      },
-    ]);
+    try {
+      const result = await axios.get(api["site-setting"], config);
+
+      const data = result.data.find(
+        (e) => e.name === "afg_address_destinations"
+      );
+      const finalData = JSON.parse(data.value.replaceAll(`'`, `"`));
+
+      setAfghanistanOffices(finalData);
+    } catch (error) {
+      console.log(JSON.stringify(error));
+    }
   };
   useEffect(() => {
     getAfghanistanOffices();
@@ -64,7 +59,7 @@ const IdentityScreen = ({ lang, token, refreshToken, userInfo }) => {
   const findAfghanistanOfficeIndex = () => {
     if (userInfo) {
       const foundIndex = afghanistanOffices.findIndex(
-        (e) => e.address === userInfo.preferredOffice
+        (e) => e === userInfo.preferredOffice
       );
       setSelectedAfghanistanOfficeIndex(foundIndex);
       setInitalAfghanistanOfficeIndex(foundIndex);
@@ -171,34 +166,49 @@ const IdentityScreen = ({ lang, token, refreshToken, userInfo }) => {
     },
   };
 
-  const uploadDocument = async () => {
-    let filename = document.split("/").pop();
+  const setLoader = useLoaderSetState();
 
-    let match = /\.(\w+)$/.exec(filename);
-    let type = match ? `image/${match[1]}` : `image`;
+  const uploadDocument = async (customFunction) => {
+    if (document) {
+      let filename = document.split("/").pop();
 
-    let formData = new FormData();
-    formData.append("file", { uri: document, name: filename, type });
+      let match = /\.(\w+)$/.exec(filename);
+      let type = match ? `image/${match[1]}` : `image`;
 
-    await axios
-      .post(api["upload-profile-document"], formData, {
-        headers: {
-          "Content-Type": "multipart/form-data; boundary=----",
-          Authorization: "Bearer " + token.accessToken,
-        },
-      })
-      .then((result) => {})
-      .catch((error) => {
-        console.log(JSON.stringify(error));
-      });
+      let formData = new FormData();
+      formData.append("file", { uri: document, name: filename, type });
+
+      setLoader(true);
+      await axios
+        .post(api["upload-profile-document"], formData, {
+          headers: {
+            "Content-Type": "multipart/form-data; boundary=----",
+            Authorization: "Bearer " + token.accessToken,
+          },
+        })
+        .then((result) => {
+          setLoader(false);
+          console.log(result);
+          customFunction();
+        })
+        .catch((error) => {
+          console.log(JSON.stringify(error));
+          setLoader(false);
+        });
+    } else customFunction();
   };
 
   const updateProfile = async (values) => {
     if (refreshToken()) {
+      setLoader(true);
       await axios
         .put(api["profile"], values, config)
-        .then((result) => {})
+        .then((result) => {
+          setLoader(false);
+          console.log(result.data);
+        })
         .catch((error) => {
+          setLoader(false);
           console.log(JSON.stringify(error));
         });
     }
@@ -246,11 +256,10 @@ const IdentityScreen = ({ lang, token, refreshToken, userInfo }) => {
           newValues.preferredOffice = afghanistanOffices[
             selectedAfghanistanOfficeIndex
           ]
-            ? afghanistanOffices[selectedAfghanistanOfficeIndex].address
+            ? afghanistanOffices[selectedAfghanistanOfficeIndex]
             : "";
 
-          uploadDocument();
-          updateProfile(newValues);
+          uploadDocument(() => updateProfile(newValues));
         }}
       >
         {({ handleChange, handleBlur, handleSubmit, values, resetForm }) => (

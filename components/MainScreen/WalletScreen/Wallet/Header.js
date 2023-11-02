@@ -8,7 +8,6 @@ const Header = ({ lang, stackNavigation, getBalances }) => {
       <View style={styles.buttonsView}>
         <TouchableOpacity onPress={getBalances}>
           <Image
-            resizeMethod="cover"
             style={styles.refreshIcon}
             source={require("../../../../assets/App/MainScreen/WalletScreen/refresh.png")}
           />

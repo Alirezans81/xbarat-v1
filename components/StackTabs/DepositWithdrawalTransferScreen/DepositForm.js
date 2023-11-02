@@ -38,7 +38,7 @@ const DepositForm = ({
   const deposit = async (amount, currencyId, countryId) => {
     if (refreshToken()) {
       const param = {
-        amount: +amount,
+        amount: +amount.replaceAll(",", ""),
         countryId,
         currencyId,
       };

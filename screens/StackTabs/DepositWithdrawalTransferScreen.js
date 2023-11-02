@@ -12,7 +12,6 @@ import Loader from "react-native-modal-loader";
 import { useState } from "react";
 import { View } from "react-native";
 import { Text } from "react-native";
-import { TouchableOpacity } from "react-native";
 
 const DepositWithdrawalTransferScreen = ({
   lang,

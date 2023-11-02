@@ -66,7 +66,12 @@ const WithdrawalForm = ({
   const api = require("../../../assets/api.json");
   const withdarwal = async (amount, destination, currencyId, countryId) => {
     if (refreshToken()) {
-      const param = { amount, destination, currencyId, countryId };
+      const param = {
+        amount: +amount.replaceAll(",", ""),
+        destination,
+        currencyId,
+        countryId,
+      };
       const config = {
         headers: {
           Authorization: "Bearer " + token.accessToken,

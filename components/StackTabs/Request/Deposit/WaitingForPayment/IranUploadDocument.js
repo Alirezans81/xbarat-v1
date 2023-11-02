@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import SelectDropdown from "react-native-select-dropdown";
 import UploadDocument from "../../../../MainScreen/ProfileScreen/Tab/IdentityScreen/UploadDocument";
+import { useLoaderSetState } from "../../../../../providers/LoaderProvider";
 
 const IranUploadDocument = ({ token, amount, navigation, lang, depositId }) => {
   const api = require("../../../../../assets/api.json");
@@ -44,6 +45,8 @@ const IranUploadDocument = ({ token, amount, navigation, lang, depositId }) => {
 
   const [canUpload, setCanUpload] = useState(false);
 
+  const setLoader = useLoaderSetState();
+
   const [image, setImage] = useState();
   const upload = async () => {
     let filename = image.split("/").pop();
@@ -54,6 +57,7 @@ const IranUploadDocument = ({ token, amount, navigation, lang, depositId }) => {
     let formData = new FormData();
     formData.append("file", { uri: image, name: filename, type });
 
+    setLoader(true);
     await axios
       .post(
         api["upload-deposit-document-1st"] +
@@ -68,9 +72,11 @@ const IranUploadDocument = ({ token, amount, navigation, lang, depositId }) => {
         }
       )
       .then((result) => {
+        setLoader(false);
         submit(result.data);
       })
       .catch((error) => {
+        setLoader(false);
         console.log(JSON.stringify(error));
       });
   };
@@ -81,6 +87,7 @@ const IranUploadDocument = ({ token, amount, navigation, lang, depositId }) => {
       peymentIdnetity: imageFileName,
     };
 
+    setLoader(true);
     await axios
       .post(
         api["submit-deposit-document-1st"] +
@@ -90,9 +97,11 @@ const IranUploadDocument = ({ token, amount, navigation, lang, depositId }) => {
         config
       )
       .then((result) => {
+        setLoader(false);
         navigation.goBack();
       })
       .catch((error) => {
+        setLoader(false);
         console.log(JSON.stringify(error));
       });
   };
